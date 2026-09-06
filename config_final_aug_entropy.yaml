@@ -1,0 +1,27 @@
+# Entropy-minimisation experiment based on config_final_aug.yaml.
+# The base config retains mode=cross_entropy; this selectable mode adds H.
+base_config: ./config_final_aug.yaml
+
+runtime:
+  # Physical GPU 1 is a 32GB Tesla V100 on this machine.
+  device: cuda:1
+
+data:
+  text:
+    cache_output: ./work_dir/final_aug_entropy/clip_text_action_embeddings.pt
+
+train:
+  loss:
+    mode: cross_entropy_entropy
+    entropy_weight: 0.05
+    entropy_temperature: 0.1
+    entropy_scope: seen
+    entropy_normalize: true
+    entropy_correct_only: true
+    entropy_start_epoch: 10
+    entropy_warmup_epochs: 20
+    scale_independent: true
+
+outputs:
+  work_dir: ./work_dir/final_aug_entropy
+  run_name: lambda005_seed20260616

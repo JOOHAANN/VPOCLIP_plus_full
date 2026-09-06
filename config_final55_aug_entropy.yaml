@@ -1,0 +1,39 @@
+# Selectable CE+entropy fine-tuning mode for the 55/0 closed-set model.
+# The original config_final55_aug.yaml remains the unchanged CE training mode.
+base_config: ./config_final55_aug.yaml
+
+runtime:
+  device: cuda:1
+
+data:
+  augment:
+    enabled: false
+  text:
+    cache_output: ./work_dir/final55_aug_entropy/clip_text_action_embeddings.pt
+
+train:
+  init_checkpoint: ./work_dir/final55_aug/run_20260729_135321/swa_model.pth
+  epochs: 20
+  swa_start: null
+  checkpoint_every: null
+  freeze_batchnorm: true
+  optimizer:
+    name: AdamW
+    lr: 2.0e-6
+    weight_decay: 0.0
+  loss:
+    mode: cross_entropy_entropy
+    entropy_weight: 2.0
+    entropy_temperature: 0.1
+    entropy_scope: all
+    entropy_normalize: true
+    entropy_correct_only: true
+    entropy_start_epoch: 0
+    entropy_warmup_epochs: 5
+    scale_independent: true
+    anchor_weight: 100.0
+    anchor_scope: visual
+
+outputs:
+  work_dir: ./work_dir/final55_aug_entropy
+  run_name: final55_swa_lambdaH2_anchor100

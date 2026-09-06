@@ -1,0 +1,23 @@
+# Full 40/15 run with the same current upstream pipeline and recipe as final_aug.
+base_config: ./config_final_aug.yaml
+
+runtime:
+  device: cuda:0
+
+data:
+  train:
+    data_dir: ./data/contrastive_cs_70_10_20_zsl_40_15_coco17_current
+    prefix: trimodal_train
+    pose_suffix: _coco17
+    mmap: true
+  val:
+    data_dir: ./data/contrastive_cs_70_10_20_zsl_40_15_coco17_current
+    prefix: trimodal_val
+    pose_suffix: _coco17
+    mmap: true
+  text:
+    cache_output: ./work_dir/final40_aug_coco17/clip_text_action_embeddings.pt
+
+outputs:
+  work_dir: ./work_dir/final40_aug_coco17
+  run_name: ce_8prompt_full300

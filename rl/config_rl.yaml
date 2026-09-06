@@ -1,0 +1,103 @@
+# Active-view RL scaffold. Paths are relative to VPOCLIP_plus/rl.
+
+runtime:
+  device: cuda:0
+  seed: 20260902
+  amp: true
+
+recognizer:
+  config: ../config_final_aug.yaml
+  # Set this explicitly after choosing best/last/SWA from the final_aug run.
+  checkpoint: null
+  frozen: true
+  embedding_dim: 512
+  num_classes: 55
+  prompt_count: 8
+
+cache:
+  root: ../data/active_multiview_cache
+  num_views: 8              # change to 16 only when every episode has 16 aligned views
+  selected_views: 3
+  mmap: true
+  arrays:
+    z: z.npy
+    logits: logits.npy
+    joint_xy: joint_xy.npy
+    joint_conf: joint_conf.npy
+    object_map: object_map.npy
+    image_quality: image_quality.npy
+    view_geometry: view_geometry.npy
+    reachable: reachable.npy
+    move_cost: move_cost.npy
+    labels: labels.npy
+    target_columns: target_columns.npy
+    metadata: metadata.json
+  splits:
+    seen_train: seen_train
+    seen_val: seen_val
+    pseudo_unseen_val: pseudo_unseen_val
+    unseen_test: unseen_test
+
+state:
+  stage: M0                 # M0=minimal, M1=Top-5 evidence, M2=pose+object
+  slots: 3
+  top_k: 5
+  fusion_weights: [1.0, 1.0, 1.0]
+  view_encoding: one_hot
+  image_quality_dim: 4
+  use_top5_evidence: false
+  use_pose: false
+  use_object: false
+  pose_input_dim: 663       # 13 * 17 * (x,y,confidence)
+  object_input_dim: 1800    # 50 * 6 * 6
+
+network:
+  semantic_dim: 128
+  pose_dim: 64
+  object_dim: 64
+  quality_view_dim: 32
+  view_output_dim: 256
+  evidence_output_dim: 128
+  robot_output_dim: 64
+  trunk_dims: [512, 256]
+  head_hidden_dim: 128
+
+reward:
+  ce_weight: 0.3
+  terminal_weight: 1.0
+  movement_weight: 0.05
+  ce_clip: 1.0
+  entropy_reward_weight: 0.0  # entropy is state by default, not the main reward
+
+agent:
+  algorithm: double_dueling_dqn
+  gamma: 0.95
+  batch_size: 128
+  replay_capacity: 100000
+  replay_warmup: 5000
+  learning_rate: 1.0e-4
+  weight_decay: 1.0e-4
+  grad_clip: 10.0
+  target_update_interval: 1000
+  epsilon:
+    start: 1.0
+    end: 0.05
+    decay_steps: 100000
+
+train:
+  episodes: null            # set after the synchronized manifest is available
+  validation_interval: 1000
+  checkpoint_metric: pseudo_unseen_top1
+  output_dir: ../work_dir/active_view_ddqn
+  resume: null
+
+evaluation:
+  baselines: [single, random3, fixed_uniform3, dqn, oracle]
+  metrics: [top1, top5, gain_from_A, movement_cost, entropy, margin]
+  save_predictions: true
+
+# Implementation guide
+# 1. Fill recognizer.checkpoint and cache paths only after validating exact data
+#    alignment; do not point this config at unrelated single-view samples.
+# 2. Keep M0 as the first acceptance target, then enable M1 and M2 independently.
+# 3. Resolve and save this YAML with every run so results remain reproducible.

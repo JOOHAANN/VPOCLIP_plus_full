@@ -1,0 +1,555 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+% Keep the source compilable while the three external framework assets are
+% being revised. When the files are restored, they are included automatically.
+\newcommand{\safeincludegraphics}[2][]{%
+  \IfFileExists{#2}{\includegraphics[#1]{#2}}{%
+    \fbox{\parbox[c][3.2cm][c]{0.92\linewidth}{\centering Figure asset unavailable}}}}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+
+\title{Teaching Robots New Activities with a Sentence: On-Device Multimodal Action Recognition for Elderly-Centered HRI*
+}
+
+\author{\IEEEauthorblockN{1\textsuperscript{st} Youhan Li}
+\IEEEauthorblockA{\textit{DIBRIS Department, RICE laboratory} \\
+\textit{University of Genoa}\\
+City, Italy \\
+youhan.li@edu.unige.it}
+\and
+\IEEEauthorblockN{2\textsuperscript{nd} Jinhua Xu}
+\IEEEauthorblockA{\textit{DIBRIS Department, SmartLab} \\
+\textit{University of Genoa}\\
+Genoa, Italy \\
+jinhua.xu@edu.unige.it}
+\IEEEauthorblockA{\textit{DIAG Department} \\
+\textit{Sapienza University of Rome}\\
+Rome, Italy \\
+jinhua.xu@uniroma1.it}
+\and
+\IEEEauthorblockN{3\textsuperscript{rd} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+\and
+\IEEEauthorblockN{4\textsuperscript{th} Given Name Surname}
+\IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
+\textit{name of organization (of Aff.)}\\
+City, Country \\
+email address or ORCID}
+}
+
+\maketitle
+
+\begin{abstract}
+Can we use a sentence to teach a robot to recognise a new human action without retraining?
+Socially assistive robots (SARs) and companion robots should be able to recognise the activities of daily living (ADLs) performed by older adults. However, conventional closed-set models cannot identify unseen activities or adapt to new scenarios without retraining. In addition, many existing approaches are not specifically designed for older adults.
+
+To address these limitations, we propose a tri-modal fusion encoder that integrates RGB video appearance, skeletal motion, and object context (VPOCLIP). Contrastive learning aligns the fused representation with a frozen CLIP text space, while a confidence-aware objective combines cross-entropy, normalized predictive-entropy minimization, and an optional weight anchor. The original cross-entropy training remains available as a selectable mode. One or several natural-language prompts can form each class prototype, so new activities can be introduced without retraining.
+
+On the elderly subset of ETRI-Activity3D, entropy-regularized adaptation reaches 77.24\% top-1 accuracy on the five unseen classes of the 50/5 split and 81.39\% on seen samples evaluated against all 55 prototypes. A separate 55/0 model retains 78.45\% closed-set accuracy while reducing normalized predictive entropy from 0.681 to 0.594. A live deployment on Jetson AGX Xavier requires 130~ms end to end per decision, of which the framework core accounts for 30~ms. These results show that confidence can be improved without sacrificing seen-class accuracy, although excessive entropy minimization can harm zero-shot transfer.
+\end{abstract}
+
+\begin{IEEEkeywords}
+human action recognition, zero-shot learning, multimodal fusion, socially assistive robots, vision-language models, activities of daily living
+\end{IEEEkeywords}
+
+\section{Introduction}
+
+As populations age, demand for socially assistive robots (SARs) is expected to increase, particularly in home-care settings~\cite{olatunji2025sar}. Reliable and continuous perception of older adults' activities is therefore important for enabling SARs to adapt their assistance to users' changing needs. Existing behaviour-recognition systems, however, face two practical constraints. First, on-robot deployment requires low-latency inference while preserving users' privacy, which limits dependence on cloud-based processing~\cite{yoon2026edge}. Second, caregiving applications are inherently subject-specific because behaviour patterns vary across individuals, health conditions, and living environments. After deployment, caregivers may also need to introduce previously unseen activities that were not included in the original training set. Retraining the entire recognition model whenever a new action is added would impose substantial computational and operational costs~\cite{park2021classincremental}. This tension motivates the development of efficient, privacy-preserving recognition frameworks that support incremental adaptation without repeated full-model retraining.
+
+Multimodal perception may improve the accuracy and robustness of human action recognition compared with single-modality approaches, including graph convolutional network (GCN)-based skeleton recognition~\cite{yan2018stgcn,shi2019agcn,chen2021ctrgcn} and video-based methods~\cite{carreira2017i3d,wang2016tsn,feichtenhofer2020x3d}. Nevertheless, many existing multimodal frameworks remain closed-set and cannot incorporate new action classes without retraining~\cite{zhang2025rgbdsurvey}. CLIP-based zero-shot human action recognition offers a promising alternative by enabling recognition of previously unseen actions through vision-language alignment~\cite{radford2021clip,wang2021actionclip,ni2022xclip,rasheed2023vificlip}. Although such methods have achieved competitive results on offline benchmarks and high-performance GPUs~\cite{weng2023openvclip}, their practical use in socially assistive robots remains limited. Most studies give insufficient attention to edge deployment, do not provide a complete real-time perception pipeline, and rarely consider actions specific to older adults~\cite{jang2020etri}. Consequently, a clear research gap remains in developing a unified framework that balances recognition accuracy, real-time deployability, and extensibility to new actions.
+To address this gap, the proposed framework makes the following contributions:
+
+\begin{enumerate}
+    \item A three-stream multimodal architecture is developed to fuse skeleton, video, and object information and align the resulting representation with the CLIP text embedding space for older adults' activities of daily living.
+    \item A describe-to-add mechanism and normalized multi-prompt prototypes allow a new action to be introduced through textual descriptions without retraining the full model. Open-vocabulary performance is evaluated under multiple seen and unseen class splits.
+    \item A selectable confidence-aware objective combines cross-entropy with scale-independent predictive-entropy minimization. Correct-only masking, warm-up, and an L2-SP visual anchor control confident-error reinforcement and forgetting.
+    \item A complete real-time pipeline is implemented, from webcam input and person detection to skeleton extraction, video feature encoding, and action recognition. The system runs locally on a GPU at 5-10 frames per second and is intended for integration with socially assistive robots.
+    \item Experiments on the older-adult subset of ETRI-Activity3D evaluate recognition accuracy, generalisation to unseen actions, and real-time performance.
+\end{enumerate}
+
+
+\section{Related Work}
+
+Human action recognition has been studied extensively for assistive settings, yet most established methods rely on supervised learning over predefined action categories, and they typically require additional labelled data and model retraining once new behaviours are introduced~\cite{simonyan2014twostream,tran2015c3d,wang2016tsn,carreira2017i3d,yan2018stgcn,shi2019agcn,chen2021ctrgcn}. This limits their adaptability in real-world scenarios, where caregivers may need to customize the behaviors monitored by the robot.
+
+Zero-shot action recognition addresses this limitation by using semantic information, such as natural-language descriptions~\cite{zhu2024purls,gupta2021synse}, to recognize unseen actions. However, existing approaches are often computationally intensive or primarily evaluated offline, which makes their real-time deployment on robotic platforms challenging~\cite{zhou2025pgfa,do2025tdsm}. Moreover, relatively limited attention has been given to connecting zero-shot recognition outputs with human-adaptive robot responses. In contrast, this study develops a lightweight framework that allows non-technical users to define target behaviors through natural language and supports real-time, locally deployed action recognition for adaptive social robot interaction.
+
+\section{Method}
+
+VPOCLIP builds on three complementary streams: YOLOv5m provides object-level context that captures human--object interactions~\cite{redmon2016yolo}, X3D encodes RGB appearance and the surrounding environment~\cite{feichtenhofer2020x3d}, and CTR-GCN extracts skeleton-based motion dynamics~\cite{chen2021ctrgcn}. Together they yield a tri-modal representation that makes recognition robust across the visually similar activities of daily living. More importantly, we align this tri-modal representation with a frozen CLIP text encoder, which grounds visual features in natural language and enables the model to recognize actions directly from textual descriptions.
+
+
+
+\begin{figure}[t]
+    \centering
+    \safeincludegraphics[width=1\linewidth]{figures/CLIPGCN_framework_overall.png}
+    \caption{Overview of the proposed VPOCLIP framework, which integrates multi-branch RGB-D action encoding, RS-map feature fusion, and CLIP-based semantic matching for real-time recognition of both seen and unseen activities of daily living.}
+    \label{fig:framework}
+\end{figure}
+
+\subsection{Tri-modal feature streams}\label{AA}
+\begin{figure}[t]
+    \centering
+    \safeincludegraphics[width=1\linewidth]{figures/CLIPGCN_Trimodel_details.png}
+    \caption{Tri-modal feature extraction streams of VPOCLIP.}
+    \label{fig:tri_details}
+\end{figure}
+
+As shown in Fig.~\ref{fig:tri_details}, the input video is processed by three
+parallel streams: RGB appearance, 3D skeleton pose, and YOLO-based object
+detection. Each stream is encoded by its own backbone into video, pose, and
+object feature maps, which are then passed to the fusion module for alignment
+with the CLIP semantic space.
+
+\subsection{Fusion and embedding}
+\begin{figure}[t]
+    \centering
+    \safeincludegraphics[width=1\linewidth]{figures/CLIPGCN_fusion_details.png}
+    \caption{Two-stage spatial mid-fusion and reduction to the 512-D ADL embedding.}
+    \label{fig:fusion_details}
+\end{figure}
+
+Fig.~\ref{fig:fusion_details} illustrates the current two-stage spatial
+mid-fusion. X3D features are projected to 33 channels, while CTR-GCN features
+over 17 COCO joints are converted to a $6\times6$ relation-space (RS) map.
+Their tensors, both spanning 13 frames, are concatenated into a
+$13\times50\times6\times6$ representation. A non-negative
+$1\times50\times6\times6$ object RS map is appended along the temporal axis,
+giving $14\times50\times6\times6$. A lightweight 3-D spatial convolution and
+depth-wise temporal convolution produce one 256-D token per time step. A
+learned class token, positional embeddings, and a one-layer four-head
+Transformer aggregate these tokens before a projection to the 512-D ADL
+embedding. This attention-pooling reducer replaces the original
+$25{,}200\rightarrow512$ flattening layer, while the latter remains selectable
+for checkpoint compatibility and ablation.
+
+\subsection{Language prototypes and confidence-aware training}
+Each seen action is described in an action-description table. The frozen CLIP
+ViT-B/32 text encoder maps every description to a 512-D vector. In the
+multi-prompt mode, eight semantic templates are encoded independently, each
+vector is L2-normalized, and the mean is normalized again to obtain class
+prototype $\hat{t}_k$. A single-description mode is retained for direct
+describe-to-add operation. Training and inference use the same prototype-bank
+construction to avoid a prompt mismatch.
+
+Let $\hat{v}_i$ be a normalized visual embedding and
+$z_{ik}=\alpha\hat{v}_i^{\top}\hat{t}_k$ its scaled cosine logit. The original
+mode minimizes the cross-entropy $\mathcal{L}_{\mathrm{CE}}$. The new selectable
+mode additionally measures a scale-independent distribution
+\begin{equation}
+q_{ik}=\frac{\exp(\hat{v}_i^{\top}\hat{t}_k/\tau)}
+{\sum_{j\in\mathcal{C}}\exp(\hat{v}_i^{\top}\hat{t}_j/\tau)},\qquad
+\bar{H}_i=-\frac{\sum_{k\in\mathcal{C}}q_{ik}\log q_{ik}}{\log|\mathcal{C}|},
+\end{equation}
+where $\tau=0.1$ and $\bar{H}\in[0,1]$. Removing the learnable logit scale
+$\alpha$ prevents the model from lowering entropy merely by increasing a
+scalar. To reduce reinforcement of confident errors, entropy is applied only
+to samples currently classified correctly, indicated by $m_i$. For adaptation
+from a strong checkpoint, an L2-SP anchor limits visual-encoder drift:
+\begin{equation}
+\mathcal{L}=\mathcal{L}_{\mathrm{CE}}+
+\lambda_H\frac{\sum_i m_i\bar{H}_i}{\max(1,\sum_i m_i)}+
+\lambda_A\frac{\|\theta_v-\theta_v^0\|_2^2}
+{\|\theta_v^0\|_2^2+\epsilon}.
+\end{equation}
+The entropy coefficient is linearly warmed up, and BatchNorm statistics can be
+frozen during short fine-tuning. For long runs, checkpoint selection can use
+$Q=\mathrm{Acc}_{\mathrm{val}}-\bar{H}_{\mathrm{val}}$ instead of accuracy alone.
+
+\subsection{Open-vocabulary inference and real-time pipeline}
+At inference time, all action descriptions are encoded offline once and cached
+as a text embedding bank. The visual encoder produces an L2-normalized ADL
+embedding, and the predicted class is the $\arg\max$ of its cosine similarity
+to the bank. To add a new action, a caregiver appends a one-sentence description
+to the table; it becomes immediately recognizable without parameter updates.
+
+An optional unknown gate precedes the final decision. It can reject a window
+using normalized entropy, maximum prototype similarity, or the class-normalized
+distance $z=(1-\cos(\hat v,c_k)-\mu_k)/\sigma_k$ to the predicted seen-class
+centroid $c_k$. Person-presence and motion checks handle empty and static
+windows, and a hysteresis filter requires repeated agreement before changing
+the displayed state. In generalized ZSL, the z-score gate first chooses between
+the seen and unseen candidate sets, after which classification is performed
+only within the selected set.
+
+In the real-time pipeline, a 30-FPS RGB-D camera feeds the three streams,
+with RTMPose providing 17 COCO skeleton keypoints. At every camera frame, 13 frames
+are sampled from a 2--4\,s sliding history window and passed through the
+model, and a majority vote over the last ten predictions gives the final
+label. The interface displays the current top-1 action and the measured
+end-to-end latency in real time.
+
+
+\section{Experiments}
+
+\subsection{Setup}
+All experiments were carried out on ETRI-Activity3D~\cite{jang2020etri}, a
+large RGB-D corpus of daily activities recorded mostly from elderly subjects,
+from which we retain 55 action classes under a fixed 35/5/10
+train/validation/test subject partition. All 50/5, 45/10, 40/15, and 55/0
+experiments use this same subject partition and the same X3D-S,
+RTMPose COCO-17/CTR-GCN, and YOLOv5m feature pipeline; only the held-out class
+set changes. Because no zero-shot protocol has, to our
+knowledge, been published for this dataset, we define four seen/unseen class
+splits (55/0, 50/5, 45/10 and 40/15) and release the class lists to allow
+replication. Unless stated otherwise, class prototypes use eight prompts and a
+frozen CLIP ViT-B/32 encoder~\cite{radford2021clip}. The 50/5, 45/10, and 40/15
+ZSL tests contain 145, 287, and 437 unseen clips, respectively. Their seen
+evaluations contain 1,456, 1,314, and 1,164 clips classified among all 55
+prototypes; ZSL and seen accuracies therefore share a checkpoint but not a
+candidate space. The 55/0 closed test
+contains 1,601 clips and 55 candidates. We report mean normalized predictive
+entropy $\bar H$ at $\tau=0.1$ together with top-1 accuracy.
+
+Each confidence model first runs the common 300-epoch, eight-prompt CE recipe.
+It then fine-tunes the best augmented checkpoint for 20 epochs with a single
+prompt, $\lambda_H=2$, $\lambda_A=100$, learning rate
+$2\times10^{-6}$, five-epoch entropy warm-up, frozen BatchNorm, and the last
+checkpoint. The low-entropy study trains from scratch for 300 epochs with eight
+prompts, $\lambda_H=5$, AdamW at $10^{-4}$, a 20-epoch warm-up after epoch 10,
+and $Q=\mathrm{Acc}_{\mathrm{val}}-\bar H_{\mathrm{val}}$ selection. Training
+used one V100 GPU. Deployment latency was measured separately on Jetson AGX
+Xavier using the complete live perception pipeline.
+The YAML configuration keeps the original CE and flatten-FC framework
+selectable, alongside attention, spatial-token, and global-average reducers;
+temporal concatenation, broadcast fusion, and object cross-attention; one- or
+eight-prompt banks; and entropy-, prototype-, or z-score-based rejection.
+
+\subsection{Zero-shot and generalized zero-shot recognition}
+Direct comparison with prior zero-shot skeleton methods is complicated by the
+fact that each line of work evaluates on different datasets and, at times,
+different class draws for nominally identical splits. Recent consolidated
+comparisons~\cite{wang2026skeletoncontext}, for instance, report markedly
+different values for several earlier methods, which suggests that
+protocol details matter as much as the methods themselves. Table~\ref{tab:context}
+should therefore be read as context rather than as a ranking; our ETRI numbers
+are, at present, the only ones available for this dataset.
+
+\begin{table}[t]
+\centering
+\caption{Zero-shot action recognition in prior publications and our ETRI
+evaluation. Datasets and class draws differ across rows, so the numbers
+provide context rather than a direct ranking.}
+\label{tab:context}
+\scriptsize
+\resizebox{\columnwidth}{!}{%
+\begin{tabular}{lllc}
+\hline
+Method & Benchmark & ZSL Top-1 & GZSL (S/U/H) \\
+\hline
+SynSE~\cite{gupta2021synse}   & NTU-60 55/5 & 75.8\% & 61.3 / 56.9 / 59.0 \\
+SMIE~\cite{zhou2023smie}      & NTU-60 55/5 & 65.08\% & -- \\
+ReViSE~\cite{tsai2017revise}  & PKU-MMD 46/5 & 71.75\% & 52.06 / 60.34 / -- \\
+STAR~\cite{chen2024star}      & NTU-60 55/5 & 81.4\% & 69.0 / 69.9 / 69.4 \\
+SCoPLe~\cite{zhu2025scople}   & NTU-60 55/5 & 84.1\% & 69.6 / 71.9 / 70.8 \\
+Neuron~\cite{chen2025neuron}  & NTU-60 55/5 & \textbf{86.9\%} & \textbf{69.1 / 73.8 / 71.4} \\
+\hline
+Ours ($\mathcal{L}_{\mathrm{CE}}+H$) & ETRI 50/5  & 77.24\% & 60.03 / 60.00 / 60.01 \\
+Ours ($\mathcal{L}_{\mathrm{CE}}+H$) & ETRI 45/10 & 49.13\% & 60.20 / 40.77 / 48.61 \\
+Ours ($\mathcal{L}_{\mathrm{CE}}+H$) & ETRI 40/15 & 22.88\% & 58.68 / 18.99 / 28.70 \\
+\hline
+\end{tabular}
+}
+\end{table}
+
+On 50/5, confidence-aware fine-tuning improves unseen accuracy from 69.66\% at
+its exact single-prompt starting checkpoint to 77.24\%. The older eight-prompt
+CE baseline obtains 66.21\%. The 45/10 and 40/15 rows use the same current
+feature and training pipeline and show degradation as the unseen candidate set
+expands. Against their corresponding 300-epoch, eight-prompt CE checkpoints,
+confidence adaptation raises ZSL from 43.90\% to 49.13\% and from 21.51\% to
+22.88\%, respectively. Before GZSL gating, their seen accuracies against all 55
+prototypes are 82.50\% and 82.65\%.
+
+Joint arg-max over 55 classes gives the entropy-adapted model 81.39\% on seen clips but
+0\% on unseen clips because seen prototypes dominate. The z-score gate is
+calibrated without the final unseen test classes: four pseudo-unseen validation
+groups choose a 30\% rejection rate, which transfers to S/U/H of
+60.03/60.00/60.01\%. Applying the same validation-only 30\% rejection protocol
+to 45/10 and 40/15 gives 60.20/40.77/48.61\% and 58.68/18.99/28.70\%,
+respectively. No final unseen labels are used for these operating points.
+Candidate-set selection therefore remains the principal difficulty in
+generalized ZSL.
+
+\begin{table}[t]
+\centering
+\caption{Entropy fine-tuning on 50/5 from the same single-prompt checkpoint.
+ZSL uses five unseen candidates; Seen uses all 55 candidates.}
+\label{tab:entropy_ft}
+\scriptsize
+\begin{tabular}{cccccc}
+\hline
+$\lambda_H$ & Epochs & ZSL (\%) & $\bar H_{\rm ZSL}$ & Seen (\%) & $\bar H_{\rm S}$ \\
+\hline
+0 (initial) & 0  & 69.66 & 0.864 & 78.09 & 0.738 \\
+0.1         & 20 & 75.86 & 0.852 & 80.77 & 0.717 \\
+0.5         & 20 & 76.55 & 0.846 & 80.77 & 0.704 \\
+2           & 20 & 77.24 & 0.836 & \textbf{81.39} & 0.686 \\
+5           & 20 & \textbf{77.24} & \textbf{0.832} & 80.98 & \textbf{0.677} \\
+\hline
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:entropy_ft} isolates the entropy weight while keeping the prompt
+bank, initialization, anchor, and evaluation protocol fixed. Increasing
+$\lambda_H$ lowers entropy monotonically. Accuracy initially rises because the
+regularizer sharpens already-correct alignments, while correct-only masking and
+the anchor prevent large visual drift. The best seen accuracy occurs at
+$\lambda_H=2$; $\lambda_H=5$ gives the lowest entropy without reducing ZSL.
+
+Long training produces a substantially sharper 55/0 model: the last checkpoint
+matches the CE SWA accuracy exactly while reducing $\bar H$ by 0.087. This does
+not transfer uniformly to unseen classes. On 50/5, the same 300-epoch recipe
+reduces predictive entropy but lowers ZSL accuracy to 60.69\%; against all 55 prototypes,
+none of the unseen clips wins joint arg-max. Entropy is therefore a confidence
+measure rather than a guarantee of correctness. The short anchored adaptation
+is the preferred 50/5 operating point, whereas the long run is useful for the
+closed 55-class model. We select checkpoints by validation accuracy minus
+validation entropy; checkpoint timing is not itself a contribution of this work.
+
+\subsection{Eldercare-oriented subset}
+Service robots for older adults rarely need all 55 categories at once. We
+therefore repeated the generalized evaluation on a reduced vocabulary of 13
+seen classes per split, drawn from eldercare-relevant actions such as eating,
+taking medicine, using a gas stove and falling, together with the full unseen
+set of the corresponding split. Under this configuration the 50/5 model
+reaches S~$=60.0\%$, U~$=55.6\%$ and H~$=57.7\%$, with the correct unseen
+class always contained in the top five predictions. This reduced-vocabulary
+analysis is reported for the 50/5 operating point only. The 50/5 figure appears
+more representative of the intended use case than the
+full-vocabulary one, though
+we acknowledge that a smaller candidate set naturally inflates absolute
+accuracy.
+
+\subsection{Efficiency}
+The current attention-pooling fusion head carries 1,376,908 trainable
+parameters, compared with 13.0M for the retained flatten-FC reducer. Together
+with YOLOv5m~\cite{jocher2020yolov5} (21.1M),
+X3D-S~\cite{feichtenhofer2020x3d} (3.1M) and CTR-GCN~\cite{chen2021ctrgcn}
+(1.5M), the deployed stack totals roughly 27.1M parameters. The 151M-parameter
+CLIP text encoder is only used offline to pre-compute prototypes and never
+runs at inference time. In the live Jetson AGX Xavier deployment, a complete
+decision requires 130~ms end to end, including the surrounding perception and
+post-processing stages, while the VPOCLIP framework core requires 30~ms. For comparison, embedded
+two-stream pipelines relying on optical flow have been reported to require
+several hundred milliseconds per inference~\cite{wang2024rthar}, whereas
+model-only TSM and mixed-precision V-JEPA measurements demonstrate the lower
+latencies attainable with narrower timing boundaries~\cite{lin2019tsm,wirth2026vjepa}. Supervised
+accuracy is not sacrificed for this budget: on the closed 55-class test set
+the fused model reaches 78.45\% top-1, on par with its strongest single stream
+and with a fine-tuned X3D baseline, while adding a zero-shot capability that
+closed-set classifiers lack by construction.
+
+\begin{figure*}[t]
+\centering
+\safeincludegraphics[width=0.92\textwidth]{figures/edge_latency_comparison.pdf}
+\caption{On-device latency context. The VPOCLIP live demo runs entirely on a
+Jetson AGX Xavier at 130~ms end to end per decision; the framework core takes
+30~ms. Literature values are from RT-HARE~\cite{wang2024rthar},
+TSM~\cite{lin2019tsm}, and mixed-precision V-JEPA~\cite{wirth2026vjepa}.
+Published systems use different devices and timing boundaries, so
+end-to-end and model-only measurements are shown separately.}
+\label{fig:demo}
+\end{figure*}
+
+\section{Discussion: Implications for HRI}
+
+This study supports the practical deployment of socially assistive robots in three ways. First, caregivers and family members can define target behaviors through natural-language descriptions, enabling zero-shot recognition without model retraining. Second, the lightweight architecture provides sufficiently low end-to-end latency for local robotic deployment. Third, recognition results can directly trigger human-adaptive behaviors, such as confirming medication dosage after detecting medication intake or proactively checking on a user after detecting fall-related actions.
+
+However, several limitations remain. When seen and unseen classes are recognized jointly, dominant seen classes may suppress unseen classes and reduce zero-shot accuracy. Predictive-entropy minimization sharpens the output distribution but can also sharpen an incorrect seen-class decision; the 300-epoch 50/5 result demonstrates this failure mode. Correct-only masking helps during supervised training but cannot directly protect unseen classes. The centroid gate and pseudo-unseen calibration improve the seen/unseen balance, although their threshold remains dataset dependent. Real-time predictions may also fluctuate during transitions between actions. Future work should investigate entropy objectives that preserve inter-class geometry, independent unseen validation, temporal smoothing, and adaptive class-specific thresholds.
+
+\section{Conclusion}
+
+We presented VPOCLIP, a tri-modal recognition framework that couples appearance, skeletal motion, and object context with a frozen CLIP text encoder, so that activities of daily living can be recognised and later extended through natural language. The current model replaces the large flattening head with a 1.38M-parameter attention-pooling reducer and supports consistent single- or multi-prompt prototypes. A selectable confidence-aware objective combines cross-entropy, normalized predictive entropy, and anchored adaptation while preserving the original training mode. On the elderly subset of ETRI-Activity3D, the preferred 50/5 model reaches 77.24\% five-way ZSL accuracy and 81.39\% seen accuracy against 55 candidates. On 55/0, long entropy training preserves 78.45\% closed-set accuracy while reducing normalized entropy from 0.681 to 0.594. The complete live stack runs on Jetson AGX Xavier at 130~ms per decision, with 30~ms attributable to the framework core. Generalized recognition remains harder: a validation-transferred centroid gate reaches S/U/H of 60.03/60.00/60.01\%, and excessive entropy minimization still favours seen classes. Independent open-set calibration and geometry-preserving confidence objectives are therefore the main next steps, together with temporal aggregation and closer coupling between the recognised activity and the robot's adaptive response.
+
+
+\begin{thebibliography}{00}
+
+\bibitem{olatunji2025sar}
+S. A. Olatunji, V. Falcon, A. Ramesh, and W. A. Rogers,
+``Considerations for designing socially assistive robots for older adults,''
+\textit{Frontiers in Robotics and AI}, vol. 12, Art. no. 1622206, 2025.
+
+\bibitem{yoon2026edge}
+D. Yoon, J. Kim, and D. Lee,
+``Resource-efficient RGB-only action recognition for edge deployment,''
+\textit{arXiv preprint arXiv:2602.10818}, 2026.
+
+\bibitem{park2021classincremental}
+J. Park, M. Kang, and B. Han,
+``Class-incremental learning for action recognition in videos,''
+in \textit{Proc. IEEE/CVF Int. Conf. Computer Vision (ICCV)}, 2021, pp. 13698--13707.
+
+\bibitem{yan2018stgcn}
+S. Yan, Y. Xiong, and D. Lin,
+``Spatial temporal graph convolutional networks for skeleton-based action recognition,''
+in \textit{Proc. AAAI Conf. Artificial Intelligence (AAAI)}, 2018, pp. 7444--7452.
+
+\bibitem{shi2019agcn}
+L. Shi, Y. Zhang, J. Cheng, and H. Lu,
+``Two-stream adaptive graph convolutional networks for skeleton-based action recognition,''
+in \textit{Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)}, 2019, pp. 12026--12035.
+
+\bibitem{chen2021ctrgcn}
+Y. Chen, Z. Zhang, C. Yuan, B. Li, Y. Deng, and W. Hu,
+``Channel-wise topology refinement graph convolution for skeleton-based action recognition,''
+in \textit{Proc. IEEE/CVF Int. Conf. Computer Vision (ICCV)}, 2021, pp. 13359--13368.
+
+\bibitem{carreira2017i3d}
+J. Carreira and A. Zisserman,
+``Quo vadis, action recognition? A new model and the Kinetics dataset,''
+in \textit{Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR)}, 2017, pp. 4724--4733.
+
+\bibitem{wang2016tsn}
+L. Wang, Y. Xiong, Z. Wang, Y. Qiao, D. Lin, X. Tang, and L. Van Gool,
+``Temporal segment networks: towards good practices for deep action recognition,''
+in \textit{Proc. European Conf. Computer Vision (ECCV)}, 2016, pp. 20--36.
+
+\bibitem{feichtenhofer2020x3d}
+C. Feichtenhofer,
+``X3D: expanding architectures for efficient video recognition,''
+in \textit{Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)}, 2020, pp. 203--213.
+
+\bibitem{zhang2025rgbdsurvey}
+Y. Zhang and Y. Wang,
+``A comprehensive survey on RGB-D-based human action recognition: algorithms, datasets, and popular applications,''
+\textit{EURASIP J. Image and Video Processing}, vol. 2025, Art. no. 15, 2025.
+
+\bibitem{radford2021clip}
+A. Radford, J. W. Kim, C. Hallacy, A. Ramesh, G. Goh, S. Agarwal, G. Sastry, A. Askell, P. Mishkin, J. Clark, \textit{et al.},
+``Learning transferable visual models from natural language supervision,''
+in \textit{Proc. Int. Conf. Machine Learning (ICML)}, 2021, pp. 8748--8763.
+
+\bibitem{wang2021actionclip}
+M. Wang, J. Xing, and Y. Liu,
+``ActionCLIP: a new paradigm for video action recognition,''
+\textit{arXiv preprint arXiv:2109.08472}, 2021.
+
+\bibitem{ni2022xclip}
+B. Ni, H. Peng, M. Chen, S. Zhang, G. Meng, J. Fu, S. Xiang, and H. Ling,
+``Expanding language-image pretrained models for general video recognition,''
+in \textit{Proc. European Conf. Computer Vision (ECCV)}, 2022, pp. 1--18.
+
+\bibitem{rasheed2023vificlip}
+H. Rasheed, M. U. Khattak, M. Maaz, S. Khan, and F. S. Khan,
+``Fine-tuned CLIP models are efficient video learners,''
+in \textit{Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)}, 2023, pp. 6545--6554.
+
+\bibitem{weng2023openvclip}
+Z. Weng, X. Yang, A. Li, Z. Wu, and Y.-G. Jiang,
+``Open-VCLIP: transforming CLIP to an open-vocabulary video model via interpolated weight optimization,''
+in \textit{Proc. Int. Conf. Machine Learning (ICML)}, vol. 202, 2023, pp. 36978--36989.
+
+\bibitem{jang2020etri}
+J. Jang, D. Kim, C. Park, M. Jang, J. Lee, and J. Kim,
+``ETRI-Activity3D: a large-scale RGB-D dataset for robots to recognize daily activities of the elderly,''
+in \textit{Proc. IEEE/RSJ Int. Conf. Intelligent Robots and Systems (IROS)}, 2020, pp. 10990--10997.
+
+\bibitem{simonyan2014twostream}
+K. Simonyan and A. Zisserman,
+``Two-stream convolutional networks for action recognition in videos,''
+in \textit{Proc. Advances in Neural Information Processing Systems (NeurIPS)}, 2014, pp. 568--576.
+
+\bibitem{tran2015c3d}
+D. Tran, L. Bourdev, R. Fergus, L. Torresani, and M. Paluri,
+``Learning spatiotemporal features with 3D convolutional networks,''
+in \textit{Proc. IEEE Int. Conf. Computer Vision (ICCV)}, 2015, pp. 4489--4497.
+
+\bibitem{zhu2024purls}
+A. Zhu, Q. Ke, M. Gong, and J. Bailey,
+``Part-aware unified representation of language and skeleton for zero-shot action recognition,''
+in \textit{Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)}, 2024, pp. 18761--18770.
+
+\bibitem{gupta2021synse}
+P. Gupta, D. Sharma, and R. K. Sarvadevabhatla,
+``Syntactically guided generative embeddings for zero-shot skeleton action recognition,''
+in \textit{Proc. IEEE Int. Conf. Image Processing (ICIP)}, 2021, pp. 439--443.
+
+\bibitem{zhou2025pgfa}
+K. Zhou, S. Zhang, Z. You, J. Hu, M. Tan, and F. Liu,
+``Zero-shot skeleton-based action recognition with prototype-guided feature alignment,''
+\textit{IEEE Trans. Image Processing}, vol. 34, pp. 4602--4617, 2025.
+
+\bibitem{do2025tdsm}
+J. Do and M. Kim,
+``Bridging the skeleton-text modality gap: diffusion-powered modality alignment for zero-shot skeleton-based action recognition,''
+in \textit{Proc. IEEE/CVF Int. Conf. Computer Vision (ICCV)}, 2025, pp. 12757--12768.
+
+\bibitem{redmon2016yolo}
+J. Redmon, S. Divvala, R. Girshick, and A. Farhadi,
+``You only look once: unified, real-time object detection,''
+in \textit{Proc. IEEE Conf. Computer Vision and Pattern Recognition (CVPR)}, 2016, pp. 779--788.
+
+\bibitem{chao2016gzsl}
+W.-L. Chao, S. Changpinyo, B. Gong, and F. Sha,
+``An empirical study and analysis of generalized zero-shot learning for object recognition in the wild,''
+in \textit{Proc. European Conf. Computer Vision (ECCV)}, 2016, pp. 52--68.
+
+\bibitem{chen2024star}
+Y. Chen, J. Guo, T. He, X. Lu, and L. Wang,
+``Fine-grained side information guided dual-prompts for zero-shot skeleton action recognition,''
+in \textit{Proc. 32nd ACM Int. Conf. Multimedia (ACM MM)}, 2024, pp. 778--786.
+
+\bibitem{zhou2023smie}
+Y. Zhou, W. Qiang, A. Rao, N. Lin, B. Su, and J. Wang,
+``Zero-shot skeleton-based action recognition via mutual information estimation and maximization,''
+in \textit{Proc. 31st ACM Int. Conf. Multimedia (ACM MM)}, 2023, pp. 5302--5310.
+
+\bibitem{tsai2017revise}
+Y.-H. H. Tsai, L.-K. Huang, and R. Salakhutdinov,
+``Learning robust visual-semantic embeddings,''
+in \textit{Proc. IEEE Int. Conf. Computer Vision (ICCV)}, 2017, pp. 3591--3600.
+
+\bibitem{zhu2025scople}
+A. Zhu, J. Zhu, J. Bailey, M. Gong, and Q. Ke,
+``Semantic-guided cross-modal prompt learning for skeleton-based zero-shot action recognition,''
+in \textit{Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)}, 2025, pp. 13876--13885.
+
+\bibitem{chen2025neuron}
+Y. Chen, J. Guo, S. Guo, and D. Tao,
+``Neuron: learning context-aware evolving representations for zero-shot skeleton action recognition,''
+in \textit{Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)}, 2025.
+
+\bibitem{wu2025fsvae}
+W. Wu, Z. Guo, C. Chen, H. Xue, and A. Lu,
+``Frequency-semantic enhanced variational autoencoder for zero-shot skeleton-based action recognition,''
+in \textit{Proc. IEEE/CVF Int. Conf. Computer Vision (ICCV)}, 2025, pp. 11122--11131.
+
+\bibitem{wang2026skeletoncontext}
+N. Wang, T. Wu, N. Sharif, F. Boussaid, G. Zhu, L. Mei, M. Bennamoun, and L. Zhang,
+``SkeletonContext: skeleton-side context prompt learning for zero-shot skeleton-based action recognition,''
+in \textit{Proc. IEEE/CVF Conf. Computer Vision and Pattern Recognition (CVPR)}, 2026, pp. 20170--20180.
+
+\bibitem{jocher2020yolov5}
+G. Jocher \textit{et al.},
+``Ultralytics YOLOv5,'' 2020. [Online]. Available: \texttt{https://github.com/ultralytics/yolov5}
+
+\bibitem{wang2024rthar}
+R. Wang, Z. Wang, P. Gao, M. Li, J. Jeong, Y. Xu, Y. Lee, C. M. Baum, L. T. Connor, and C. Lu,
+``Real-time human action recognition on embedded platforms,''
+\textit{arXiv preprint arXiv:2409.05662}, 2024.
+
+\bibitem{lin2019tsm}
+J. Lin, C. Gan, and S. Han,
+``TSM: temporal shift module for efficient video understanding,''
+in \textit{Proc. IEEE/CVF Int. Conf. Computer Vision (ICCV)}, 2019, pp. 7083--7093.
+
+\bibitem{wirth2026vjepa}
+C. Wirth, X. Zhang, Y. Song, and B. Dina,
+``Efficient human action recognition with mixed-precision V-JEPA on embedded devices,''
+in \textit{Proc. 9th Int. Conf. Information and Computer Technologies (ICICT)}, 2026, pp. 259--265.
+
+\end{thebibliography}
+
+
+\end{document}

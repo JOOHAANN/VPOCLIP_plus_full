@@ -1,0 +1,69 @@
+# CLIPGCN tri-modal contrastive training config for compact CS 70/10/20 50/5 data.
+# Relative paths are resolved from this config file's directory.
+
+runtime:
+  device: cuda:0
+  seed: 20260616
+  amp: true
+  no_show: true
+
+data:
+  train:
+    data_dir: ./data/contrastive_cs_70_10_20_zsl_50_5
+    prefix: trimodal_train
+    mmap: true
+
+  val:
+    data_dir: ./data/contrastive_cs_70_10_20_zsl_50_5
+    prefix: trimodal_val
+    mmap: true
+
+  validation_split:
+    fraction: 0.1
+    seed: 20260616
+
+  text:
+    xlsx: ./ntu55_global_descriptions.xlsx
+    id_column: ID
+    text_column: global_description
+    label_offset: 1
+    prompt_template: "{global_description}"
+    batch_size: 128
+    cache_output: ./work_dir/clip_text_action_embeddings.pt
+
+  dataloader:
+    batch_size: 128
+    num_workers: 16
+    train_shuffle: true
+    val_shuffle: false
+    class_balanced_sampling: true
+    pin_memory: true
+    drop_last: true
+
+model:
+  text_encoder:
+    name: ViT-B/32
+    download_root: null
+  fusion:
+    reducer: flatten_fc
+    object_fusion: temporal_concat
+    dropout: 0.4
+
+train:
+  epochs: 240
+  val_interval: 1
+  grad_clip_norm: 1.0
+  optimizer:
+    name: AdamW
+    lr: 0.0001
+    weight_decay: 0.0001
+
+outputs:
+  work_dir: ./work_dir/clipgcn_cs_70_10_20_50_5
+  auto_run_dir: true
+  run_name: null
+  best_model: ./work_dir/clipgcn_cs_70_10_20_50_5/best_model.pth
+  last_model: ./work_dir/clipgcn_cs_70_10_20_50_5/last_model.pth
+  history: ./work_dir/clipgcn_cs_70_10_20_50_5/history.json
+  train_curve: ./work_dir/clipgcn_cs_70_10_20_50_5/train_curve.png
+  test_results: ./work_dir/clipgcn_cs_70_10_20_50_5/unseen_test_results.json

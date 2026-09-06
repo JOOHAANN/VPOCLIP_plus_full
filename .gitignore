@@ -1,0 +1,53 @@
+# Large/generated datasets. data is a symlink to /workspace/VPOCLIP/data (174G),
+# so it must be matched without a trailing slash: git sees a file, not a dir.
+/data
+
+# Downloaded third-party models (pose_landmarker_full.task etc.)
+checkpoints/
+
+# Training/evaluation outputs. work_dir itself is NOT ignored: the weights and
+# logs in it are covered by the extension rules below, so the small run records
+# (history.json, *_test.json, source_config.yaml, train_curve.png) stay tracked.
+outputs/
+output/
+runs/
+logs/
+wandb/
+tensorboard/
+
+# Model checkpoints and serialized arrays
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.task
+*.npy
+*.npz
+*.pkl
+*.pickle
+*.h5
+*.hdf5
+
+# Archives and large media/data exports
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.csv
+
+# Python/cache artifacts
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+
+# Local/editor files
+.DS_Store
+.vscode/
+*.log

@@ -1,0 +1,69 @@
+# CLIPGCN 55类动作 角色选择表
+# 每类三种状态:
+#   seen   - 已见类 (参与 seen 侧的样本与候选)
+#   unseen - 未见类 (参与 unseen 侧的样本与候选, 用于ZSL/GZSL评测)
+#   off    - 完全排除 (样本和候选都不出现)
+# 改完运行: /root/miniconda3/envs/clipgcn/bin/python tools/build_class_selection.py
+# 生成 data/class_selection/metadata.json 供 test.py --class-split-dir 使用
+# 注: label id = ID - 1 (数据集标签0-54)
+#
+# !!! 重要: unseen 标记只改变评测协议, 不改变模型训练时见过什么 !!!
+# 真ZSL要求: 这里标 unseen 的类集合 == checkpoint 训练时排除的类集合
+#   参考: 50_5 checkpoint 的排除集是 A010 A011 A012 A018 A050 (label 9,10,11,17,49)
+# 当前搭配的checkpoint: (自己填, 换表时记得更新)
+classes:
+  A001: seen   # label= 0 | eating food with a fork
+  A002: seen   # label= 1 | pouring water into a cup
+  A003: seen   # label= 2 | taking medicine
+  A004: seen   # label= 3 | drinking water
+  A005: off   # label= 4 | putting food in the fridge/taking food from the fridge
+  A006: off   # label= 5 | trimming vegetables
+  A007: off   # label= 6 | peeling fruit
+  A008: seen   # label= 7 | using a gas stove
+  A009: unseen   # label= 8 | cutting vegetable on the cutting board
+  A010: unseen   # label= 9 | brushing teeth
+  A011: unseen   # label=10 | washing hands
+  A012: seen   # label=11 | washing face
+  A013: off   # label=12 | wiping face with a towel
+  A014: off   # label=13 | putting on cosmetics
+  A015: off   # label=14 | putting on lipstick
+  A016: off   # label=15 | brushing hair
+  A017: unseen   # label=16 | blow drying hair
+  A018: seen   # label=17 | putting on a jacket
+  A019: off   # label=18 | taking off a jacket
+  A020: off   # label=19 | putting on/taking off shoes
+  A021: off   # label=20 | putting on/taking off glasses
+  A022: off   # label=21 | washing the dishes
+  A023: seen   # label=22 | vacuuming the floor
+  A024: off   # label=23 | scrubbing the floor with a rag
+  A025: seen   # label=24 | wiping off the dinning table
+  A026: off   # label=25 | rubbing up furniture
+  A027: off   # label=26 | spreading bedding/folding bedding
+  A028: off   # label=27 | washing a towel by hands
+  A029: off   # label=28 | hanging out laundry
+  A030: off   # label=29 | looking around for something
+  A031: off   # label=30 | using a remote control
+  A032: seen   # label=31 | reading a book
+  A033: off   # label=32 | reading a newspaper
+  A034: off   # label=33 | handwriting
+  A035: off   # label=34 | talking on the phone
+  A036: off   # label=35 | playing with a mobile phone
+  A037: off   # label=36 | using a computer
+  A038: off   # label=37 | smoking
+  A039: off   # label=38 | clapping
+  A040: off   # label=39 | rubbing face with hands
+  A041: off   # label=40 | doing freehand exercise
+  A042: off   # label=41 | doing neck roll exercise
+  A043: off   # label=42 | massaging a shoulder oneself
+  A044: off   # label=43 | taking a bow
+  A045: off   # label=44 | talking to each other
+  A046: off   # label=45 | handshaking
+  A047: off   # label=46 | hugging each other
+  A048: off   # label=47 | fighting each other
+  A049: unseen   # label=48 | waving a hand
+  A050: off   # label=49 | flapping a hand up and down (beckoning)
+  A051: off   # label=50 | pointing with a finger
+  A052: off   # label=51 | opening the door and walking in
+  A053: seen   # label=52 | fallen on the floor
+  A054: seen   # label=53 | sitting up/standing up
+  A055: seen   # label=54 | lying down

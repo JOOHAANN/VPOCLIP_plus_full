@@ -1,0 +1,110 @@
+# CLIPGCN 55/0 closed-set on the cross-subject split.
+# All 55 classes are seen. train / val / test use disjoint subject groups
+# (35 / 5 / 10 people), so val measures generalisation to new people.
+# Skeleton: RTMPose COCO-17 (CTR-GCN_17). Variant: flatten_fc + temporal_concat (original)
+
+runtime:
+  device: cuda:0
+  seed: 20260616
+  amp: true
+  no_show: true
+
+data:
+  train:
+    data_dir: ./data/contrastive_zsl_splits/55_0
+    prefix: seen
+    pose_suffix: _coco17
+    mmap: true
+
+  # Real held-out subjects, not a random slice of the training clips.
+  val:
+    data_dir: ./data/contrastive_zsl_splits/55_0
+    prefix: val
+    pose_suffix: _coco17
+    mmap: true
+
+  text:
+    xlsx: ./ntu55_global_descriptions.xlsx
+    id_column: ID
+    text_column: global_description
+    label_offset: 1
+    prompt_template: "{global_description}"
+    batch_size: 128
+    cache_output: ./work_dir/clip_text_action_embeddings.pt
+
+  dataloader:
+    batch_size: 128
+    num_workers: 16
+    train_shuffle: true
+    val_shuffle: false
+    class_balanced_sampling: true
+    pin_memory: true
+    drop_last: true
+
+model:
+  text_encoder:
+    name: ViT-B/32
+    download_root: null
+  fusion:
+    # reducer: flatten_fc  spatial GAP + temporal attention  (~1.5M)
+    #          gap             spatial GAP + temporal GAP        (~0.7M)
+    #          flatten_fc      original 25200->512 projection    (~13M)
+    reducer: flatten_fc
+    dropout: 0.2
+    attention_dim: 256
+    attention_heads: 4
+    attention_layers: 1
+    # object_fusion: cross_attention  objects are key/value, frames are query
+    #                broadcast        object map repeated on every frame
+    #                temporal_concat  original: object map as a 14th frame
+    object_fusion: temporal_concat
+    object_attention_dim: 128
+    object_attention_heads: 4
+    object_dropout: 0.1
+    # RTMPose COCO-17: 33 video channels + 17 joints = 50
+    video_channels: 33
+    num_joints: 17
+
+train:
+  epochs: 300
+  val_interval: 1
+  grad_clip_norm: 1.0
+  # No early stopping: every variant runs the full budget so the comparison is
+  # not biased towards whichever one happens to plateau first.
+  scheduler: cosine
+  min_lr: 1.0e-6
+  # Val loss is dominated by a few hard clips and kept selecting checkpoints
+  # that tested worse, so the best model is the one with the highest val top-1.
+  model_selection: val_accuracy
+  optimizer:
+    name: AdamW
+    lr: 0.0001
+    weight_decay: 0.0001
+
+outputs:
+  work_dir: ./work_dir/cs_55_0_coco17_legacy
+  auto_run_dir: true
+  run_name: null
+  best_model: ./work_dir/cs_55_0_coco17_legacy/best_model.pth
+  last_model: ./work_dir/cs_55_0_coco17_legacy/last_model.pth
+  history: ./work_dir/cs_55_0_coco17_legacy/history.json
+  train_curve: ./work_dir/cs_55_0_coco17_legacy/train_curve.png
+  test_results: ./work_dir/cs_55_0_coco17_legacy/unseen_test_results.json
+
+inference:
+  gating:
+    enabled: true
+    # YOLO sees no person -> unknown, whatever the scores say.
+    require_person: true
+    person_slot: 0            # class 0 of the custom50 detector is "person"
+    novelty:
+      method: entropy         # entropy | prototype
+      temperature: 0.1        # softmax temperature the entropy is measured at
+      entropy_threshold: 0.55 # above this the window is too ambiguous -> unknown
+      cosine_threshold: 0.25  # below this no prototype is close enough -> unknown
+    motion:
+      enabled: true
+      static_threshold: 0.004 # mean per-joint displacement per frame
+      static_labels: [52]     # a motionless person is unknown or "fallen on the floor"
+      static_cosine_threshold: 0.25
+    hysteresis: 3             # agreeing windows needed before the label switches

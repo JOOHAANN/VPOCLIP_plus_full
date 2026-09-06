@@ -1,0 +1,17 @@
+# Stronger entropy minimization under the allowed <=4-point ZSL trade-off.
+base_config: ./config_final_aug_entropy_single_h01.yaml
+
+runtime:
+  device: cuda:1
+
+data:
+  text:
+    cache_output: ./work_dir/final_aug_entropy_single_h2/clip_text_action_embeddings.pt
+
+train:
+  loss:
+    entropy_weight: 2.0
+
+outputs:
+  work_dir: ./work_dir/final_aug_entropy_single_h2
+  run_name: final_best_single_lambdaH2_anchor100

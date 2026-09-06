@@ -1,0 +1,70 @@
+# Conservative CLIPGCN training config for action-detail raw 50/5 data.
+# This keeps the same data as config_action_detail_raw_50_5.yaml, but uses a
+# lower learning rate and early stopping for better cross-subject validation.
+
+runtime:
+  device: cuda:1
+  seed: 20260616
+  amp: true
+  no_show: true
+
+data:
+  train:
+    data_dir: ./data/contrastive_action_detail_raw_13f_zsl_50_5
+    prefix: trimodal_train
+    mmap: true
+
+  val:
+    data_dir: ./data/contrastive_action_detail_raw_13f_zsl_50_5
+    prefix: trimodal_val
+    mmap: true
+
+  validation_split:
+    fraction: 0.1
+    seed: 20260616
+
+  text:
+    xlsx: ./ntu55_global_descriptions.xlsx
+    id_column: ID
+    text_column: global_description
+    label_offset: 1
+    prompt_template: "{global_description}"
+    batch_size: 128
+    cache_output: ./work_dir/clip_text_action_embeddings.pt
+
+  dataloader:
+    batch_size: 128
+    num_workers: 8
+    train_shuffle: true
+    val_shuffle: false
+    class_balanced_sampling: true
+    pin_memory: true
+    drop_last: true
+
+model:
+  text_encoder:
+    name: ViT-B/32
+    download_root: null
+  fusion:
+    dropout: 0.4
+
+train:
+  epochs: 100
+  val_interval: 1
+  early_stopping_patience: 20
+  early_stopping_min_delta: 0.0005
+  grad_clip_norm: 1.0
+  optimizer:
+    name: AdamW
+    lr: 0.00003
+    weight_decay: 0.0005
+
+outputs:
+  work_dir: ./work_dir/clipgcn_action_detail_raw_50_5_lr3e5
+  auto_run_dir: true
+  run_name: null
+  best_model: ./work_dir/clipgcn_action_detail_raw_50_5_lr3e5/best_model.pth
+  last_model: ./work_dir/clipgcn_action_detail_raw_50_5_lr3e5/last_model.pth
+  history: ./work_dir/clipgcn_action_detail_raw_50_5_lr3e5/history.json
+  train_curve: ./work_dir/clipgcn_action_detail_raw_50_5_lr3e5/train_curve.png
+  test_results: ./work_dir/clipgcn_action_detail_raw_50_5_lr3e5/unseen_test_results.json

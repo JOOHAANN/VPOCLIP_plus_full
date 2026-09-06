@@ -1,0 +1,31 @@
+# Entropy fine-tuning from the actual final_aug best_model checkpoint.
+base_config: ./config_final_aug_entropy.yaml
+
+runtime:
+  device: cuda:1
+
+data:
+  augment:
+    enabled: false
+  text:
+    cache_output: ./work_dir/final_aug_entropy_anchor_best10/clip_text_action_embeddings.pt
+
+train:
+  init_checkpoint: ./work_dir/final_aug/run_20260728_225739/best_model.pth
+  epochs: 12
+  swa_start: null
+  freeze_batchnorm: true
+  optimizer:
+    name: AdamW
+    lr: 2.0e-6
+    weight_decay: 0.0
+  loss:
+    entropy_weight: 0.005
+    entropy_start_epoch: 0
+    entropy_warmup_epochs: 3
+    anchor_weight: 10.0
+    anchor_scope: visual
+
+outputs:
+  work_dir: ./work_dir/final_aug_entropy_anchor_best10
+  run_name: final_best_lambdaH0005_anchor10

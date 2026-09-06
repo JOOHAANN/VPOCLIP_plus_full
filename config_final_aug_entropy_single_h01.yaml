@@ -1,0 +1,22 @@
+# Align the training text bank with the historical single-prompt ZSL protocol.
+base_config: ./config_final_aug_entropy_anchor_best100.yaml
+
+runtime:
+  device: cuda:1
+
+data:
+  text:
+    prompt_templates: null
+    cache_output: ./work_dir/final_aug_entropy_single_h01/clip_text_action_embeddings.pt
+
+train:
+  epochs: 20
+  loss:
+    entropy_weight: 0.1
+    entropy_scope: all
+    entropy_warmup_epochs: 5
+    anchor_weight: 100.0
+
+outputs:
+  work_dir: ./work_dir/final_aug_entropy_single_h01
+  run_name: final_best_single_lambdaH0p1_anchor100

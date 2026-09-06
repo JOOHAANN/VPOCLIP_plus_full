@@ -1,0 +1,17 @@
+# Entropy-dominant counterpart for the allowed <=4-point ZSL trade-off.
+base_config: ./config_final_aug_entropy_single_h01.yaml
+
+runtime:
+  device: cuda:0
+
+data:
+  text:
+    cache_output: ./work_dir/final_aug_entropy_single_h05/clip_text_action_embeddings.pt
+
+train:
+  loss:
+    entropy_weight: 0.5
+
+outputs:
+  work_dir: ./work_dir/final_aug_entropy_single_h05
+  run_name: final_best_single_lambdaH0p5_anchor100

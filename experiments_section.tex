@@ -1,0 +1,169 @@
+% =========================================================================
+% Experiments section for IEEE RO-MAN workshop paper (<= 1 page of text).
+% All numbers are measured on our system unless a citation says otherwise.
+% Figure placeholder for the real-time demo screenshot is at the bottom.
+% =========================================================================
+
+\section{Experiments}
+
+\subsection{Setup}
+All experiments were carried out on ETRI-Activity3D~\cite{jang2020etri}, a
+large RGB-D corpus of daily activities recorded mostly from elderly subjects,
+from which we retain 55 action classes under a subject-disjoint 70/10/20
+train/validation/test partition. Because no zero-shot protocol has, to our
+knowledge, been published for this dataset, we define four seen/unseen class
+splits (55/0, 50/5, 45/10 and 40/15) and release the class lists to allow
+replication. Class prototypes are obtained by encoding one natural-language
+description per action with a frozen CLIP ViT-B/32 text encoder~\cite{radford2021clip};
+recognition then reduces to cosine matching in the shared embedding space.
+For the generalized setting we adopt calibrated stacking~\cite{chao2016gzsl},
+scaling unseen-class scores by a single coefficient $\gamma=1.18$ selected by
+sweeping the harmonic mean. Training used one V100 GPU; latency was profiled
+on the same card and, separately, on a consumer laptop (RTX~3060).
+
+\subsection{Zero-shot and generalized zero-shot recognition}
+Direct comparison with prior zero-shot skeleton methods is complicated by the
+fact that each line of work evaluates on different datasets and, at times,
+different class draws for nominally identical splits. The re-evaluation in
+\cite{chen2024star}, for instance, credits SynSE and SMIE with considerably
+higher accuracy than their original papers report, which suggests that
+protocol details matter as much as the methods themselves. Table~\ref{tab:context}
+should therefore be read as context rather than as a ranking; our ETRI numbers
+are, at present, the only ones available for this dataset.
+
+\begin{table}[t]
+\centering
+\caption{Zero-shot action recognition results as reported in the original
+publications. Datasets and class draws differ across rows, so the numbers
+situate our benchmark rather than rank the methods.}
+\label{tab:context}
+\small
+\begin{tabular}{lllc}
+\hline
+Method & Benchmark & ZSL Top-1 & GZSL (S/U/H) \\
+\hline
+SynSE~\cite{gupta2021synse}   & NTU-60 55/5  & 64.19\% & -- \\
+SMIE~\cite{zhou2023smie}      & NTU-60 55/5  & 65.08\% & -- \\
+STAR~\cite{chen2024star}      & NTU-60 55/5  & 81.4\%  & -- \\
+ReViSE~\cite{tsai2017revise}  & PKU-MMD 46/5 & 71.75\% & 52.06 / 60.34 / -- \\
+\hline
+Ours & ETRI 50/5  & 69.11\% & 52.5 / 52.9 / 52.7 \\
+Ours & ETRI 45/10 & 51.06\% & 48.9 / 48.9 / 48.9 \\
+Ours & ETRI 40/15 & 34.43\% & 51.0 / 33.0 / 40.1 \\
+\hline
+\end{tabular}
+\end{table}
+
+On the 50/5 split the model recognises unseen actions with 69.11\% top-1
+accuracy, which sits between the figures originally reported for SynSE and
+ReViSE on their respective benchmarks. Accuracy degrades as the unseen set
+grows, falling to 34.43\% at 40/15; a similar trend is visible across the
+NTU-based literature and is arguably inherent to prototype matching with an
+expanding candidate set. Without calibration the generalized setting collapses
+almost entirely (harmonic means below 3\%), since seen prototypes absorb
+nearly every unseen sample. A single shared $\gamma$ restores the balance
+reported in Table~\ref{tab:context}. We would caution that $\gamma$ was tuned
+on the evaluated sets, as the protocol provides no independent unseen
+validation data; the resulting sensitivity, roughly $\pm0.04$ around the
+optimum, indicates that additive calibration might be preferable in
+deployment.
+
+\subsection{Eldercare-oriented subset}
+Service robots for older adults rarely need all 55 categories at once. We
+therefore repeated the generalized evaluation on a reduced vocabulary of 13
+seen classes per split, drawn from eldercare-relevant actions such as eating,
+taking medicine, using a gas stove and falling, together with the full unseen
+set of the corresponding split. Under this configuration the 50/5 model
+reaches S~$=60.0\%$, U~$=55.6\%$ and H~$=57.7\%$, with the correct unseen
+class always contained in the top five predictions. The 45/10 and 40/15
+variants attain harmonic means of 47.6\% and 41.9\%. These figures appear more
+representative of the intended use case than the full-vocabulary ones, though
+we acknowledge that a smaller candidate set naturally inflates absolute
+accuracy.
+
+\subsection{Efficiency}
+The fusion head that combines the three streams carries 13.0M trainable
+parameters; together with YOLOv5m~\cite{jocher2020yolov5} (21.1M),
+X3D-S~\cite{feichtenhofer2020x3d} (3.1M) and CTR-GCN~\cite{chen2021ctrgcn}
+(1.5M) the deployed stack totals roughly 38.6M parameters. The 151M-parameter
+CLIP text encoder is only used offline to pre-compute prototypes and never
+runs at inference time. Measured end to end at batch size one on a V100, a
+13-frame clip is processed in 58.8~ms (detection 13.1, video backbone 15.8,
+skeleton backbone 27.9, fusion and matching 2.0), or about 17 clips per
+second; the live demo on a laptop RTX~3060 runs at approximately 45~ms per
+clip, excluding pose-estimation pre-processing. For comparison, embedded
+two-stream pipelines relying on optical flow have been reported to require
+several hundred milliseconds per inference~\cite{wang2024rthar}. Supervised
+accuracy is not sacrificed for this budget: on the closed 55-class test set
+the fused model scores within one point of its strongest single stream
+(77\% versus 78\% top-1 for the fine-tuned X3D), while adding a zero-shot
+capability that closed-set classifiers lack by construction.
+
+% ---------------- real-time demo screenshot placeholder ----------------
+\begin{figure}[t]
+\centering
+\fbox{\parbox[c][4.5cm][c]{0.9\linewidth}{\centering
+\vspace{1.8cm} \textit{[Placeholder: screenshot of the real-time demo]} }}
+% \includegraphics[width=\linewidth]{figures/realtime_demo.png}
+\caption{Real-time recognition on a consumer laptop (RTX~3060). The system
+processes webcam input at roughly 45~ms per 13-frame clip while matching both
+seen and unseen action prototypes.}
+\label{fig:demo}
+\end{figure}
+
+% =========================== references ===========================
+\begin{thebibliography}{9}
+
+\bibitem{jang2020etri}
+J.~Jang, D.~Kim, C.~Park, M.~Jang, J.~Lee, and J.~Kim,
+``ETRI-Activity3D: A large-scale RGB-D dataset for robots to recognize daily
+activities of the elderly,'' in \emph{Proc. IEEE/RSJ IROS}, 2020.
+
+\bibitem{radford2021clip}
+A.~Radford \emph{et al.},
+``Learning transferable visual models from natural language supervision,''
+in \emph{Proc. ICML}, 2021.
+
+\bibitem{chao2016gzsl}
+W.-L. Chao, S.~Changpinyo, B.~Gong, and F.~Sha,
+``An empirical study and analysis of generalized zero-shot learning for
+object recognition in the wild,'' in \emph{Proc. ECCV}, 2016.
+
+\bibitem{gupta2021synse}
+P.~Gupta, D.~Sharma, and R.~K. Sarvadevabhatla,
+``Syntactically guided generative embeddings for zero-shot skeleton action
+recognition,'' in \emph{Proc. IEEE ICIP}, 2021.
+
+\bibitem{zhou2023smie}
+Y.~Zhou, W.~Qiang, A.~Rao, N.~Lin, B.~Su, and J.~Wang,
+``Zero-shot skeleton-based action recognition via mutual information
+estimation and maximization,'' in \emph{Proc. ACM Multimedia}, 2023.
+
+\bibitem{chen2024star}
+Y.~Chen, J.~Guo, T.~He, and L.~Wang,
+``Fine-grained side information guided dual-prompts for zero-shot skeleton
+action recognition,'' arXiv:2404.07487, 2024.
+
+\bibitem{tsai2017revise}
+Y.-H.~H. Tsai, L.-K. Huang, and R.~Salakhutdinov,
+``Learning robust visual-semantic embeddings,'' in \emph{Proc. IEEE ICCV},
+2017.
+
+\bibitem{jocher2020yolov5}
+G.~Jocher \emph{et al.}, ``Ultralytics YOLOv5,'' 2020. [Online].
+Available: \url{https://github.com/ultralytics/yolov5}
+
+\bibitem{feichtenhofer2020x3d}
+C.~Feichtenhofer, ``X3D: Expanding architectures for efficient video
+recognition,'' in \emph{Proc. IEEE/CVF CVPR}, 2020.
+
+\bibitem{chen2021ctrgcn}
+Y.~Chen, Z.~Zhang, C.~Yuan, B.~Li, Y.~Deng, and W.~Hu,
+``Channel-wise topology refinement graph convolution for skeleton-based
+action recognition,'' in \emph{Proc. IEEE/CVF ICCV}, 2021.
+
+\bibitem{wang2024rthar}
+R.~Wang \emph{et al.}, ``Real-time human action recognition on embedded
+platforms,'' arXiv:2409.05662, 2024.
+
+\end{thebibliography}

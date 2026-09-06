@@ -1,0 +1,75 @@
+# CLIPGCN tri-modal contrastive training config for all 55 seen classes.
+# Attention-pool fusion version.
+# Relative paths are resolved from this config file's directory.
+
+runtime:
+  device: cuda:0
+  seed: 20260616
+  amp: true
+  no_show: true
+
+data:
+  train:
+    data_dir: ./data/contrastive_zsl_splits/55_0
+    prefix: seen
+    mmap: true
+
+  # Cross-subject validation split written in the same 55_0 directory.
+  val:
+    data_dir: ./data/contrastive_zsl_splits/55_0
+    prefix: val
+    mmap: true
+
+  validation_split:
+    fraction: 0.0
+    seed: 20260616
+
+  text:
+    xlsx: ./ntu55_global_descriptions.xlsx
+    id_column: ID
+    text_column: global_description
+    label_offset: 1
+    prompt_template: "{global_description}"
+    batch_size: 128
+    cache_output: ./work_dir/clip_text_action_embeddings.pt
+
+  dataloader:
+    batch_size: 128
+    num_workers: 16
+    train_shuffle: true
+    val_shuffle: false
+    class_balanced_sampling: true
+    pin_memory: true
+    drop_last: true
+
+model:
+  text_encoder:
+    name: ViT-B/32
+    download_root: null
+  fusion:
+    reducer: attention_pool
+    dropout: 0.4
+    attention_dim: 256
+    attention_heads: 4
+    attention_layers: 2
+
+train:
+  epochs: 500
+  val_interval: 1
+  grad_clip_norm: 1.0
+  early_stopping_patience: 40
+  early_stopping_min_delta: 0.001
+  optimizer:
+    name: AdamW
+    lr: 0.00003
+    weight_decay: 0.0005
+
+outputs:
+  work_dir: ./work_dir/clipgcn_contrastive_55_0_attention
+  auto_run_dir: true
+  run_name: null
+  best_model: ./work_dir/clipgcn_contrastive_55_0_attention/best_model.pth
+  last_model: ./work_dir/clipgcn_contrastive_55_0_attention/last_model.pth
+  history: ./work_dir/clipgcn_contrastive_55_0_attention/history.json
+  train_curve: ./work_dir/clipgcn_contrastive_55_0_attention/train_curve.png
+  test_results: ./work_dir/clipgcn_contrastive_55_0_attention/seen_test_results.json
