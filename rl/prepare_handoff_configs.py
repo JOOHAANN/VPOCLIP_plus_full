@@ -133,23 +133,17 @@ def _common(name: str, unseen: list[int], vpo_config: Path, vpo_checkpoint: Path
 
 def main() -> None:
     new_run = ROOT / "logs/allviews_lowview50_5_20260907"
-    old_run = ROOT / "logs/allviews_20260907"
     split = _read_json(new_run / "class_split.json")
     new_unseen = list(split["unseen_classes_zero_based"])
-    old_unseen = [9, 10, 11, 17, 49]
     new_vpo = _last_model(ROOT / "work_dir/allviews_lowview50_5_final_aug_entropy_single_h2/latest_run.json")
-    old_vpo = _last_model(ROOT / "work_dir/allviews_final_aug_entropy_single_h2/latest_run.json")
-    base_vpo = ROOT / "config_final_aug_entropy_single_h2.yaml"
+    base_vpo = new_run / "final_aug_entropy_single_h2.yaml"
+    if not base_vpo.is_file():
+        raise FileNotFoundError(base_vpo)
     configs = {
         "new50_5": _common(
             "new50_5", new_unseen, base_vpo, new_vpo, new_run,
             "active_view_ddqn_new50_5", "active_multiview_cache_new50_5",
             recording_manifest=new_run / "class_split.json"),
-        "old50_5": _common(
-            "old50_5", old_unseen, base_vpo, old_vpo, old_run,
-            "active_view_ddqn_old50_5", "active_multiview_cache_old50_5",
-            allow_cross_group_views=True,
-            allow_available_four_views=False),
     }
     out = ROOT / "rl/handoff_configs"
     out.mkdir(parents=True, exist_ok=True)

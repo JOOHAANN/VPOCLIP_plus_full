@@ -25,9 +25,7 @@ check_pipeline() {
     fi
 }
 
-wait_for_marker "${ROOT}/logs/allviews_20260907/10_final55_aug_entropy_h5_full300_score.done"
 wait_for_marker "${ROOT}/logs/allviews_lowview50_5_20260907/10_final_aug_entropy_single_h2.done"
-check_pipeline "${ROOT}/logs/allviews_20260907/pipeline.log"
 check_pipeline "${ROOT}/logs/allviews_lowview50_5_20260907/pipeline.log"
 
 "${PY}" -u -m rl.prepare_handoff_configs
@@ -62,6 +60,5 @@ PY
 }
 
 run_one new50_5
-run_one old50_5
 date -Is
 echo "status=complete"
