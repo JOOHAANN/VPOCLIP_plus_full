@@ -1,80 +1,72 @@
-# Active-view RL scaffold. Paths are relative to VPOCLIP_plus/rl.
+# Body-orientation-conditioned active second-view selection.
+# The recognizer is frozen; A comes from navigation and the DQN chooses B.
 
 runtime:
   device: cuda:0
-  seed: 20260902
+  seed: 20260906
   amp: true
 
 recognizer:
   config: ../config_final_aug.yaml
-  # Set this explicitly after choosing best/last/SWA from the final_aug run.
-  checkpoint: null
+  checkpoint: ../work_dir/final_aug/run_20260906_214434/best_model.pth
   frozen: true
   embedding_dim: 512
   num_classes: 55
-  prompt_count: 8
+
+data:
+  rgb_root: ../../ETRI-Activity3D-RGB
+  skeleton_root: ../../ETRI-Activity3D-Skeleton
+  angle_csv: ../../ETRI-Activity3D-RGB/low_view_camera_angles_split55.csv
+  source_split_dir: ../../X3D_full/data/etri_rgb_c001_cs_70_10_20
+  source_prefix:
+    dqn_train: train
+    val: val
+    test: test
+  exclude_labels: [9, 10, 11, 17, 49]
+  subject_groups:
+    dqn_train: [P001, P002, P005, P006, P008, P012, P015, P021, P024, P025, P026, P032, P044, P052, P054, P056, P060, P065, P068, P076, P077, P081, P086, P091, P093]
+    val: [P010, P014, P019, P031, P033, P034, P038, P046, P048, P090]
+    test: [P003, P009, P022, P023, P027, P035, P036, P040, P051, P055, P061, P064, P066, P069, P079, P092, P094, P095, P096, P098]
+  window_seconds: 2.0
+  stride_seconds: 1.0
+  frames: 13
+  max_windows_per_clip: 3
+  max_episodes: null
 
 cache:
   root: ../data/active_multiview_cache
-  num_views: 8              # change to 16 only when every episode has 16 aligned views
-  selected_views: 3
+  num_views: 4
+  selected_views: 2
   mmap: true
-  arrays:
-    z: z.npy
-    logits: logits.npy
-    joint_xy: joint_xy.npy
-    joint_conf: joint_conf.npy
-    object_map: object_map.npy
-    image_quality: image_quality.npy
-    view_geometry: view_geometry.npy
-    reachable: reachable.npy
-    move_cost: move_cost.npy
-    labels: labels.npy
-    target_columns: target_columns.npy
-    metadata: metadata.json
-  splits:
-    seen_train: seen_train
-    seen_val: seen_val
-    pseudo_unseen_val: pseudo_unseen_val
-    unseen_test: unseen_test
 
 state:
-  stage: M0                 # M0=minimal, M1=Top-5 evidence, M2=pose+object
+  stage: M2
   slots: 3
   top_k: 5
-  fusion_weights: [1.0, 1.0, 1.0]
-  view_encoding: one_hot
+  fusion_weights: [1.0, 1.0]
+  use_top5_evidence: true
+  use_pose: true
+  use_object: true
+  pose_input_dim: 442
+  object_input_dim: 1800
   image_quality_dim: 4
-  use_top5_evidence: false
-  use_pose: false
-  use_object: false
-  pose_input_dim: 663       # 13 * 17 * (x,y,confidence)
-  object_input_dim: 1800    # 50 * 6 * 6
+  view_encoding_dim: 3
 
 network:
-  semantic_dim: 128
-  pose_dim: 64
-  object_dim: 64
-  quality_view_dim: 32
-  view_output_dim: 256
-  evidence_output_dim: 128
-  robot_output_dim: 64
-  trunk_dims: [512, 256]
-  head_hidden_dim: 128
+  view_encoding_dim: 3
 
 reward:
   ce_weight: 0.3
   terminal_weight: 1.0
   movement_weight: 0.05
   ce_clip: 1.0
-  entropy_reward_weight: 0.0  # entropy is state by default, not the main reward
 
 agent:
-  algorithm: double_dueling_dqn
+  algorithm: masked_dueling_q_single_step
   gamma: 0.95
-  batch_size: 128
+  batch_size: 512
   replay_capacity: 100000
-  replay_warmup: 5000
+  replay_warmup: 512
   learning_rate: 1.0e-4
   weight_decay: 1.0e-4
   grad_clip: 10.0
@@ -84,20 +76,39 @@ agent:
     end: 0.05
     decay_steps: 100000
 
+# GPU-resident terminal-transition trainer.  A->B episodes are one-step, so
+# every replay target is the immediate reward and no next-state bootstrap is
+# required.  The large batch removes the former Python/memmap bottleneck.
+fast:
+  batch_size: 524288
+  updates_per_epoch: 512
+  replay_capacity: 100000
+  selection_batch_size: 16384
+  validation_batch_size: 16384
+  amp_dtype: bfloat16
+  compile: true
+  compile_mode: reduce-overhead
+
+raw:
+  batch_size: 32
+  rtmpose_mode: balanced
+  x3d_input_size: 168
+  x3d_root: ../../X3D_full
+  x3d_config: ../../X3D_full/configs/x3d-s_etri_rgb_cs_45_25_10_20_zsl50_5_182.yaml
+  x3d_checkpoint: ../../X3D_full/outputs/x3d-s_clipgcn_tensor_cs_45_25_10_20_zsl50_5_182/model_final.pth
+  x3d_layer: s5
+  ctrgcn_root: ../../CTR-GCN_17_full
+  ctrgcn_config: ../../CTR-GCN_17_full/config/etri-coco17/ctrgcn_joint_coco17_13.yaml
+  ctrgcn_weights: ../../CTR-GCN_17_full/work_dir/etri_coco17/ctrgcn_joint_coco17_13_cs45_zsl50_5/runs-42-504.pt
+  ctrgcn_hook_layer: l4
+  yolo_repo: ../../yolov5_full
+  yolo_weights: ../../yolov5_full/best.pt
+
 train:
-  episodes: null            # set after the synchronized manifest is available
-  validation_interval: 1000
-  checkpoint_metric: pseudo_unseen_top1
-  output_dir: ../work_dir/active_view_ddqn
+  epochs: 50
+  validation_interval: 1
+  output_dir: ../work_dir/active_view_ddqn_body_relative_v2
   resume: null
 
 evaluation:
-  baselines: [single, random3, fixed_uniform3, dqn, oracle]
-  metrics: [top1, top5, gain_from_A, movement_cost, entropy, margin]
-  save_predictions: true
-
-# Implementation guide
-# 1. Fill recognizer.checkpoint and cache paths only after validating exact data
-#    alignment; do not point this config at unrelated single-view samples.
-# 2. Keep M0 as the first acceptance target, then enable M1 and M2 independently.
-# 3. Resolve and save this YAML with every run so results remain reproducible.
+  splits: [val, test]

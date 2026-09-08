@@ -10,14 +10,14 @@ runtime:
 
 data:
   train:
-    data_dir: ./data/contrastive_zsl_splits/55_0
+    data_dir: ./data/contrastive_cs_45_25_10_20_55_0
     prefix: seen
     pose_suffix: _coco17
     mmap: true
 
   # Real held-out subjects, not a random slice of the training clips.
   val:
-    data_dir: ./data/contrastive_zsl_splits/55_0
+    data_dir: ./data/contrastive_cs_45_25_10_20_55_0
     prefix: val
     pose_suffix: _coco17
     mmap: true
@@ -55,7 +55,8 @@ data:
 
   dataloader:
     batch_size: 128
-    num_workers: 16
+    num_workers: 12
+    persistent_workers: true
     train_shuffle: true
     val_shuffle: false
     class_balanced_sampling: true

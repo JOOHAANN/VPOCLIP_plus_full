@@ -19,13 +19,24 @@ class ReplayBuffer:
 
     def add(self, transition: IndexTransition) -> None:
         """Append one validated A->AB or AB->ABC transition."""
-
-        raise NotImplementedError("Implement transition-contract validation before append here.")
+        if len(transition.views) != 1 or len(transition.next_views) != 2:
+            raise ValueError("Rosbot active-view replay expects exactly A -> AB")
+        if transition.next_views[0] != transition.views[0] or transition.next_views[1] != transition.action:
+            raise ValueError("next_views must append the selected action to the previous view")
+        if len(set(transition.next_views)) != 2 or not transition.done:
+            raise ValueError("one-step active-view transitions must terminate at AB")
+        if not all(int(view) >= 0 for view in transition.next_views):
+            raise ValueError("view ids must be non-negative")
+        self._items.append(transition)
 
     def sample(self, batch_size: int) -> List[IndexTransition]:
         """Sample indices; the agent uses StateBuilder to reconstruct tensors."""
 
-        raise NotImplementedError("Implement reproducible uniform sampling here.")
+        if batch_size <= 0:
+            raise ValueError("batch_size must be positive")
+        if batch_size > len(self._items):
+            raise ValueError(f"cannot sample {batch_size} items from {len(self._items)}")
+        return self._rng.sample(list(self._items), int(batch_size))
 
     def __len__(self) -> int:
         return len(self._items)

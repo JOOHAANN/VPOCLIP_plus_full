@@ -41,7 +41,7 @@ The policy receives a dictionary with these tensors:
 |---|---:|---|
 | `view_features` | `[B,3,...]` | Fixed A/B/C slots with zero padding. |
 | `evidence` | `[B,519]` | 512-D Top-5 prototype summary, five probabilities, H, margin. |
-| `robot_context` | `[B,4V+1]` | Current, selected, reachable, budget, and movement costs. |
+| `robot_context` | `[B,4V+4]` | Current/selected/reachable/costs, budget, `sin/cos(delta_A)`, yaw confidence. |
 | `slot_mask` | `[B,3]` | Which A/B/C slots contain observations. |
 | `action_mask` | `[B,V]` | Reachable destinations that have not been selected. |
 

@@ -20,13 +20,21 @@ class ViewObservation(TypedDict, total=False):
 
 
 class PolicyState(TypedDict):
-    """Fixed-shape input shared by training, evaluation, online, and target Q nets."""
+    """Label-free fixed-shape state at the navigation-selected view A.
+
+    The policy observes A only.  The four candidate rows contain geometry and
+    navigation information, never visual features from an unvisited camera.
+    """
 
     view_features: torch.Tensor
     evidence: torch.Tensor
     robot_context: torch.Tensor
     slot_mask: torch.Tensor
     action_mask: torch.Tensor
+    candidate_geometry: torch.Tensor
+    pose_features: torch.Tensor
+    object_features: torch.Tensor
+    quality_features: torch.Tensor
 
 
 class StepInfo(TypedDict, total=False):
@@ -43,7 +51,7 @@ class StepInfo(TypedDict, total=False):
 
 @dataclass(frozen=True)
 class IndexTransition:
-    """Compact replay item reconstructed through ``StateBuilder`` when sampled."""
+    """Compact one-step replay item reconstructed through ``StateBuilder``."""
 
     episode_id: int
     views: Tuple[int, ...]
@@ -68,7 +76,7 @@ class CacheShape:
     """Expected dimensions used when validating a multi-view cache."""
 
     episodes: int
-    views: int
+    views: int = 4
     embedding_dim: int = 512
     classes: int = 55
     frames: int = 13

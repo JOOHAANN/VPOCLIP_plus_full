@@ -1,5 +1,6 @@
-# CLIPGCN 50/5 ZSL on the cross-subject 70/10/20 split.
-# train / val / test come from disjoint subject groups (35 / 5 / 10 subjects),
+# CLIPGCN 50/5 ZSL on the canonical 45/25/10/20 subject split.
+# VPO train / val / test come from disjoint subject groups (45 / 10 / 20);
+# the other 25 subjects are reserved exclusively for DQN.
 # so the val loss finally measures generalisation to unseen people.
 # Variant 'aug': objconcat head + feature augmentation + modality dropout
 # + prototype ensembling. Base: attention_pool + temporal_concat
@@ -12,14 +13,14 @@ runtime:
 
 data:
   train:
-    data_dir: ./data/contrastive_cs_70_10_20_zsl_50_5
+    data_dir: ./data/contrastive_cs_45_25_10_20_zsl_50_5
     prefix: trimodal_train
     pose_suffix: _coco17
     mmap: true
 
   # Real held-out subjects, not a random slice of the training clips.
   val:
-    data_dir: ./data/contrastive_cs_70_10_20_zsl_50_5
+    data_dir: ./data/contrastive_cs_45_25_10_20_zsl_50_5
     prefix: trimodal_val
     pose_suffix: _coco17
     mmap: true
@@ -57,7 +58,8 @@ data:
 
   dataloader:
     batch_size: 128
-    num_workers: 16
+    num_workers: 12
+    persistent_workers: true
     train_shuffle: true
     val_shuffle: false
     class_balanced_sampling: true

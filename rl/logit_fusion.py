@@ -36,7 +36,48 @@ class LogitFusion:
     ) -> FusionOutput:
         """Fuse ``K`` independent logits and build the cumulative evidence summary."""
 
-        raise NotImplementedError("Implement equal or configured weighted logit fusion here.")
+        if logits.ndim not in (2, 3):
+            raise ValueError(f"logits must be [K,C] or [B,K,C], got {tuple(logits.shape)}")
+        if logits.shape[-1] != self.num_classes:
+            raise ValueError(
+                f"expected {self.num_classes} classes, got {logits.shape[-1]}"
+            )
+        if text_prototypes.ndim != 2 or text_prototypes.shape != (self.num_classes, 512):
+            raise ValueError(
+                "text_prototypes must have shape [num_classes,512], "
+                f"got {tuple(text_prototypes.shape)}"
+            )
+        if weights is None:
+            weight = torch.ones(logits.shape[-2], device=logits.device, dtype=logits.dtype)
+        else:
+            if len(weights) != logits.shape[-2]:
+                raise ValueError("number of fusion weights must equal the number of views")
+            weight = torch.as_tensor(weights, device=logits.device, dtype=logits.dtype)
+        weight = weight / weight.sum().clamp_min(torch.finfo(weight.dtype).eps)
+        fused = (logits * weight.reshape(*([1] * (logits.ndim - 2)), -1, 1)).sum(dim=-2)
+        probabilities = torch.softmax(fused, dim=-1)
+        k = min(self.top_k, self.num_classes)
+        top_probabilities, top_indices = torch.topk(probabilities, k=k, dim=-1)
+        prototypes = text_prototypes.to(device=logits.device, dtype=logits.dtype)
+        if logits.ndim == 2:
+            semantic_summary = (top_probabilities.unsqueeze(-1) * prototypes[top_indices]).sum(dim=-2)
+            entropy = -(probabilities.clamp_min(1e-8).log() * probabilities).sum()
+            entropy = entropy / torch.log(torch.tensor(float(self.num_classes), device=logits.device))
+            margin = top_probabilities[..., 0] - top_probabilities[..., 1].clamp_min(0.0) if k > 1 else top_probabilities[..., 0]
+        else:
+            semantic_summary = (top_probabilities.unsqueeze(-1) * prototypes[top_indices]).sum(dim=-2)
+            entropy = -(probabilities.clamp_min(1e-8).log() * probabilities).sum(dim=-1)
+            entropy = entropy / torch.log(torch.tensor(float(self.num_classes), device=logits.device))
+            margin = top_probabilities[..., 0] - top_probabilities[..., 1] if k > 1 else top_probabilities[..., 0]
+        return FusionOutput(
+            logits=fused,
+            probabilities=probabilities,
+            top_indices=top_indices,
+            top_probabilities=top_probabilities,
+            semantic_summary=semantic_summary,
+            entropy=entropy,
+            margin=margin,
+        )
 
 
 # Implementation guide

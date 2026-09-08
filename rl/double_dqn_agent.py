@@ -34,24 +34,68 @@ class DoubleDQNAgent:
 
     def select_action(self, state: PolicyState, epsilon: float) -> int:
         """Choose a random valid destination or masked online-network argmax."""
-
-        raise NotImplementedError("Implement epsilon-greedy selection over valid destinations here.")
+        mask = state["action_mask"].bool()
+        valid = torch.nonzero(mask, as_tuple=False).flatten()
+        if valid.numel() == 0:
+            raise RuntimeError("no legal action remains")
+        import random
+        if random.random() < float(epsilon):
+            return int(valid[torch.randint(valid.numel(), (1,))].item())
+        with torch.no_grad():
+            q = self.masked_q(self.online(self._batch_state(state)), mask.unsqueeze(0))
+        return int(torch.argmax(q[0]).item())
 
     def update(self, transitions: Sequence[IndexTransition]) -> Dict[str, float]:
         """Perform one masked Double DQN SmoothL1 update."""
 
-        raise NotImplementedError("Implement indexed state reconstruction and Bellman loss here.")
+        if not transitions:
+            return {"loss": 0.0, "q": 0.0, "target": 0.0}
+        device = next(self.online.parameters()).device
+        states = [self.state_builder.build(t.episode_id, t.views) for t in transitions]
+        next_states = [self.state_builder.build(t.episode_id, t.next_views) for t in transitions]
+        state = self._stack_states(states, device)
+        next_state = self._stack_states(next_states, device)
+        actions = torch.as_tensor([t.action for t in transitions], dtype=torch.long, device=device)
+        rewards = torch.as_tensor([t.reward for t in transitions], dtype=torch.float32, device=device)
+        done = torch.as_tensor([t.done for t in transitions], dtype=torch.float32, device=device)
+        q = self.online(state).gather(1, actions[:, None]).squeeze(1)
+        with torch.no_grad():
+            online_next = self.masked_q(self.online(next_state), next_state["action_mask"].bool())
+            next_action = torch.argmax(online_next, dim=1)
+            target_next = self.masked_q(self.target(next_state), next_state["action_mask"].bool())
+            bootstrap = target_next.gather(1, next_action[:, None]).squeeze(1)
+            target = rewards + self.gamma * (1.0 - done) * bootstrap
+        loss = torch.nn.functional.smooth_l1_loss(q, target)
+        self.optimizer.zero_grad(set_to_none=True)
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(self.online.parameters(), self.grad_clip)
+        self.optimizer.step()
+        return {"loss": float(loss.item()), "q": float(q.mean().item()), "target": float(target.mean().item())}
 
     def sync_target(self) -> None:
         """Hard-copy online weights and leave the target network in evaluation mode."""
 
-        raise NotImplementedError("Implement target hard synchronization here.")
+        self.target.load_state_dict(self.online.state_dict())
+        self.target.eval()
 
     @staticmethod
     def masked_q(q_values: torch.Tensor, valid_mask: torch.Tensor) -> torch.Tensor:
         """Replace invalid destination scores with a stable large negative value."""
 
-        raise NotImplementedError("Implement shape-checked action masking here.")
+        if q_values.ndim != 2 or valid_mask.shape != q_values.shape:
+            raise ValueError(f"q/mask shape mismatch: {tuple(q_values.shape)} vs {tuple(valid_mask.shape)}")
+        if not valid_mask.any(dim=1).all():
+            raise ValueError("each batch row must contain a valid action")
+        return q_values.masked_fill(~valid_mask.bool(), torch.finfo(q_values.dtype).min)
+
+    @staticmethod
+    def _batch_state(state: PolicyState) -> PolicyState:
+        return {key: value.unsqueeze(0) if value.ndim in (1, 2) else value for key, value in state.items()}
+
+    @staticmethod
+    def _stack_states(states: Sequence[PolicyState], device: torch.device) -> PolicyState:
+        keys = states[0].keys()
+        return {key: torch.stack([state[key].to(device) for state in states], dim=0) for key in keys}
 
 
 # Implementation guide

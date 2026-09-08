@@ -1,0 +1,111 @@
+强化学习交接日志（2026-09-07）
+项目根目录：/home/youhan/ws/VPOCLIP_plus_full
+
+【2026-09-08 最新优先级，覆盖下文旧顺序与双流水线等待条件】
+最新 X3D 训练预算：用户要求新50/5改为总共7000次optimizer迭代（不是7000 epochs）。
+warmup 400次，学习率衰减在3500、5810次，每1000次保存/验证，7000次结束。
+CTR-GCN和VPOCLIP训练轮数不变；旧50/5和闭集仍暂停。
+X3D仍按seen-validation top1选择model_best.pth供后续提取；第7000次权重也保留，
+“训练7000次”不表示用户要求强制选用第7000次权重。最终VPO使用last_model.pth不变。
+最新抽取方式：已接入 tools/extract_rtmpose_parallel.py（CTR-GCN_17_full 下）。
+相同96视频的1/2/3进程测试（含启动）分别4.72/5.19/5.18 clip/s；
+骨骼输出 allclose(rtol=1e-5, atol=1e-5) 一致，选择2个进程。
+每进程独立模型、独立分片目录，仅主进程校验样本名/标签/形状/有限值后写回，
+每批500条合并、先flush骨骼再标记done，保留此前约35800条完成结果。
+测试与分片结果留在 allviews_cs45 下；parallel_tuning.json 记录选择依据。
+本次取代下文“双实例单进程”方案；尚不承诺接近100%GPU利用率或按倍数缩短总工期。
+并行度实测补充：正式数据上尝试四独立推理实例+12解码线程约500条，
+含启动阶段平均约5.6 clip/s，未超过此前双实例约6.2 clip/s，已回退双实例+8解码。
+此为不同连续片段的短时观测，不是严格同样本基准；不得据此声称已达到100%利用率。
+试跑产生的有效骨骼结果保留，断点续跑。多进程方案需要独立分片与安全合并，
+禁止直接并发多个现有提取命令写同一份 memmap/done 文件。
+用户现在只要求优先完成新 50/5：A001/A003/A027/A035/A051。
+共享 RGB 缓存与骨骼提取后，直接运行新划分 X3D、CTR-GCN、三流推理和
+final_aug -> final_aug_entropy_single_h2；旧 50/5 和 55/0 暂停，不再自动接续。
+原全视角 controller 已换为 --shared-only：只完成共享预处理后退出。
+切换后骨骼抽取已从约 32600 条断点续跑，双推理实例生效；短时吞吐约
+5.5–5.7 clip/s（原约 4.56），并非整套数据稳定吞吐保证。此前“旧进程未重启”已过时。
+新队列改为等待 logs/allviews_20260907/02_rtmpose.done，随后执行新方案；
+新方案自己生成 YOLO 推理结果，不再依赖旧方案的任何特征或训练结果。
+给 RL agent：新方案只需等待
+  logs/allviews_lowview50_5_20260907/10_final_aug_entropy_single_h2.done
+并核验新模型及骨干清单；不再要求旧方案或闭集完成。
+旧方案 RL 同样暂缓，恢复前先确认用户安排，不能在新方案后自动执行旧方案。
+注意：现有 rl/run_vpo_handoff.sh 已由另一个 agent 启动，仍在等旧闭集完成。
+RL agent 必须相应更新自己的等待器及 prepare_handoff_configs，使其只准备/执行新方案；
+不能只改等待标志却继续加载尚不存在的旧模型。本次没有改动该 agent 的 RL 脚本。
+预计新 VPO 全流程从本次调整起约 14–20 小时，不含 RL；这是现有吞吐推算，
+不是满载保证，需在新 X3D 实际运行后以日志吞吐修正。
+
+用户要求：等待本次 VPOCLIP 训练完成，再先跑新的 50/5 强化学习，之后跑旧的 50/5。
+本文件只是交接指令，不代表训练已完成，也没有启动新的 RL 任务。
+
+【等待条件：必须两套流水线均成功完成】
+原全视角 tmux：vpoclip_allviews_20260907
+新 50/5 队列 tmux：vpoclip_lowview50_5_20260907
+相对于项目根目录，以下两个成功标志都存在，才允许启动本交接的 RL：
+  logs/allviews_20260907/10_final55_aug_entropy_h5_full300_score.done
+  logs/allviews_lowview50_5_20260907/10_final_aug_entropy_single_h2.done
+同时检查各自 pipeline.log 无未解决异常，所引用的最终权重实际存在且能加载。
+不要把 tmux 消失、last_model.pth 已出现或 latest_run.json 已生成误认为训练完成；
+这些权重/索引在训练中也可能存在。失败时查日志处理，不可绕过等待条件。
+
+【执行顺序和模型对应关系】
+1. 新 50/5（先运行）：
+   未见类 A001、A003、A027、A035（talking on the phone）、A051。
+   零基标签 [0, 2, 26, 34, 50]；A041、A053 不作为未见类，仍属已见类。
+   最终类别与完整四低位视角记录清单：
+     logs/allviews_lowview50_5_20260907/class_split.json
+   现在的 provisional_class_split.json 只是预核验清单，不能代替最终清单。
+   VPO 配置：logs/allviews_lowview50_5_20260907/final_aug_entropy_single_h2.yaml
+   模型索引：work_dir/allviews_lowview50_5_final_aug_entropy_single_h2/latest_run.json
+   读取索引中的 last_model，使用对应 last_model.pth，不选 best_model.pth。
+   对应骨干记录：logs/allviews_lowview50_5_20260907/selected_backbones.json
+
+2. 旧 50/5（上述新方案的 RL 训练及评测完成后再运行）：
+   未见类 A010、A011、A012、A018、A050；零基标签 [9, 10, 11, 17, 49]。
+   这里的“旧”是旧类别划分下新训练的全视角模型，不是历史 C001 单视角权重！
+   VPO 配置：logs/allviews_20260907/final_aug_entropy_single_h2.yaml
+   模型索引：work_dir/allviews_final_aug_entropy_single_h2/latest_run.json
+   同样读取 last_model，使用对应 last_model.pth。
+   对应骨干记录：logs/allviews_20260907/selected_backbones.json
+
+【数据隔离与 RL 配置】
+统一 subject 清单：/home/youhan/ws/ETRI_subject_split_45_25_10_20.json
+45 subjects 仅用于 VPO 监督训练；25 subjects 用于 DQN 训练；10 validation；20 test。
+按 subject 隔离，禁止按视频重新随机切分，禁止用 test 训练或挑选超参数。
+两套 VPO 都是 C001–C008 全视角训练；RL 的四低位视角为 C001/C003/C005/C007。
+新方案的未见类 RL 记录须符合最终 class_split.json 中 complete_recording_ids，
+还需核验实际 RL 时间窗四视角都可用；视频存在不等于所有时间窗有效。
+冻结各自的 VPO 与对应骨干，不可交叉混用新旧划分的 X3D/CTR-GCN 特征。
+全视角基础 RGB 缓存可共用：
+  /home/youhan/ws/X3D_full/data/etri_rgb_allviews_cs_45_25_10_20
+但基础 RGB 缓存不是 RL 时间窗缓存；按各方案实际模型重新生成/校验 RL 特征和 logits。
+RL 配置、缓存、日志、权重、评测报告分别用独立 new50_5 / old50_5 目录，不覆盖历史结果。
+现有 rl/config_rl.yaml 仍含历史 C001 缓存、旧 checkpoint 和旧 exclude_labels；
+必须复制成两份独立配置并逐项更新，不能直接照旧启动。
+source_split_dir 指向上述全视角缓存，source_prefix.dqn_train 应为 dqn，不是 train；
+subject_groups 必须来自统一清单。候选类别、训练排除类别和未见评测标签同步更新。
+延续严格 ZSL 协议：DQN 训练不使用各自五个未见类标签；未见类留给独立评测。
+先查阅 rl/README_RL.md 和当前训练/评测入口，做数据与模型加载冒烟检查。
+
+【资源和后台运行要求】
+用户明确要求尽量把 GPU 计算利用率拉到接近 100%，不是只把显存占满。
+使用现有 /home/youhan/.conda/envs/clipgcn/bin/python，必须在 tmux 后台运行。
+等待期间定期检查完成标志即可，不提前开启竞争 GPU 的新 RL 任务。
+开始后用 nvidia-smi 观察持续利用率，逐步调大 batch、并行环境/推理批量和数据预取；
+依据吞吐量调优，防止 CPU/磁盘供数瓶颈。小型 DQN 不保证单独持续 100%，据实记录瓶颈。
+保留必要显存与系统内存余量，避免 OOM、系统卡死；不要终止其他未授权任务。
+新方案完成后才切换旧方案，不能为提高利用率打乱用户指定顺序。
+每套记录配置、subject/类别划分、模型路径、GPU 利用率、训练日志和独立测试结果。
+
+【2026-09-08 吞吐优化补充】
+RTMPose 后续启动默认 --inference-workers 2：独立模型实例并发，解码与后处理重叠；
+--inference-workers 1 可回退。正在运行的旧提取进程没有中断，仍使用启动时的代码。
+同一组 25 视频的小样本测试（另有提取任务共享 GPU）：单实例 1.85 clip/s，
+双实例 2.17 clip/s，约提升 17%；骨骼输出 allclose(rtol=1e-5, atol=1e-5) 通过。
+这是受并发负载影响的小样本结果，不是整套数据的性能保证。
+X3D 后续训练默认启用单批 CUDA 异步传输预取，保持模型/类别/训练 batch 不变；
+--no-device-prefetch 可回退，额外占用一批输入的显存。
+两个训练 tmux 新增 live 窗口，自动跟踪阶段并每 15 秒记录 GPU 利用率/显存/功耗到
+各自 logs/<run>/gpu_telemetry.jsonl；不要把 GPU 显存占用当作计算利用率。

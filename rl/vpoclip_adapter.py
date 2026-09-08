@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+import sys
+from pathlib import Path
 from typing import Dict, Mapping, Optional
 
 import torch
+import torch.nn.functional as F
 from torch import nn
 
 from .contracts import TensorDict
@@ -27,19 +30,70 @@ class VPOCLIPAdapter:
 
     def encode_all_views(self, batch: Mapping[str, torch.Tensor]) -> TensorDict:
         """Return ``z[B,V,512]`` and ``logits[B,V,55]`` without gradients."""
-
-        raise NotImplementedError("Implement flattened B*V VPOCLIP inference here.")
+        video = batch["video"]
+        if video.ndim < 2:
+            raise ValueError("video input must have leading [B,V] dimensions")
+        bsz, views = video.shape[:2]
+        def flatten(value: torch.Tensor) -> torch.Tensor:
+            return value.reshape(bsz * views, *value.shape[2:])
+        with torch.inference_mode():
+            visual = self.model.encode_visual(
+                flatten(video),
+                flatten(batch["pose"]),
+                flatten(batch.get("object", batch.get("object_map"))),
+                flatten(batch["joint_xy"]),
+            )
+            z = F.normalize(visual.float(), dim=-1)
+            text = F.normalize(self.model.text_features.float(), dim=-1)
+            scale = self.model.logit_scale.exp().clamp(max=100)
+            logits = (scale * z @ text.t()).reshape(bsz, views, -1)
+        return {"z": z.reshape(bsz, views, -1), "logits": logits}
 
     def assert_frozen(self, reference: Optional[Dict[str, torch.Tensor]] = None) -> None:
         """Check gradient flags and optionally compare against a weight snapshot."""
 
-        raise NotImplementedError("Implement freeze and bitwise-weight validation here.")
+        for parameter in self.model.parameters():
+            if parameter.requires_grad:
+                raise AssertionError("VPOCLIP parameter unexpectedly requires gradients")
+        if reference is not None:
+            current = self.model.state_dict()
+            for key, value in reference.items():
+                if key not in current or not torch.equal(current[key].detach().cpu(), value.detach().cpu()):
+                    raise AssertionError(f"VPOCLIP parameter changed: {key}")
 
     @classmethod
     def from_config(cls, config_path: str, checkpoint_path: str, device: str) -> "VPOCLIPAdapter":
         """Build the existing model, text bank, and checkpoint exactly as test.py does."""
 
-        raise NotImplementedError("Reuse model.py and test.py checkpoint loading semantics here.")
+        import yaml
+        root = Path(__file__).resolve().parents[1]
+        sys.path.insert(0, str(root))
+        from model import apply_action_text_bank, build_model_from_config
+
+        cfg_path = Path(config_path).resolve()
+        config = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
+        def resolve(value):
+            if value is None:
+                return None
+            path = Path(value)
+            return path if path.is_absolute() else (cfg_path.parent / path).resolve()
+        model = build_model_from_config(
+            config,
+            device=torch.device(device),
+            download_root=str(resolve(config["model"]["text_encoder"].get("download_root"))) if config["model"]["text_encoder"].get("download_root") else None,
+        )
+        ckpt = resolve(checkpoint_path)
+        try:
+            state = torch.load(ckpt, map_location=device, weights_only=True)
+        except Exception:
+            state = torch.load(ckpt, map_location=device)
+        if isinstance(state, dict) and "state_dict" in state:
+            state = state["state_dict"]
+        model.load_state_dict(state, strict=True)
+        text_cfg = config["data"]["text"]
+        xlsx = resolve(text_cfg["xlsx"])
+        apply_action_text_bank(model, text_cfg, str(xlsx))
+        return cls(model, torch.device(device))
 
 
 # Implementation guide

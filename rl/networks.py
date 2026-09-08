@@ -28,8 +28,11 @@ class ViewEncoder(nn.Module):
         self.use_pose = bool(config.get("use_pose", False))
         self.use_object = bool(config.get("use_object", False))
         self.semantic = mlp(512, 256, 128)
-        self.pose = mlp(int(config.get("pose_input_dim", 663)), 128, 64)
-        self.object = mlp(int(config.get("object_input_dim", 1800)), 128, 64)
+        self.pose_input_dim = int(config.get("pose_input_dim", 442))
+        self.object_input_dim = int(config.get("object_input_dim", 1800))
+        self.quality_dim = int(config.get("quality_dim", 4))
+        self.pose = mlp(self.pose_input_dim, 128, 64)
+        self.object = mlp(self.object_input_dim, 128, 64)
         quality_view_dim = int(config.get("quality_dim", 4)) + int(config.get("view_encoding_dim", 8))
         self.quality_view = mlp(quality_view_dim, 64, 32)
         self.fuse = mlp(128 + 64 + 64 + 32, 256, 256)
@@ -37,7 +40,22 @@ class ViewEncoder(nn.Module):
     def forward(self, slot: Mapping[str, torch.Tensor], slot_mask: torch.Tensor) -> torch.Tensor:
         """Encode one slot as h_v[256], returning exact zeros for padded slots."""
 
-        raise NotImplementedError("Implement optional branch masking and post-bias slot masking here.")
+        z = slot["z"]
+        if z.ndim == 1:
+            z = z.unsqueeze(0)
+        parts = [self.semantic(z)]
+        if self.use_pose:
+            parts.append(self.pose(slot["pose"]))
+        else:
+            parts.append(torch.zeros((*z.shape[:-1], 64), device=z.device, dtype=z.dtype))
+        if self.use_object:
+            parts.append(self.object(slot["object_map"]))
+        else:
+            parts.append(torch.zeros((*z.shape[:-1], 64), device=z.device, dtype=z.dtype))
+        qv = torch.cat((slot["quality"], slot["view_encoding"]), dim=-1)
+        parts.append(self.quality_view(qv))
+        encoded = self.fuse(torch.cat(parts, dim=-1))
+        return encoded * slot_mask.unsqueeze(-1)
 
 
 class EvidenceEncoder(nn.Module):
@@ -52,11 +70,11 @@ class EvidenceEncoder(nn.Module):
 
 
 class RobotEncoder(nn.Module):
-    """Compress the 4V+1 robot context to 64 dimensions."""
+    """Compress masks/costs plus current body-relative angle/confidence."""
 
     def __init__(self, num_views: int) -> None:
         super().__init__()
-        self.net = mlp(4 * num_views + 1, 128, 64)
+        self.net = mlp(4 * num_views + 4, 128, 64)
 
     def forward(self, context: torch.Tensor) -> torch.Tensor:
         return self.net(context)
@@ -71,19 +89,55 @@ class DuelingQNetwork(nn.Module):
         self.view_encoder = ViewEncoder(view_config)
         self.evidence_encoder = EvidenceEncoder()
         self.robot_encoder = RobotEncoder(num_views)
+        self.candidate = mlp(4, 64, 32)
         self.trunk = nn.Sequential(
-            nn.Linear(3 * 256 + 128 + 64 + 3, 512),
+            nn.Linear(3 * 256 + 128 + 64, 512),
             nn.GELU(),
             nn.Linear(512, 256),
             nn.GELU(),
         )
         self.value_head = mlp(256, 128, 1)
-        self.advantage_head = mlp(256, 128, num_views)
+        self.advantage_head = mlp(256 + 32, 128, 1)
 
     def forward(self, state: PolicyState) -> torch.Tensor:
         """Return Q[B,V] using V(s)+A(s,a)-mean_a A(s,a)."""
 
-        raise NotImplementedError("Implement fixed-slot encoding and dueling aggregation here.")
+        view = state["view_features"]
+        pose = state["pose_features"]
+        obj = state["object_features"]
+        quality = state["quality_features"]
+        slots = state["slot_mask"]
+        evidence = state["evidence"]
+        robot = state["robot_context"]
+        candidate_geometry = state["candidate_geometry"]
+        if view.ndim == 2:
+            view, pose, obj, quality, slots, evidence, robot, candidate_geometry = (
+                x.unsqueeze(0) for x in (view, pose, obj, quality, slots, evidence, robot, candidate_geometry)
+            )
+        encoded_slots = []
+        view_encoding = torch.eye(3, device=view.device, dtype=view.dtype)
+        for index in range(3):
+            encoded_slots.append(
+                self.view_encoder(
+                    {
+                        "z": view[:, index],
+                        "pose": pose[:, index],
+                        "object_map": obj[:, index],
+                        "quality": quality[:, index],
+                        "view_encoding": view_encoding[index].expand(view.shape[0], -1),
+                    },
+                    slots[:, index],
+                )
+            )
+        h = self.trunk(torch.cat((
+            torch.cat(encoded_slots, dim=-1),
+            self.evidence_encoder(evidence),
+            self.robot_encoder(robot),
+        ), dim=-1))
+        value = self.value_head(h)
+        candidate_h = self.candidate(candidate_geometry)
+        advantage = self.advantage_head(torch.cat((h.unsqueeze(1).expand(-1, self.num_views, -1), candidate_h), dim=-1)).squeeze(-1)
+        return value + advantage - advantage.mean(dim=-1, keepdim=True)
 
 
 # Implementation guide

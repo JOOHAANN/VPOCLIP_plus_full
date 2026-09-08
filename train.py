@@ -1216,6 +1216,11 @@ def parse_args():
         "architecture effect from run-to-run variance.",
     )
     parser.add_argument("--run-name", default=None, help="Override outputs.run_name.")
+    parser.add_argument(
+        "--init-checkpoint",
+        default=None,
+        help="Override train.init_checkpoint (used by chained fine-tuning runs).",
+    )
     return parser.parse_args()
 
 
@@ -1234,6 +1239,8 @@ def main():
         config["runtime"]["seed"] = args.seed
     if args.run_name:
         config.setdefault("outputs", {})["run_name"] = args.run_name
+    if args.init_checkpoint:
+        config.setdefault("train", {})["init_checkpoint"] = os.path.abspath(args.init_checkpoint)
     set_seed(int(config["runtime"].get("seed", 20260616)))
     print(f"Seed: {config['runtime'].get('seed')}")
     run_dir = prepare_output_paths(config, config_path)
