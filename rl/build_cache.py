@@ -6,6 +6,7 @@ import argparse
 import csv
 import importlib.util
 import json
+import math
 import re
 import shutil
 import sys
@@ -20,7 +21,7 @@ import torch
 import yaml
 
 from .vpoclip_adapter import VPOCLIPAdapter
-from .body_relative_geometry import BodyRelativeResolver, json_safe, wrap_degrees
+from .body_relative_geometry import BodyRelativeResolver, direction_labels, json_safe, wrap_degrees
 
 ROOT = Path(__file__).resolve().parents[1]
 LOW_CAMERAS = ("C001", "C003", "C005", "C007")
@@ -114,6 +115,58 @@ def _window_specs(video: Path, seconds: float, stride: float, frames: int, maxim
     return result
 
 
+def _csv_geometry_fallback(episode: Mapping[str, Any]) -> dict[str, Any]:
+    """Build per-recording geometry when the raw 3-D skeleton is unavailable.
+
+    ``angle_deg`` is the recording-specific camera forward-axis yaw relative to
+    C001 from ``low_view_camera_angles_split55.csv``.  It is not a global
+    camera-ID direction table.  The common 180-degree optical-axis reversal
+    cancels in the relative differences used by the candidate scorer and move
+    cost, so the values can be used as a conservative direction-set fallback.
+    """
+
+    values = []
+    for view in episode["views"]:
+        try:
+            value = float(view.get("angle_deg", 0.0))
+        except (TypeError, ValueError):
+            value = 0.0
+        values.append(wrap_degrees(value) if math.isfinite(value) else 0.0)
+    results = []
+    for view, bearing in zip(episode["views"], values):
+        label4, label4_zh, label8, label8_zh = direction_labels(bearing)
+        results.append({
+            "camera": str(view["camera"]),
+            "relative_bearing_deg": float(bearing),
+            "bearing_mad_deg": 0.0,
+            "bearing_inlier_frames": 0,
+            "direction_4": label4,
+            "direction_4_zh": label4_zh,
+            "direction_8": label8,
+            "direction_8_zh": label8_zh,
+            "camera_center_x_m": float("nan"),
+            "camera_center_y_m": float("nan"),
+            "camera_center_z_m": float("nan"),
+            "fit_median_residual_m": float("nan"),
+            "fit_p90_residual_m": float("nan"),
+            "geometry_confidence": 0.35,
+            "geometry_source": "csv_optical_axis_relative_yaw_fallback",
+        })
+    ordered = sorted(results, key=lambda result: result["relative_bearing_deg"])
+    rank = {result["camera"]: index for index, result in enumerate(ordered)}
+    for result in results:
+        result["signed_bearing_rank"] = rank[result["camera"]]
+    return {
+        "body_yaw_deg_c001": 0.0,
+        "body_yaw_mad_deg": 180.0,
+        "body_yaw_inlier_frames": 0,
+        "body_yaw_confidence": 0.35,
+        "camera_order_by_signed_bearing": [result["camera"] for result in ordered],
+        "geometry_fallback": "csv_optical_axis_relative_yaw",
+        "views": results,
+    }
+
+
 def _source_rows(config: Mapping[str, Any], split: str) -> list[tuple[str, int]]:
     data = config["data"]
     source_root = data["source_split_dir"]
@@ -128,13 +181,16 @@ def _source_rows(config: Mapping[str, Any], split: str) -> list[tuple[str, int]]
     allowed_labels = data.get("allowed_labels_by_split", {}).get(split)
     allowed_labels = set(int(x) for x in allowed_labels) if allowed_labels is not None else None
     allowed_recordings = data.get("allowed_recording_ids")
+    recording_filter_labels = None
     if allowed_recordings is None and data.get("recording_manifest"):
         manifest = resolve(config, data["recording_manifest"])
         payload = json.loads(manifest.read_text(encoding="utf-8"))
+        recording_filter_labels = set(payload["unseen_classes_zero_based"])
         allowed_recordings = []
         for item in payload.get("selected", []):
             allowed_recordings.extend(item.get("complete_recording_ids", []))
-    allowed_recordings = set(str(x) for x in (allowed_recordings or []))
+    allowed_recordings = (set(str(x) for x in allowed_recordings)
+                          if allowed_recordings is not None else None)
     rows = []
     for name, label in zip(names, labels):
         name = str(name)
@@ -144,7 +200,9 @@ def _source_rows(config: Mapping[str, Any], split: str) -> list[tuple[str, int]]
             continue
         if allowed_labels is not None and int(label) not in allowed_labels:
             continue
-        if allowed_recordings and recording_id not in allowed_recordings:
+        if (allowed_recordings is not None
+                and (recording_filter_labels is None or int(label) in recording_filter_labels)
+                and recording_id not in allowed_recordings):
             continue
         rows.append((name, int(label)))
     return rows
@@ -166,6 +224,17 @@ def build_episode_manifest(config: Dict[str, Any], split: str) -> Path:
     candidate_cameras = tuple(config["cache"].get("candidate_cameras", LOW_CAMERAS))
     allow_cross_group = bool(config["data"].get("allow_cross_group_views", False))
     allow_any_four = bool(config["data"].get("allow_available_four_views", False))
+    allow_variable = bool(config["data"].get("allow_variable_views", False))
+    minimum_views = int(config["data"].get("minimum_views", 2))
+    if minimum_views < 2 or minimum_views > len(candidate_cameras):
+        raise ValueError(
+            "minimum_views must be between 2 and the number of candidate cameras"
+        )
+    merge_actions = set()
+    for value in config["data"].get("merge_group_actions", []):
+        text = str(value).strip().upper()
+        merge_actions.add(text if text.startswith("A") else f"A{int(text):03d}")
+    processed_merged_families: set[str] = set()
     episodes: list[dict[str, Any]] = []
     for base, entries in sorted(grouped.items()):
         source_name, label = entries[0]
@@ -177,10 +246,34 @@ def build_episode_manifest(config: Dict[str, Any], split: str) -> Path:
         episode_cameras = candidate_cameras
         by_camera = {Path(name).stem.rsplit("_", 1)[1]: (name, lab, Path(name).stem.rsplit("_", 1)[0]) for name, lab in entries}
         selected = []
-        if all(camera in by_camera for camera in episode_cameras):
+        family = base.rsplit("_", 1)[0]
+        if action in merge_actions:
+            # A049/A050 are recorded as one low camera per Group.  Treat all
+            # Groups for the same A/P recording family as one logical
+            # episode, and emit one representative for each low-camera slot.
+            # The first base is the deterministic owner; otherwise the same
+            # merged family would be duplicated once per Group.
+            if family in processed_merged_families:
+                continue
+            family_entries = by_family.get(family, [])
+            family_by_camera: dict[str, list[tuple[str, int, str]]] = {}
+            for name, lab in family_entries:
+                camera = Path(name).stem.rsplit("_", 1)[1]
+                family_by_camera.setdefault(camera, []).append(
+                    (name, lab, Path(name).stem.rsplit("_", 1)[0])
+                )
+            for camera in episode_cameras:
+                if camera in family_by_camera:
+                    selected.append(sorted(family_by_camera[camera], key=lambda x: x[2])[0])
+            if len(selected) >= minimum_views:
+                episode_cameras = tuple(camera for camera, _, _ in selected)
+                processed_merged_families.add(family)
+            else:
+                continue
+        elif all(camera in by_camera for camera in episode_cameras):
             selected = [by_camera[camera] for camera in episode_cameras]
         elif allow_cross_group:
-            family_entries = by_family.get(base.rsplit("_", 1)[0], [])
+            family_entries = by_family.get(family, [])
             family_by_camera: dict[str, list[tuple[str, int, str]]] = {}
             for name, lab in family_entries:
                 cam = Path(name).stem.rsplit("_", 1)[1]
@@ -188,7 +281,7 @@ def build_episode_manifest(config: Dict[str, Any], split: str) -> Path:
             if all(camera in family_by_camera for camera in episode_cameras):
                 selected = [sorted(family_by_camera[camera], key=lambda x: x[2])[0] for camera in episode_cameras]
         if not selected and allow_any_four:
-            family_entries = by_family.get(base.rsplit("_", 1)[0], [])
+            family_entries = by_family.get(family, [])
             family_by_camera: dict[str, list[tuple[str, int, str]]] = {}
             for name, lab in family_entries:
                 cam = Path(name).stem.rsplit("_", 1)[1]
@@ -197,7 +290,16 @@ def build_episode_manifest(config: Dict[str, Any], split: str) -> Path:
             if len(available) >= 4:
                 selected = [sorted(family_by_camera[camera], key=lambda x: x[2])[0] for camera in available[:4]]
                 episode_cameras = tuple(camera for camera, _, _ in selected)
-        if len(selected) != 4:
+        if not selected and allow_variable:
+            # Keep incomplete ordinary recordings in their original Group
+            # whenever at least two low cameras exist.  This is the intended
+            # 2-of-2/3-of-3 path for A010/A012/A013 and the corresponding
+            # partially recorded Groups; it never infers a missing camera.
+            available = [camera for camera in episode_cameras if camera in by_camera]
+            if len(available) >= minimum_views:
+                selected = [by_camera[camera] for camera in available]
+                episode_cameras = tuple(available)
+        if len(selected) < minimum_views or (not allow_variable and len(selected) != 4):
             continue
         views = []
         try:
@@ -205,15 +307,25 @@ def build_episode_manifest(config: Dict[str, Any], split: str) -> Path:
                 camera = Path(name).stem.rsplit("_", 1)[1]
                 stem = Path(name).stem
                 video = rgb_root / name
-                skeleton = _skeleton_path(skeleton_root, stem, subject)
+                try:
+                    skeleton = _skeleton_path(skeleton_root, stem, subject)
+                except FileNotFoundError:
+                    if not bool(config["data"].get("allow_missing_skeleton", False)):
+                        raise
+                    skeleton = None
                 if not video.exists():
                     raise FileNotFoundError(video)
                 angle, angle_source = _angle(angles, actual_base, camera)
+                if bool(config["data"].get("require_recording_angles", False)) and angle_source != "csv":
+                    raise ValueError(
+                        "missing recording-specific camera angle for "
+                        f"{actual_base}_{camera}; refusing camera-order fallback"
+                    )
                 cap = cv2.VideoCapture(str(video))
                 frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
                 fps = float(cap.get(cv2.CAP_PROP_FPS) or 20.0)
                 cap.release()
-                views.append({"camera": camera, "video": str(video), "skeleton": str(skeleton), "angle_deg": angle, "angle_source": angle_source, "frame_count": frame_count, "fps": fps, "source_base": actual_base})
+                views.append({"camera": camera, "video": str(video), "sample_name": str(name), "skeleton": str(skeleton) if skeleton is not None else None, "angle_deg": angle, "angle_source": angle_source, "frame_count": frame_count, "fps": fps, "source_base": actual_base})
         except FileNotFoundError:
             continue
         common_total = min(int(v["frame_count"] * float(views[0]["fps"]) / max(float(v["fps"]), 1e-6)) for v in views)
@@ -229,9 +341,13 @@ def build_episode_manifest(config: Dict[str, Any], split: str) -> Path:
                 "episode_id": len(episodes),
                 "subject": subject,
                 "action": action,
-                "group": f"G{int(group):03d}" if all(v["source_base"] == base for v in views) else "MIXED",
+                "group": (
+                    "MERGED"
+                    if action in merge_actions
+                    else group if all(v["source_base"] == base for v in views) else "MIXED"
+                ),
                 "label": int(label),
-                "base_sample": base,
+                "base_sample": family + "_MERGED" if action in merge_actions else base,
                 "window": window,
                 "views": views,
             })
@@ -243,7 +359,14 @@ def build_episode_manifest(config: Dict[str, Any], split: str) -> Path:
     with manifest.open("w", encoding="utf-8") as handle:
         for row in episodes:
             handle.write(json.dumps(row, ensure_ascii=False) + "\n")
-    (out / "manifest_summary.json").write_text(json.dumps({"split": split, "episodes": len(episodes), "views": LOW_CAMERAS}, indent=2), encoding="utf-8")
+    (out / "manifest_summary.json").write_text(json.dumps({
+        "split": split,
+        "episodes": len(episodes),
+        "views": LOW_CAMERAS,
+        "variable_views": allow_variable,
+        "minimum_views": minimum_views,
+        "merge_group_actions": sorted(merge_actions),
+    }, indent=2), encoding="utf-8")
     print(f"manifest {split}: {len(episodes)} episodes -> {manifest}", flush=True)
     return manifest
 
@@ -259,15 +382,48 @@ def _load_raw_module():
     return module
 
 
-def _read_video(path: Path, width: int = 640, height: int = 480) -> np.ndarray:
+def _read_video(
+    path: Path,
+    width: int = 640,
+    height: int = 480,
+    sample_frames: list[int] | tuple[int, ...] | None = None,
+) -> np.ndarray:
+    """Decode a video, retaining only requested frames when provided.
+
+    The old implementation materialized every 640x480 frame even though the
+    VPOCLIP input uses only 13 uniformly sampled frames.  That made cache
+    generation memory-bound and left the GPU idle.  Sequential decoding still
+    preserves the exact frame content while keeping memory proportional to the
+    requested window.
+    """
     cap = cv2.VideoCapture(str(path))
-    frames = []
-    while True:
-        ok, frame = cap.read()
-        if not ok:
-            break
-        frame = cv2.resize(frame, (width, height), interpolation=cv2.INTER_AREA)
-        frames.append(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+    frames: list[np.ndarray] = []
+    if sample_frames is None:
+        while True:
+            ok, frame = cap.read()
+            if not ok:
+                break
+            frame = cv2.resize(frame, (width, height), interpolation=cv2.INTER_AREA)
+            frames.append(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+    else:
+        requested = [max(0, int(index)) for index in sample_frames]
+        unique_targets = sorted(set(requested))
+        captured: dict[int, np.ndarray] = {}
+        target_index = 0
+        frame_index = 0
+        while target_index < len(unique_targets):
+            ok, frame = cap.read()
+            if not ok:
+                break
+            if frame_index == unique_targets[target_index]:
+                frame = cv2.resize(frame, (width, height), interpolation=cv2.INTER_AREA)
+                captured[frame_index] = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+                target_index += 1
+            frame_index += 1
+        if target_index != len(unique_targets):
+            cap.release()
+            raise ValueError(f"could not decode requested frames from {path}")
+        frames = [captured[index] for index in requested]
     cap.release()
     if not frames:
         raise ValueError(f"could not decode {path}")
@@ -300,6 +456,36 @@ def _rtmpose_window(body: Any, frames: np.ndarray, raw: Any) -> tuple[torch.Tens
     return pose_tensor, joint_xy, quality
 
 
+def _precomputed_rtmpose_window(
+    pose_array: Any,
+    pose_index: Mapping[str, int],
+    sample_name: str,
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
+    """Read the already extracted 13-frame RTMPose tensor for one video.
+
+    The stored format is ``[3, 13, 17, 2]`` = x/y/score, time, COCO-17
+    joints, person slots.  Keeping the lookup by the complete sample name is
+    important: camera IDs are physical labels, not a direction ordering.
+    """
+    try:
+        index = pose_index[str(sample_name)]
+    except KeyError as exc:
+        raise FileNotFoundError(f"RTMPose cache has no sample {sample_name}") from exc
+    pose_np = np.asarray(pose_array[index], dtype=np.float32)
+    if pose_np.shape != (3, 13, 17, 2):
+        raise ValueError(f"unexpected RTMPose shape for {sample_name}: {pose_np.shape}")
+    pose = torch.from_numpy(pose_np)
+    joint = torch.from_numpy(pose_np[:2, :, :, 0].transpose(1, 2, 0).copy())
+    score = pose[2]
+    quality = torch.tensor([
+        float((score > 0).float().mean()),
+        float(score[score > 0].mean()) if (score > 0).any() else 0.0,
+        float(score.max()),
+        1.0,
+    ])
+    return pose, joint, quality
+
+
 def _runtime_models(config: Mapping[str, Any], device: torch.device):
     raw = _load_raw_module()
     raw_cfg = config["raw"]
@@ -326,11 +512,18 @@ def _runtime_models(config: Mapping[str, Any], device: torch.device):
         str(resolve(config, config["recognizer"]["checkpoint"])),
         str(device),
     )
-    import onnxruntime as ort
-    from rtmlib import Body
-    if "CUDAExecutionProvider" not in ort.get_available_providers():
-        raise RuntimeError("CUDAExecutionProvider unavailable for RTMPose")
-    body = Body(mode=raw_cfg.get("rtmpose_mode", "balanced"), backend="onnxruntime", device="cuda")
+    if raw_cfg.get("rtmpose_cache_root"):
+        # The raw RTMPose tensors are already available for every source
+        # split.  Reusing them keeps this cache aligned with VPOCLIP's
+        # pre-extracted pose input and avoids running an identical detector
+        # once per frame during the cache build.
+        body = None
+    else:
+        import onnxruntime as ort
+        from rtmlib import Body
+        if "CUDAExecutionProvider" not in ort.get_available_providers():
+            raise RuntimeError("CUDAExecutionProvider unavailable for RTMPose")
+        body = Body(mode=raw_cfg.get("rtmpose_mode", "balanced"), backend="onnxruntime", device="cuda")
     return raw, args, x3d_model, x3d_capture, x3d_cfg, pose_model, pose_capture, object_runner, body, adapter, x3d_hook, pose_hook
 
 
@@ -359,38 +552,84 @@ def export_cache(config: Dict[str, Any], manifest_path: Path) -> Path:
         "image_quality": np.lib.format.open_memmap(tmp / "image_quality.npy", mode="w+", dtype=np.float32, shape=(n, views, 4)),
         "view_geometry": np.lib.format.open_memmap(tmp / "view_geometry.npy", mode="w+", dtype=np.float32, shape=(n, views, 4)),
         "reachable": np.lib.format.open_memmap(tmp / "reachable.npy", mode="w+", dtype=np.bool_, shape=(n, views, views)),
+        "view_valid": np.lib.format.open_memmap(tmp / "view_valid.npy", mode="w+", dtype=np.bool_, shape=(n, views)),
         "move_cost": np.lib.format.open_memmap(tmp / "move_cost.npy", mode="w+", dtype=np.float32, shape=(n, views, views)),
         "labels": np.lib.format.open_memmap(tmp / "labels.npy", mode="w+", dtype=np.int64, shape=(n,)),
         "target_columns": np.lib.format.open_memmap(tmp / "target_columns.npy", mode="w+", dtype=np.int64, shape=(n,)),
     }
     batch_size = int(config["raw"].get("batch_size", 8))
-    video_cache: dict[str, np.ndarray] = {}
+    video_cache: dict[tuple[str, tuple[int, ...]], np.ndarray] = {}
     decode_workers = int(config['raw'].get('decode_workers', 1))
     pose_cache: dict[tuple, tuple] = {}
+    precomputed_pose = None
+    precomputed_pose_index: dict[str, int] = {}
+    if config["raw"].get("rtmpose_cache_root"):
+        split_key = {"dqn_train": "dqn", "val": "val", "test": "test"}
+        pose_root = resolve(config, config["raw"]["rtmpose_cache_root"])
+        pose_prefix = split_key[manifest_path.parent.name]
+        precomputed_pose = np.load(
+            pose_root / f"{pose_prefix}_x.npy", mmap_mode="r", allow_pickle=False
+        )
+        pose_names = np.load(
+            pose_root / f"{pose_prefix}_sample_names.npy", allow_pickle=True
+        ).astype(str)
+        precomputed_pose_index = {name: index for index, name in enumerate(pose_names)}
     geometry_resolver = BodyRelativeResolver()
     metadata_rows = []
     try:
         for start in range(0, n, batch_size):
             batch_rows = rows[start:start + batch_size]
-            missing = list(dict.fromkeys(v['video'] for r in batch_rows for v in r['views'] if v['video'] not in video_cache))
+            requests = []
+            for row in batch_rows:
+                frame_key = tuple(int(index) for index in row["window"]["sample_frames"])
+                for view in row["views"]:
+                    key = (view["video"], frame_key)
+                    if key not in video_cache:
+                        requests.append(key)
+            missing = list(dict.fromkeys(requests))
             if decode_workers > 1:
                 with ThreadPoolExecutor(max_workers=decode_workers) as pool:
-                    for path, decoded in zip(missing, pool.map(lambda p: _read_video(Path(p)), missing)):
-                        video_cache[path] = decoded
+                    decoded = pool.map(
+                        lambda request: _read_video(
+                            Path(request[0]), sample_frames=request[1]
+                        ),
+                        missing,
+                    )
+                    for key, frames in zip(missing, decoded):
+                        video_cache[key] = frames
             videos, poses, joints, objects, qualities = [], [], [], [], []
+            row_view_counts: list[int] = []
             for row in batch_rows:
                 frame_ids = row["window"]["sample_frames"]
-                for view in row["views"]:
-                    if view["video"] not in video_cache:
-                        video_cache[view["video"]] = _read_video(Path(view["video"]))
-                    source = video_cache[view["video"]]
-                    frames = source[[min(int(i), len(source) - 1) for i in frame_ids]]
+                actual_count = len(row["views"])
+                if actual_count < 1 or actual_count > views:
+                    raise ValueError(f"invalid view count {actual_count} in {row['base_sample']}")
+                row_view_counts.append(actual_count)
+                # The tensors retain four physical camera slots for backward
+                # compatibility.  A missing slot repeats an existing input
+                # only for batching, then is zeroed and masked before writing;
+                # it can never become a legal action downstream.
+                for slot in range(views):
+                    view = row["views"][min(slot, actual_count - 1)]
+                    frame_key = tuple(int(index) for index in frame_ids)
+                    video_key = (view["video"], frame_key)
+                    if video_key not in video_cache:
+                        video_cache[video_key] = _read_video(
+                            Path(view["video"]), sample_frames=frame_key
+                        )
+                    frames = video_cache[video_key]
                     x3d_size = int(config["raw"].get("x3d_input_size", 0) or getattr(x3d_cfg.TRANSFORM.TEST, "TENSOR_RESIZE_SIZE", 0) or getattr(x3d_cfg.TRANSFORM.TEST, "TEST_CROP_SIZE", 0) or 182)
                     videos.append(raw.x3d_tensor_from_frames(frames, x3d_size, x3d_cfg.TRANSFORM.MEAN, x3d_cfg.TRANSFORM.STD))
-                    if config['raw'].get('reuse_pose_frames', False):
+                    if precomputed_pose is not None:
+                        pose, joint, quality = _precomputed_rtmpose_window(
+                            precomputed_pose,
+                            precomputed_pose_index,
+                            view["sample_name"],
+                        )
+                    elif config['raw'].get('reuse_pose_frames', False):
                         parts = []
                         for fid, frame in zip(frame_ids, frames):
-                            key = (view['video'], min(int(fid), len(source)-1))
+                            key = (view['video'], min(int(fid), len(frames)-1))
                             if key not in pose_cache:
                                 pose_cache[key] = _rtmpose_window(body, frame[None], raw)
                             parts.append(pose_cache[key])
@@ -414,13 +653,29 @@ def export_cache(config: Dict[str, Any], manifest_path: Path) -> Path:
                     "video": video_feature.unsqueeze(0), "pose": pose_feature.unsqueeze(0),
                     "object": object_map.unsqueeze(0), "joint_xy": joint.unsqueeze(0),
                 })
-            arrays["z"][start:start + len(batch_rows)] = encoded["z"][0].cpu().numpy().reshape(len(batch_rows), views, 512)
-            arrays["logits"][start:start + len(batch_rows)] = encoded["logits"][0].cpu().numpy().reshape(len(batch_rows), views, 55)
-            arrays["pose"][start:start + len(batch_rows)] = joint.cpu().numpy().reshape(len(batch_rows), views, 442)
-            arrays["object_map"][start:start + len(batch_rows)] = object_map.cpu().numpy().reshape(len(batch_rows), views, 1800)
-            arrays["image_quality"][start:start + len(batch_rows)] = torch.stack(qualities).numpy().reshape(len(batch_rows), views, 4)
-            for offset, row in enumerate(batch_rows):
-                resolved_geometry = geometry_resolver.resolve(row)
+            encoded_z = encoded["z"][0].cpu().numpy().reshape(len(batch_rows), views, 512)
+            encoded_logits = encoded["logits"][0].cpu().numpy().reshape(len(batch_rows), views, 55)
+            cached_pose = joint.cpu().numpy().reshape(len(batch_rows), views, 442)
+            cached_objects = object_map.cpu().numpy().reshape(len(batch_rows), views, 1800)
+            cached_quality = torch.stack(qualities).numpy().reshape(len(batch_rows), views, 4)
+            for offset, (row, actual_count) in enumerate(zip(batch_rows, row_view_counts)):
+                if actual_count < views:
+                    encoded_z[offset, actual_count:] = 0.0
+                    encoded_logits[offset, actual_count:] = 0.0
+                    cached_pose[offset, actual_count:] = 0.0
+                    cached_objects[offset, actual_count:] = 0.0
+                    cached_quality[offset, actual_count:] = 0.0
+                arrays["z"][start + offset] = encoded_z[offset]
+                arrays["logits"][start + offset] = encoded_logits[offset]
+                arrays["pose"][start + offset] = cached_pose[offset]
+                arrays["object_map"][start + offset] = cached_objects[offset]
+                arrays["image_quality"][start + offset] = cached_quality[offset]
+                try:
+                    resolved_geometry = geometry_resolver.resolve(row)
+                except (FileNotFoundError, TypeError):
+                    if not bool(config["data"].get("allow_missing_skeleton", False)):
+                        raise
+                    resolved_geometry = _csv_geometry_fallback(row)
                 angle_degrees = np.asarray([
                     float(view["relative_bearing_deg"])
                     for view in resolved_geometry["views"]
@@ -428,15 +683,21 @@ def export_cache(config: Dict[str, Any], manifest_path: Path) -> Path:
                 angles = np.radians(angle_degrees)
                 geometry = np.stack((np.sin(angles), np.cos(angles)), axis=1)
                 cost = np.zeros((views, views), dtype=np.float32)
-                for source_id in range(views):
-                    for dest_id in range(views):
+                for source_id in range(actual_count):
+                    for dest_id in range(actual_count):
                         cost[source_id, dest_id] = abs(
                             wrap_degrees(angle_degrees[dest_id] - angle_degrees[source_id])
                         ) / 180.0
-                arrays["view_geometry"][start + offset] = np.concatenate((geometry, np.zeros((views, 2), dtype=np.float32)), axis=1)
-                arrays["reachable"][start + offset] = True
+                geometry_padded = np.zeros((views, 4), dtype=np.float32)
+                geometry_padded[:actual_count, :2] = geometry
+                arrays["view_geometry"][start + offset] = geometry_padded
+                reachable = np.zeros((views, views), dtype=np.bool_)
+                reachable[:actual_count, :actual_count] = True
+                arrays["reachable"][start + offset] = reachable
+                arrays["view_valid"][start + offset] = False
+                arrays["view_valid"][start + offset, :actual_count] = True
                 arrays["move_cost"][start + offset] = cost
-                arrays["image_quality"][start + offset, :, 3] = float(
+                arrays["image_quality"][start + offset, :actual_count, 3] = float(
                     resolved_geometry["body_yaw_confidence"]
                 )
                 arrays["labels"][start + offset] = row["label"]
@@ -459,12 +720,27 @@ def export_cache(config: Dict[str, Any], manifest_path: Path) -> Path:
     (tmp / "metadata.json").write_text(json.dumps(json_safe({
         "format": "active_view_cache_v2", "episodes": metadata_rows, "num_views": 4,
         "classes": 55, "embedding_dim": 512, "input_resolution": [640, 480],
+        "variable_views": True,
+        "minimum_views": int(config["data"].get("minimum_views", 2)),
+        "merge_group_actions": sorted({
+            str(value).upper() if str(value).upper().startswith("A") else f"A{int(value):03d}"
+            for value in config["data"].get("merge_group_actions", [])
+        }),
         "windowing": {"seconds": config["data"]["window_seconds"], "stride_seconds": config["data"]["stride_seconds"], "frames": config["data"]["frames"]},
         "protocol": "strict_zsl_50_5", "angle_csv": str(resolve(config, config["data"]["angle_csv"])),
         "geometry_contract": {
-            "definition": "candidate camera center bearing relative to anatomical body forward",
+            "definition": (
+                "recording-specific candidate bearing; relative to anatomical body "
+                "forward when 3-D skeleton geometry is available, otherwise the "
+                "per-recording source-camera optical-axis yaw relative to C001"
+            ),
             "sign": "negative=body-left, zero=front, positive=body-right",
             "camera_id_is_not_angular_order": True,
+            "fallback_definition": (
+                "per-recording source camera forward-axis yaw relative to C001; "
+                "not an estimate of human anatomical yaw"
+            ),
+            "missing_skeleton_fallback": "per-recording CSV optical-axis relative yaw; confidence=0.35",
         },
     }), ensure_ascii=False, allow_nan=False), encoding="utf-8")
     for value in arrays.values(): del value

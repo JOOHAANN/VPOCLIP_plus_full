@@ -1,0 +1,76 @@
+# Reproduction of the preferred two-stage VPOCLIP recipe on the new
+# all-view 50/5 split: unseen A001/A003/A027/A035/A051 (0-based 0,2,26,34,50).
+base_config: /home/youhan/ws/VPOCLIP_plus_full/config_final_aug.yaml
+
+runtime:
+  device: cuda:0
+  seed: 20260616
+  amp: true
+  no_show: true
+
+data:
+  train:
+    data_dir: /home/youhan/ws/VPOCLIP_plus_full/data/allviews_cs45_lowview50_5_zsl
+    prefix: trimodal_train
+    pose_suffix: _coco17
+    mmap: true
+  val:
+    data_dir: /home/youhan/ws/VPOCLIP_plus_full/data/allviews_cs45_lowview50_5_zsl
+    prefix: trimodal_val
+    pose_suffix: _coco17
+    mmap: true
+  augment:
+    enabled: true
+    noise_std: 0.02
+    time_jitter: 0.3
+    modality_dropout: 0.2
+  text:
+    xlsx: /home/youhan/ws/VPOCLIP_plus_full/ntu55_global_descriptions.xlsx
+    id_column: ID
+    text_column: global_description
+    label_offset: 1
+    prompt_template: "{global_description}"
+    prompt_templates:
+      - "{global_description}"
+      - "{action_description}"
+      - "a person {action_description}"
+      - "a video of a person {action_description}"
+      - "an older adult {action_description}"
+      - "someone at home {action_description}"
+      - "a daily activity: {action_description}"
+      - "footage of {action_description} indoors"
+    batch_size: 128
+    cache_output: /home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_recipe_stage_a/text.pt
+  dataloader:
+    batch_size: 128
+    num_workers: 16
+    persistent_workers: true
+    train_shuffle: true
+    val_shuffle: false
+    class_balanced_sampling: true
+    pin_memory: true
+    drop_last: true
+
+train:
+  epochs: 300
+  loss:
+    mode: cross_entropy
+  swa_start: 200
+  val_interval: 1
+  grad_clip_norm: 1.0
+  scheduler: cosine
+  min_lr: 1.0e-6
+  model_selection: val_accuracy
+  optimizer:
+    name: AdamW
+    lr: 1.0e-4
+    weight_decay: 1.0e-4
+
+outputs:
+  work_dir: /home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_recipe_stage_a
+  auto_run_dir: false
+  best_model: /home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_recipe_stage_a/best_model.pth
+  last_model: /home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_recipe_stage_a/last_model.pth
+  history: /home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_recipe_stage_a/history.json
+  train_curve: /home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_recipe_stage_a/train_curve.png
+  test_results: /home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_recipe_stage_a/unseen_test_results.json

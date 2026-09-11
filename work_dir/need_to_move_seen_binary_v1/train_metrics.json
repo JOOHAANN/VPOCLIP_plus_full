@@ -1,0 +1,82 @@
+{
+  "episodes": 2734,
+  "train_subjects": [
+    "P001",
+    "P005",
+    "P006",
+    "P008",
+    "P012",
+    "P015",
+    "P021",
+    "P024",
+    "P025",
+    "P026",
+    "P032",
+    "P044",
+    "P054",
+    "P060",
+    "P065",
+    "P068",
+    "P076",
+    "P077",
+    "P091",
+    "P093"
+  ],
+  "validation_subjects": [
+    "P002",
+    "P052",
+    "P056",
+    "P081",
+    "P086"
+  ],
+  "train_label_counts": [
+    656,
+    1588
+  ],
+  "validation_label_counts": [
+    146,
+    344
+  ],
+  "train_metrics": {
+    "auroc": 0.9999827210173865,
+    "auprc": 0.9999929420843123,
+    "positive_prevalence": 0.7076648841354723,
+    "accuracy": 0.9991087344028521,
+    "precision": 1.0,
+    "recall_recoverable": 0.9987405541561712,
+    "f1": 0.9993698802772526,
+    "predicted_positive_rate": 0.7067736185383244
+  },
+  "validation_metrics": {
+    "auroc": 0.5704344536476584,
+    "auprc": 0.7490298249837859,
+    "positive_prevalence": 0.7020408163265306,
+    "accuracy": 0.6244897959183674,
+    "precision": 0.7285714285714285,
+    "recall_recoverable": 0.7412790697674418,
+    "f1": 0.734870317002882,
+    "predicted_positive_rate": 0.7142857142857143
+  },
+  "feature_info": {
+    "causal_feature_groups": [
+      "current_entropy",
+      "current_top1",
+      "current_top1_top2_margin",
+      "current_energy",
+      "body_visibility_proxy",
+      "interaction_ambiguity_proxy",
+      "torso_orientation_proxy",
+      "image_quality",
+      "current_body_relative_geometry"
+    ],
+    "unavailable_not_fabricated": [
+      "RGB_vs_skeleton_modality_disagreement",
+      "RGB_vs_object_modality_disagreement",
+      "per_joint_skeleton_confidence",
+      "per_frame_logit_instability"
+    ],
+    "feature_dim": 30,
+    "future_candidate_inputs": false
+  },
+  "threshold": 0.5
+}

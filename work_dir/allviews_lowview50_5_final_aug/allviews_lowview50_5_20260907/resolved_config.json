@@ -1,0 +1,136 @@
+{
+  "runtime": {
+    "device": "cuda:0",
+    "seed": 20260616,
+    "amp": true,
+    "no_show": true
+  },
+  "data": {
+    "train": {
+      "data_dir": "/home/youhan/ws/VPOCLIP_plus_full/data/allviews_cs45_lowview50_5_zsl",
+      "prefix": "trimodal_train",
+      "pose_suffix": "_coco17",
+      "mmap": true
+    },
+    "val": {
+      "data_dir": "/home/youhan/ws/VPOCLIP_plus_full/data/allviews_cs45_lowview50_5_zsl",
+      "prefix": "trimodal_val",
+      "pose_suffix": "_coco17",
+      "mmap": true
+    },
+    "augment": {
+      "enabled": true,
+      "noise_std": 0.02,
+      "time_jitter": 0.3,
+      "modality_dropout": 0.2
+    },
+    "text": {
+      "xlsx": "/home/youhan/ws/VPOCLIP_plus_full/ntu55_global_descriptions.xlsx",
+      "id_column": "ID",
+      "text_column": "global_description",
+      "label_offset": 1,
+      "prompt_template": "{global_description}",
+      "prompt_templates": [
+        "{global_description}",
+        "{action_description}",
+        "a person {action_description}",
+        "a video of a person {action_description}",
+        "an older adult {action_description}",
+        "someone at home {action_description}",
+        "a daily activity: {action_description}",
+        "footage of {action_description} indoors"
+      ],
+      "batch_size": 128,
+      "cache_output": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_final_aug/text.pt"
+    },
+    "dataloader": {
+      "batch_size": 128,
+      "num_workers": 12,
+      "persistent_workers": true,
+      "train_shuffle": true,
+      "val_shuffle": false,
+      "class_balanced_sampling": true,
+      "pin_memory": true,
+      "drop_last": true
+    }
+  },
+  "model": {
+    "text_encoder": {
+      "name": "ViT-B/32",
+      "download_root": null
+    },
+    "fusion": {
+      "reducer": "attention_pool",
+      "dropout": 0.4,
+      "attention_dim": 256,
+      "attention_heads": 4,
+      "attention_layers": 1,
+      "object_fusion": "temporal_concat",
+      "object_attention_dim": 128,
+      "object_attention_heads": 4,
+      "object_dropout": 0.1,
+      "video_channels": 33,
+      "num_joints": 17
+    }
+  },
+  "train": {
+    "epochs": 300,
+    "loss": {
+      "mode": "cross_entropy",
+      "entropy_weight": 0.05,
+      "entropy_temperature": 0.1,
+      "entropy_scope": "seen",
+      "entropy_normalize": true,
+      "entropy_correct_only": true,
+      "entropy_start_epoch": 10,
+      "entropy_warmup_epochs": 20,
+      "scale_independent": true,
+      "anchor_weight": 0.0,
+      "anchor_scope": "visual"
+    },
+    "swa_start": 200,
+    "val_interval": 1,
+    "grad_clip_norm": 1.0,
+    "scheduler": "cosine",
+    "min_lr": 1e-06,
+    "model_selection": "val_accuracy",
+    "optimizer": {
+      "name": "AdamW",
+      "lr": 0.0001,
+      "weight_decay": 0.0001
+    },
+    "init_checkpoint": null
+  },
+  "outputs": {
+    "work_dir": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_final_aug/allviews_lowview50_5_20260907",
+    "auto_run_dir": true,
+    "run_name": "allviews_lowview50_5_20260907",
+    "best_model": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_final_aug/allviews_lowview50_5_20260907/best_model.pth",
+    "last_model": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_final_aug/allviews_lowview50_5_20260907/last_model.pth",
+    "history": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_final_aug/allviews_lowview50_5_20260907/history.json",
+    "train_curve": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_final_aug/allviews_lowview50_5_20260907/train_curve.png",
+    "test_results": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/allviews_lowview50_5_final_aug/allviews_lowview50_5_20260907/unseen_test_results.json"
+  },
+  "inference": {
+    "gating": {
+      "enabled": true,
+      "require_person": true,
+      "person_slot": 0,
+      "novelty": {
+        "method": "entropy",
+        "temperature": 0.1,
+        "entropy_threshold": 0.55,
+        "cosine_threshold": 0.25
+      },
+      "motion": {
+        "enabled": true,
+        "static_threshold": 0.004,
+        "static_labels": [
+          52
+        ],
+        "static_cosine_threshold": 0.25
+      },
+      "hysteresis": 3
+    }
+  }
+}

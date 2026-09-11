@@ -1,0 +1,61 @@
+{
+  "episodes": 65,
+  "random_expected_top1": 0.49230775237083435,
+  "methods": {
+    "random": {
+      "top1": 0.49230775237083435,
+      "sampled_top1": 0.5076923076923077,
+      "delta_vs_random": 0.0,
+      "paired_bootstrap_ci95": [
+        0.0,
+        0.0
+      ],
+      "body_gain": 0.007002822123467922,
+      "interaction_gain": 0.019199660047888756
+    },
+    "future_visibility_oracle": {
+      "top1": 0.38461538461538464,
+      "sampled_top1": 0.38461538461538464,
+      "delta_vs_random": -0.10769233107566833,
+      "paired_bootstrap_ci95": [
+        -0.22051285207271576,
+        0.005128186661750078
+      ],
+      "body_gain": 0.02440864033997059,
+      "interaction_gain": 0.020029880106449127
+    },
+    "future_interaction_oracle": {
+      "top1": 0.5692307692307692,
+      "sampled_top1": 0.5692307692307692,
+      "delta_vs_random": 0.07692306488752365,
+      "paired_bootstrap_ci95": [
+        -0.03076924942433834,
+        0.1846153736114502
+      ],
+      "body_gain": 0.011413446627557278,
+      "interaction_gain": 0.08071911334991455
+    },
+    "future_visibility_interaction_fixed": {
+      "top1": 0.5384615384615384,
+      "sampled_top1": 0.5384615384615384,
+      "delta_vs_random": 0.046153828501701355,
+      "paired_bootstrap_ci95": [
+        -0.06666669994592667,
+        0.1589743196964264
+      ],
+      "body_gain": 0.01465330645442009,
+      "interaction_gain": 0.0791780948638916
+    },
+    "full_har_oracle": {
+      "top1": 1.0,
+      "delta_vs_random": 0.5076922476291656,
+      "paired_bootstrap_ci95": [
+        0.4666666090488434,
+        0.5487178564071655
+      ]
+    }
+  },
+  "body_gain_definition": "future candidate body-part visibility minus current view 0",
+  "interaction_gain_definition": "future candidate interaction clarity minus current view 0",
+  "note": "future observation is privileged diagnostic input; never used by Need-to-Move classifier"
+}

@@ -1,0 +1,1062 @@
+{
+  "protocol": "causal current-view state only; future logits used only for oracle target",
+  "feature_definitions": {
+    "geometry": "candidate geometry and reachability only",
+    "geometry_pose": "geometry + current-view pose",
+    "geometry_evidence": "geometry + current-view logits summary",
+    "geometry_pose_evidence": "geometry + pose + current-view logits summary",
+    "full_causal_state": "geometry + pose + evidence + current z/object/quality reference"
+  },
+  "contexts": {
+    "train": 9485,
+    "holdout": 940,
+    "unseen": 1656
+  },
+  "models": {
+    "geometry": [
+      {
+        "seed": 20260909,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.2965271770954132,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7826945781707764,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2332,
+            "action_agreement": 0.32418525218963623,
+            "random_action_agreement": 0.3438393771648407,
+            "selected_top1": 0.7830896377563477,
+            "random_top1": 0.7730846405029297,
+            "oracle_top1": 0.7965230941772461,
+            "mean_valid_actions": 2.9369640350341797
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.07685433328151703,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.2073279768228531,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.37681159377098083,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5289855003356934,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.35748791694641113,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5193236470222473,
+            "random_top1": 0.5201288461685181,
+            "oracle_top1": 0.5676328539848328,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260910,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.292965292930603,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.781509280204773,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2336,
+            "action_agreement": 0.33090752363204956,
+            "random_action_agreement": 0.3438927233219147,
+            "selected_top1": 0.7819043397903442,
+            "random_top1": 0.7749001383781433,
+            "oracle_top1": 0.7977083921432495,
+            "mean_valid_actions": 2.9366438388824463
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.06791778653860092,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.17336907982826233,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3647342920303345,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5241546034812927,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3550724685192108,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5265700221061707,
+            "random_top1": 0.5273752212524414,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260911,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.2996438145637512,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7811141610145569,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2343,
+            "action_agreement": 0.33418694138526917,
+            "random_action_agreement": 0.3443590998649597,
+            "selected_top1": 0.7795337438583374,
+            "random_top1": 0.7740076780319214,
+            "oracle_top1": 0.7957329154014587,
+            "mean_valid_actions": 2.9338455200195312
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.08132261037826538,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.21447721123695374,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.18944844603538513,
+            "random_top1": 0.1957104504108429,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3695652186870575,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5289855003356934,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3526569902896881,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5289855003356934,
+            "random_top1": 0.5225443243980408,
+            "oracle_top1": 0.5748792290687561,
+            "mean_valid_actions": 3.0
+          }
+        }
+      }
+    ],
+    "geometry_pose": [
+      {
+        "seed": 20260909,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.34461265802383423,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7822994589805603,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2332,
+            "action_agreement": 0.4030874967575073,
+            "random_action_agreement": 0.3438393771648407,
+            "selected_top1": 0.781509280204773,
+            "random_top1": 0.7730846405029297,
+            "oracle_top1": 0.7965230941772461,
+            "mean_valid_actions": 2.9369640350341797
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.06791778653860092,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.2922252118587494,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3526569902896881,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5193236470222473,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.34541061520576477,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5169082283973694,
+            "random_top1": 0.5201288461685181,
+            "oracle_top1": 0.5676328539848328,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260910,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.3468388319015503,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7826945781707764,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2336,
+            "action_agreement": 0.4139554798603058,
+            "random_action_agreement": 0.3438927233219147,
+            "selected_top1": 0.781509280204773,
+            "random_top1": 0.7749001383781433,
+            "oracle_top1": 0.7977083921432495,
+            "mean_valid_actions": 2.9366438388824463
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.07238605618476868,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.251117080450058,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.33816424012184143,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5265700221061707,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3695652186870575,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.54347825050354,
+            "random_top1": 0.5273752212524414,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260911,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.35218167304992676,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7838798761367798,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2343,
+            "action_agreement": 0.3952198028564453,
+            "random_action_agreement": 0.3443590998649597,
+            "selected_top1": 0.7807190418243408,
+            "random_top1": 0.7740076780319214,
+            "oracle_top1": 0.7957329154014587,
+            "mean_valid_actions": 2.9338455200195312
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.06881143897771835,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.30294907093048096,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.1957104504108429,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.32367148995399475,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5265700221061707,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.33816424012184143,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5289855003356934,
+            "random_top1": 0.5225443243980408,
+            "oracle_top1": 0.5748792290687561,
+            "mean_valid_actions": 3.0
+          }
+        }
+      }
+    ],
+    "geometry_evidence": [
+      {
+        "seed": 20260909,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.296972393989563,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7807190418243408,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2332,
+            "action_agreement": 0.33447685837745667,
+            "random_action_agreement": 0.3438393771648407,
+            "selected_top1": 0.7807190418243408,
+            "random_top1": 0.7730846405029297,
+            "oracle_top1": 0.7965230941772461,
+            "mean_valid_actions": 2.9369640350341797
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.0732797160744667,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.222520112991333,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3550724685192108,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5265700221061707,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3115941882133484,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5144927501678467,
+            "random_top1": 0.5201288461685181,
+            "oracle_top1": 0.5676328539848328,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260910,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.3018699884414673,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7811141610145569,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2336,
+            "action_agreement": 0.32919520139694214,
+            "random_action_agreement": 0.3438927233219147,
+            "selected_top1": 0.7819043397903442,
+            "random_top1": 0.7749001383781433,
+            "oracle_top1": 0.7977083921432495,
+            "mean_valid_actions": 2.9366438388824463
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.07059875130653381,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.18319928646087646,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3357487916946411,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.52173912525177,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.36231884360313416,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5314009785652161,
+            "random_top1": 0.5273752212524414,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260911,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.2983081042766571,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7807190418243408,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2343,
+            "action_agreement": 0.3282116949558258,
+            "random_action_agreement": 0.3443590998649597,
+            "selected_top1": 0.7775582671165466,
+            "random_top1": 0.7740076780319214,
+            "oracle_top1": 0.7957329154014587,
+            "mean_valid_actions": 2.9338455200195312
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.0759606808423996,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.21537086367607117,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.18944844603538513,
+            "random_top1": 0.1957104504108429,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.35990336537361145,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5314009785652161,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.35990336537361145,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5265700221061707,
+            "random_top1": 0.5225443243980408,
+            "oracle_top1": 0.5748792290687561,
+            "mean_valid_actions": 3.0
+          }
+        }
+      }
+    ],
+    "geometry_pose_evidence": [
+      {
+        "seed": 20260909,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.3432769477367401,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7819043397903442,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2332,
+            "action_agreement": 0.41080617904663086,
+            "random_action_agreement": 0.3438393771648407,
+            "selected_top1": 0.7830896377563477,
+            "random_top1": 0.7730846405029297,
+            "oracle_top1": 0.7965230941772461,
+            "mean_valid_actions": 2.9369640350341797
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.06613047420978546,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.2931188642978668,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.1902478039264679,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3526569902896881,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5265700221061707,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3526569902896881,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5144927501678467,
+            "random_top1": 0.5201288461685181,
+            "oracle_top1": 0.5676328539848328,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260910,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.34149599075317383,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7803239822387695,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2336,
+            "action_agreement": 0.39811643958091736,
+            "random_action_agreement": 0.3438927233219147,
+            "selected_top1": 0.781509280204773,
+            "random_top1": 0.7749001383781433,
+            "oracle_top1": 0.7977083921432495,
+            "mean_valid_actions": 2.9366438388824463
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.0670241266489029,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.2394995540380478,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3840579688549042,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5289855003356934,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.4082125425338745,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5386473536491394,
+            "random_top1": 0.5273752212524414,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260911,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.33926981687545776,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7838798761367798,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2343,
+            "action_agreement": 0.3986342251300812,
+            "random_action_agreement": 0.3443590998649597,
+            "selected_top1": 0.7799288630485535,
+            "random_top1": 0.7740076780319214,
+            "oracle_top1": 0.7957329154014587,
+            "mean_valid_actions": 2.9338455200195312
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.0670241266489029,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.31188562512397766,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.1957104504108429,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3309178650379181,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.52173912525177,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.32608693838119507,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.533816397190094,
+            "random_top1": 0.5225443243980408,
+            "oracle_top1": 0.5748792290687561,
+            "mean_valid_actions": 3.0
+          }
+        }
+      }
+    ],
+    "full_causal_state": [
+      {
+        "seed": 20260909,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.39447909593582153,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7842749953269958,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2332,
+            "action_agreement": 0.45969125628471375,
+            "random_action_agreement": 0.3438393771648407,
+            "selected_top1": 0.787040650844574,
+            "random_top1": 0.7730846405029297,
+            "oracle_top1": 0.7965230941772461,
+            "mean_valid_actions": 2.9369640350341797
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.07417336851358414,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.309204638004303,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19104716181755066,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.34541061520576477,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5386473536491394,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.2995169162750244,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.509661853313446,
+            "random_top1": 0.5201288461685181,
+            "oracle_top1": 0.5676328539848328,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260910,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.4020480811595917,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7866455912590027,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2336,
+            "action_agreement": 0.457619845867157,
+            "random_action_agreement": 0.3438927233219147,
+            "selected_top1": 0.7878308892250061,
+            "random_top1": 0.7749001383781433,
+            "oracle_top1": 0.7977083921432495,
+            "mean_valid_actions": 2.9366438388824463
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.06255585700273514,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.2949061691761017,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.19344525039196014,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.35748791694641113,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5362318754196167,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3888888955116272,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.533816397190094,
+            "random_top1": 0.5273752212524414,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          }
+        }
+      },
+      {
+        "seed": 20260911,
+        "train": {
+          "fixed0": {
+            "episodes": 2531,
+            "choiceable": 2246,
+            "action_agreement": 0.4078361690044403,
+            "random_action_agreement": 0.3383793532848358,
+            "selected_top1": 0.7866455912590027,
+            "random_top1": 0.7675868272781372,
+            "oracle_top1": 0.7917819023132324,
+            "mean_valid_actions": 2.96972393989563
+          },
+          "random": {
+            "episodes": 2531,
+            "choiceable": 2343,
+            "action_agreement": 0.4600939154624939,
+            "random_action_agreement": 0.3443590998649597,
+            "selected_top1": 0.7842749953269958,
+            "random_top1": 0.7740076780319214,
+            "oracle_top1": 0.7957329154014587,
+            "mean_valid_actions": 2.9338455200195312
+          }
+        },
+        "holdout": {
+          "fixed0": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.06970509141683578,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.19660411775112152,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          },
+          "random": {
+            "episodes": 1251,
+            "choiceable": 1119,
+            "action_agreement": 0.31456658244132996,
+            "random_action_agreement": 0.3334822952747345,
+            "selected_top1": 0.19184651970863342,
+            "random_top1": 0.1957104504108429,
+            "oracle_top1": 0.1926458775997162,
+            "mean_valid_actions": 2.9991064071655273
+          }
+        },
+        "unseen": {
+          "fixed0": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3502415418624878,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.52173912525177,
+            "random_top1": 0.5289855599403381,
+            "oracle_top1": 0.5845410823822021,
+            "mean_valid_actions": 3.0
+          },
+          "random": {
+            "episodes": 414,
+            "choiceable": 414,
+            "action_agreement": 0.3285024166107178,
+            "random_action_agreement": 0.3333333432674408,
+            "selected_top1": 0.5193236470222473,
+            "random_top1": 0.5225443243980408,
+            "oracle_top1": 0.5748792290687561,
+            "mean_valid_actions": 3.0
+          }
+        }
+      }
+    ]
+  }
+}

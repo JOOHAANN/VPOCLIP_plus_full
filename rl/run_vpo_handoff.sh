@@ -42,10 +42,13 @@ print(Path("${cfg}").parent.parent / c["train"]["output_dir"] if not Path(c["tra
 PY
 )
     mkdir -p "${out}"
-    echo "=== START ${name} cache dqn_train ==="
-    "${PY}" -u -m rl.build_cache --config "${cfg}" --split dqn_train
-    echo "=== START ${name} cache val ==="
-    "${PY}" -u -m rl.build_cache --config "${cfg}" --split val
+    echo "=== START ${name} cache dqn_train + val (parallel) ==="
+    "${PY}" -u -m rl.build_cache --config "${cfg}" --split dqn_train &
+    local dqn_pid=$!
+    "${PY}" -u -m rl.build_cache --config "${cfg}" --split val &
+    local val_pid=$!
+    wait "${dqn_pid}"
+    wait "${val_pid}"
     echo "=== START ${name} cache test ==="
     "${PY}" -u -m rl.build_cache --config "${cfg}" --split test
     echo "=== START ${name} DDQN ==="

@@ -1,0 +1,75 @@
+{
+  "gate_a": {
+    "selected_model_by_validation": "random_forest",
+    "selected_threshold": 0.075,
+    "validation_auroc": 0.6618930714675395,
+    "validation_auprc": 0.7338276249430252,
+    "validation_positive_prevalence": 0.5755102040816327,
+    "auroc_threshold": 0.7,
+    "auprc_clear_rule": "AUPRC >= prevalence*1.15 and >= prevalence+0.03",
+    "passed": true
+  },
+  "variants": {
+    "pseudo_unseen_10": {
+      "episodes_with_remaining": 225,
+      "ranker_top1": 0.9777777777777777,
+      "random_remaining_expected_top1": 0.9777777777777777,
+      "delta_vs_random": 0.0,
+      "paired_ci95": [
+        0.0,
+        0.0
+      ],
+      "ranker_utility": 15.301358222961426,
+      "random_utility": 15.273825276162889,
+      "ranker_action_histogram": [
+        20,
+        93,
+        105,
+        27
+      ],
+      "gate_b_passed": false
+    },
+    "seen_test_50": {
+      "episodes_with_remaining": 2285,
+      "ranker_top1": 0.9601750547045952,
+      "random_remaining_expected_top1": 0.962144420131291,
+      "delta_vs_random": -0.0019693654030561447,
+      "paired_ci95": [
+        -0.004814004376367615,
+        0.00087527352297593
+      ],
+      "ranker_utility": 10.05937671661377,
+      "random_utility": 10.061164781666427,
+      "ranker_action_histogram": [
+        276,
+        1052,
+        963,
+        270
+      ],
+      "gate_b_passed": false
+    },
+    "true_unseen_5": {
+      "episodes_with_remaining": 414,
+      "ranker_top1": 0.538647342995169,
+      "random_remaining_expected_top1": 0.5410628019323671,
+      "delta_vs_random": -0.002415458904579282,
+      "paired_ci95": [
+        -0.014492753623188406,
+        0.00966183574879227
+      ],
+      "ranker_utility": 0.6070237755775452,
+      "random_utility": 0.6310976844838851,
+      "ranker_action_histogram": [
+        0,
+        127,
+        223,
+        64
+      ],
+      "gate_b_passed": false
+    }
+  },
+  "gate_b": {
+    "passed": false,
+    "criterion": "validation delta > 0.01 and paired CI lower bound > 0"
+  }
+}

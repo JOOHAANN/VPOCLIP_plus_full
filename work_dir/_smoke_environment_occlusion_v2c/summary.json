@@ -1,0 +1,3067 @@
+{
+  "variant": "multistep_environment_occlusion_policy_v2",
+  "recognizer_cache": "/home/youhan/ws/VPOCLIP_plus_full/data/rl_raw_new50_5_group1_stage_b/cache",
+  "base_policy": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/multistep_angle_object_trajectory_policy_latest_vpoclip_new50_5/seed_20260909/best.pt",
+  "strict_unseen_classes": [
+    14,
+    15,
+    25,
+    39,
+    46
+  ],
+  "selected": {
+    "seed": 20260909,
+    "checkpoint": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/_smoke_environment_occlusion_v2c/seed_20260909/best.pt",
+    "best_epoch": 1
+  },
+  "training_runs": [
+    {
+      "seed": 20260909,
+      "best_score": 0.005772000783449638,
+      "best_epoch": 1,
+      "checkpoint": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/_smoke_environment_occlusion_v2c/seed_20260909/best.pt",
+      "training_episodes": 2900
+    }
+  ],
+  "phase0": {
+    "seen_validation": {
+      "none": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9696969985961914
+        },
+        "random_exact": {
+          "top1": 0.9841269844280177,
+          "mean_movement_cost": 0.4112220724230205,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9913419913419913,
+          "mean_movement_cost": 0.3543816726348359,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.4192676544189453,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.414486289024353,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4362087547779083,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4119504392147064,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4111176133155823,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.42147767543792725,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.41903653740882874,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4235137104988098,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.40717074275016785,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.38346490263938904,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9826839745044709,
+          "std": 0.0035346103863997135
+        }
+      },
+      "mild": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9696969985961914
+        },
+        "random_exact": {
+          "top1": 0.9826839830710258,
+          "mean_movement_cost": 0.4112220724230205,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9913419913419913,
+          "mean_movement_cost": 0.35240500260676655,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.4192676544189453,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.414486289024353,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4362087547779083,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4119504392147064,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4111176133155823,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.42147767543792725,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.41903653740882874,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4235137104988098,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.40717074275016785,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.38346490263938904,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9822510778903961,
+          "std": 0.003790446223096184
+        }
+      },
+      "medium": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9696969985961914
+        },
+        "random_exact": {
+          "top1": 0.9812409815850196,
+          "mean_movement_cost": 0.4112220724230205,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9913419913419913,
+          "mean_movement_cost": 0.3427301590609086,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4192676544189453,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.414486289024353,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4362087547779083,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4119504392147064,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4111176133155823,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.42147767543792725,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.41903653740882874,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4235137104988098,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.40717074275016785,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.38346490263938904,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9809523761272431,
+          "std": 0.0041822087806481865
+        }
+      },
+      "heavy": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9696969985961914
+        },
+        "random_exact": {
+          "top1": 0.9812409815850196,
+          "mean_movement_cost": 0.4112220724230205,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9913419913419913,
+          "mean_movement_cost": 0.34104954323920855,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4192676544189453,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.414486289024353,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4362087547779083,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4119504392147064,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4111176133155823,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.42147767543792725,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.41903653740882874,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4235137104988098,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.40717074275016785,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.38346490263938904,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9809523761272431,
+          "std": 0.0041822087806481865
+        }
+      }
+    },
+    "true_unseen_5way": {
+      "none": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6125461459159851
+        },
+        "random_exact": {
+          "top1": 0.6432964341007036,
+          "mean_movement_cost": 0.4286777488474916,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6715867158671587,
+          "mean_movement_cost": 0.37927019113599153,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4287163019180298,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4582292139530182,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.4322693943977356,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.45188379287719727,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.43474191427230835,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.44847479462623596,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.43335384130477905,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.42538419365882874,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.44794711470603943,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.445553719997406,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6428044378757477,
+          "std": 0.010694727248711315
+        }
+      },
+      "mild": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6125461459159851
+        },
+        "random_exact": {
+          "top1": 0.6445264463275121,
+          "mean_movement_cost": 0.4286777488474916,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6715867158671587,
+          "mean_movement_cost": 0.3896797868625924,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4287163019180298,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4582292139530182,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.4322693943977356,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.45188379287719727,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.43474191427230835,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.44847479462623596,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.43335384130477905,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.42538419365882874,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.44794711470603943,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.445553719997406,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6435424447059631,
+          "std": 0.010609505591343417
+        }
+      },
+      "medium": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.61623615026474
+        },
+        "random_exact": {
+          "top1": 0.6457564585543206,
+          "mean_movement_cost": 0.4286777488474916,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6715867158671587,
+          "mean_movement_cost": 0.3985854853563203,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.4287163019180298,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4582292139530182,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.4322693943977356,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.45188379287719727,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.43474191427230835,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.44847479462623596,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.43335384130477905,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.42538419365882874,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.44794711470603943,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.445553719997406,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6442804515361786,
+          "std": 0.010465939038758067
+        }
+      },
+      "heavy": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6199262142181396
+        },
+        "random_exact": {
+          "top1": 0.6457564585543206,
+          "mean_movement_cost": 0.4286777488474916,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6678966789667896,
+          "mean_movement_cost": 0.3936426812212406,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.4287163019180298,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4582292139530182,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.4322693943977356,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.45188379287719727,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.43474191427230835,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.44847479462623596,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.43335384130477905,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.42538419365882874,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.44794711470603943,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.445553719997406,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6442804515361786,
+          "std": 0.010465939038758067
+        }
+      }
+    }
+  },
+  "validation": {
+    "none": {
+      "fixed0": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9696969985961914
+        },
+        "random_exact": {
+          "top1": 0.9841269844280177,
+          "mean_movement_cost": 0.4112220724230205,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9913419913419913,
+          "mean_movement_cost": 0.3543816726348359,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.39958199858665466,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.41200771927833557,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4410584270954132,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.40518543124198914,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.41842353343963623,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42345577478408813,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.416811466217041,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.4142426550388336,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4336307942867279,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42260006070137024,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9844155728816986,
+          "std": 0.0036505440463090065
+        },
+        "policy": {
+          "top1": 0.9913420081138611,
+          "mean_movement_cost": 0.36963802576065063
+        }
+      },
+      "fixed1": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9826839566230774
+        },
+        "random_exact": {
+          "top1": 0.9826839832000402,
+          "mean_movement_cost": 0.4112220728100636,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.37042809053610415,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.4106180965900421,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.42738261818885803,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4072248339653015,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.42495885491371155,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4267157316207886,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.4152625799179077,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4049382209777832,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4244619905948639,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.42957937717437744,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.41442352533340454,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9813852846622467,
+          "std": 0.005790018090115334
+        },
+        "policy": {
+          "top1": 0.9740259647369385,
+          "mean_movement_cost": 0.3817722499370575
+        }
+      },
+      "fixed2": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9783549904823303
+        },
+        "random_exact": {
+          "top1": 0.9855699860430384,
+          "mean_movement_cost": 0.4112220745840114,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.4076676301303364,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.39773616194725037,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.3931424021720886,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4235382378101349,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.42348676919937134,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.40624967217445374,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4042825996875763,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.3987700939178467,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4314509332180023,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9956709742546082,
+            "mean_movement_cost": 0.4179264008998871,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9956709742546082,
+            "mean_movement_cost": 0.41453391313552856,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9852813720703125,
+          "std": 0.006189780173551545
+        },
+        "policy": {
+          "top1": 0.9870129823684692,
+          "mean_movement_cost": 0.3835228383541107
+        }
+      },
+      "fixed3": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9610389471054077
+        },
+        "random_exact": {
+          "top1": 0.9826839830710258,
+          "mean_movement_cost": 0.41122207406795386,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.4230379980557409,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.3950461745262146,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9696969985961914,
+            "mean_movement_cost": 0.42000293731689453,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.41087278723716736,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4148520529270172,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.3984728157520294,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.3807202875614166,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.41886964440345764,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.4095877707004547,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4143107235431671,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4105182886123657,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9809523761272431,
+          "std": 0.006189780173567489
+        },
+        "policy": {
+          "top1": 0.9956709742546082,
+          "mean_movement_cost": 0.3726464509963989
+        }
+      }
+    },
+    "mild": {
+      "fixed0": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9696969985961914
+        },
+        "random_exact": {
+          "top1": 0.9826839830710258,
+          "mean_movement_cost": 0.4112220724230205,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9913419913419913,
+          "mean_movement_cost": 0.35240500260676655,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.39958199858665466,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.41200771927833557,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4410584270954132,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.40518543124198914,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.41842353343963623,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42345577478408813,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.416811466217041,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4142426550388336,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4336307942867279,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42260006070137024,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9835497736930847,
+          "std": 0.003978082831575769
+        },
+        "policy": {
+          "top1": 0.9913420081138611,
+          "mean_movement_cost": 0.37142881751060486
+        }
+      },
+      "fixed1": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9826839566230774
+        },
+        "random_exact": {
+          "top1": 0.9812409818430483,
+          "mean_movement_cost": 0.4112220728100636,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.3556907163908729,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.4106180965900421,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.42738261818885803,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4072248339653015,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.42495885491371155,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4267157316207886,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.4152625799179077,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4049382209777832,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4244619905948639,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.42957937717437744,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.41442352533340454,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9805194854736328,
+          "std": 0.0062065891859280535
+        },
+        "policy": {
+          "top1": 0.9740259647369385,
+          "mean_movement_cost": 0.38489851355552673
+        }
+      },
+      "fixed2": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9783549904823303
+        },
+        "random_exact": {
+          "top1": 0.9841269846860464,
+          "mean_movement_cost": 0.4112220745840114,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.38765752857381647,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.39773616194725037,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.3931424021720886,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4235382378101349,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.42348676919937134,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.40624967217445374,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4042825996875763,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.3987700939178467,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4314509332180023,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9956709742546082,
+            "mean_movement_cost": 0.4179264008998871,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9956709742546082,
+            "mean_movement_cost": 0.41453391313552856,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9844155728816986,
+          "std": 0.007127894751191856
+        },
+        "policy": {
+          "top1": 0.9870129823684692,
+          "mean_movement_cost": 0.388518750667572
+        }
+      },
+      "fixed3": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9610389471054077
+        },
+        "random_exact": {
+          "top1": 0.9826839830710258,
+          "mean_movement_cost": 0.41122207406795386,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.4068511302595015,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.3950461745262146,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9696969985961914,
+            "mean_movement_cost": 0.42000293731689453,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.41087278723716736,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4148520529270172,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.3984728157520294,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.3807202875614166,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.41886964440345764,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.4095877707004547,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4143107235431671,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4105182886123657,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9809523761272431,
+          "std": 0.006189780173567489
+        },
+        "policy": {
+          "top1": 0.9870129823684692,
+          "mean_movement_cost": 0.3776644766330719
+        }
+      }
+    },
+    "medium": {
+      "fixed0": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9696969985961914
+        },
+        "random_exact": {
+          "top1": 0.9812409815850196,
+          "mean_movement_cost": 0.4112220724230205,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9913419913419913,
+          "mean_movement_cost": 0.3427301590609086,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.39958199858665466,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.41200771927833557,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4410584270954132,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.40518543124198914,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.41842353343963623,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42345577478408813,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.416811466217041,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4142426550388336,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4336307942867279,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42260006070137024,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9826839745044709,
+          "std": 0.004081423540619858
+        },
+        "policy": {
+          "top1": 0.9870129823684692,
+          "mean_movement_cost": 0.3746936023235321
+        }
+      },
+      "fixed1": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9826839566230774
+        },
+        "random_exact": {
+          "top1": 0.9812409818430483,
+          "mean_movement_cost": 0.4112220728100636,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.3425692640632004,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.4106180965900421,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.42738261818885803,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4072248339653015,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.42495885491371155,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4267157316207886,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.4152625799179077,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4049382209777832,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4244619905948639,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.42957937717437744,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.41442352533340454,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9805194854736328,
+          "std": 0.0062065891859280535
+        },
+        "policy": {
+          "top1": 0.9740259647369385,
+          "mean_movement_cost": 0.39471113681793213
+        }
+      },
+      "fixed2": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9783549904823303
+        },
+        "random_exact": {
+          "top1": 0.9826839832000402,
+          "mean_movement_cost": 0.4112220745840114,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.38415800926811766,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.39773616194725037,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.3931424021720886,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4235382378101349,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42348676919937134,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.40624967217445374,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4042825996875763,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.3987700939178467,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4314509332180023,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9956709742546082,
+            "mean_movement_cost": 0.4179264008998871,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9956709742546082,
+            "mean_movement_cost": 0.41453391313552856,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.98311687707901,
+          "std": 0.0074841471829712155
+        },
+        "policy": {
+          "top1": 0.9870129823684692,
+          "mean_movement_cost": 0.3904511630535126
+        }
+      },
+      "fixed3": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9610389471054077
+        },
+        "random_exact": {
+          "top1": 0.981240981714034,
+          "mean_movement_cost": 0.41122207406795386,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.40699158199292756,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.3950461745262146,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9696969985961914,
+            "mean_movement_cost": 0.42000293731689453,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.41087278723716736,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4148520529270172,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.3984728157520294,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.3807202875614166,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.41886964440345764,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.4095877707004547,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4143107235431671,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4105182886123657,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9796536803245545,
+          "std": 0.00646940787607872
+        },
+        "policy": {
+          "top1": 0.9870129823684692,
+          "mean_movement_cost": 0.37972989678382874
+        }
+      }
+    },
+    "heavy": {
+      "fixed0": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9696969985961914
+        },
+        "random_exact": {
+          "top1": 0.9812409815850196,
+          "mean_movement_cost": 0.4112220724230205,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9913419913419913,
+          "mean_movement_cost": 0.34104954323920855,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.39958199858665466,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.41200771927833557,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4410584270954132,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.40518543124198914,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.41842353343963623,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42345577478408813,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.416811466217041,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4142426550388336,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4336307942867279,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42260006070137024,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9826839745044709,
+          "std": 0.004081423540619858
+        },
+        "policy": {
+          "top1": 0.9870129823684692,
+          "mean_movement_cost": 0.3747606873512268
+        }
+      },
+      "fixed1": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9826839566230774
+        },
+        "random_exact": {
+          "top1": 0.9812409818430483,
+          "mean_movement_cost": 0.4112220728100636,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.3465331884431633,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.4106180965900421,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.42738261818885803,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4072248339653015,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.42495885491371155,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4267157316207886,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.4152625799179077,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4049382209777832,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4244619905948639,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.42957937717437744,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.41442352533340454,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9805194854736328,
+          "std": 0.0062065891859280535
+        },
+        "policy": {
+          "top1": 0.9740259647369385,
+          "mean_movement_cost": 0.3931986391544342
+        }
+      },
+      "fixed2": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9783549904823303
+        },
+        "random_exact": {
+          "top1": 0.9826839832000402,
+          "mean_movement_cost": 0.4112220745840114,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.3869502165100791,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.39773616194725037,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.3931424021720886,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4235382378101349,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.42348676919937134,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.40624967217445374,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4042825996875763,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.3987700939178467,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4314509332180023,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9956709742546082,
+            "mean_movement_cost": 0.4179264008998871,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9956709742546082,
+            "mean_movement_cost": 0.41453391313552856,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.98311687707901,
+          "std": 0.0074841471829712155
+        },
+        "policy": {
+          "top1": 0.9870129823684692,
+          "mean_movement_cost": 0.3924107849597931
+        }
+      },
+      "fixed3": {
+        "episodes": 231,
+        "single": {
+          "top1": 0.9610389471054077
+        },
+        "random_exact": {
+          "top1": 0.981240981714034,
+          "mean_movement_cost": 0.41122207406795386,
+          "episodes": 231.0
+        },
+        "oracle": {
+          "top1": 0.9956709956709957,
+          "mean_movement_cost": 0.40090067287931197,
+          "episodes": 231.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.3950461745262146,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9696969985961914,
+            "mean_movement_cost": 0.42000293731689453,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.41087278723716736,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.4148520529270172,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9783549904823303,
+            "mean_movement_cost": 0.3984728157520294,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9870129823684692,
+            "mean_movement_cost": 0.3807202875614166,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9740259647369385,
+            "mean_movement_cost": 0.41886964440345764,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9913420081138611,
+            "mean_movement_cost": 0.4095877707004547,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4143107235431671,
+            "episodes": 231.0
+          },
+          {
+            "top1": 0.9826839566230774,
+            "mean_movement_cost": 0.4105182886123657,
+            "episodes": 231.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.9796536803245545,
+          "std": 0.00646940787607872
+        },
+        "policy": {
+          "top1": 0.9870129823684692,
+          "mean_movement_cost": 0.38055795431137085
+        }
+      }
+    }
+  },
+  "true_unseen_5way": {
+    "none": {
+      "fixed0": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6125461459159851
+        },
+        "random_exact": {
+          "top1": 0.6432964341007036,
+          "mean_movement_cost": 0.4286777488474916,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6715867158671587,
+          "mean_movement_cost": 0.37927019113599153,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.42730340361595154,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4437742829322815,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.4476892054080963,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4146088659763336,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6236162185668945,
+            "mean_movement_cost": 0.4261135756969452,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4275670349597931,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.44076794385910034,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.4376426935195923,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.4262978434562683,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4237726628780365,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.644649451971054,
+          "std": 0.011279958450156431
+        },
+        "policy": {
+          "top1": 0.6383764147758484,
+          "mean_movement_cost": 0.41994237899780273
+        }
+      },
+      "fixed1": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6457564830780029
+        },
+        "random_exact": {
+          "top1": 0.6408364097570581,
+          "mean_movement_cost": 0.42867775027712335,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6568265682656826,
+          "mean_movement_cost": 0.3935553499487163,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.45169001817703247,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6236162185668945,
+            "mean_movement_cost": 0.44278496503829956,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.426195353269577,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6273062825202942,
+            "mean_movement_cost": 0.4196494519710541,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4287601411342621,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.44514229893684387,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.42900964617729187,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.43976423144340515,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.43610110878944397,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4350576102733612,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6428044319152832,
+          "std": 0.011512281702834614
+        },
+        "policy": {
+          "top1": 0.6494464874267578,
+          "mean_movement_cost": 0.44128620624542236
+        }
+      },
+      "fixed2": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6346863508224487
+        },
+        "random_exact": {
+          "top1": 0.6408364097570581,
+          "mean_movement_cost": 0.4286777513218542,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6605166051660517,
+          "mean_movement_cost": 0.41741533358186156,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6273062825202942,
+            "mean_movement_cost": 0.43368491530418396,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.445959210395813,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4077644646167755,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.41350942850112915,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.4405176043510437,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.43521422147750854,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.432323694229126,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.45702892541885376,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4384159743785858,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.39851048588752747,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6420664310455322,
+          "std": 0.009527627209385024
+        },
+        "policy": {
+          "top1": 0.660516619682312,
+          "mean_movement_cost": 0.4400131404399872
+        }
+      },
+      "fixed3": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6051660776138306
+        },
+        "random_exact": {
+          "top1": 0.6469864711110442,
+          "mean_movement_cost": 0.428677748380112,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6642066420664207,
+          "mean_movement_cost": 0.4455565790683581,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.4321344792842865,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.4083034098148346,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.43183252215385437,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4380621314048767,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.42973592877388,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4391375482082367,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.660516619682312,
+            "mean_movement_cost": 0.4476492404937744,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4279036223888397,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.41603443026542664,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.44983619451522827,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6487084984779358,
+          "std": 0.007129818546660671
+        },
+        "policy": {
+          "top1": 0.6309963464736938,
+          "mean_movement_cost": 0.4269963204860687
+        }
+      }
+    },
+    "mild": {
+      "fixed0": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6125461459159851
+        },
+        "random_exact": {
+          "top1": 0.6445264463275121,
+          "mean_movement_cost": 0.4286777488474916,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6715867158671587,
+          "mean_movement_cost": 0.3896797868625924,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.42730340361595154,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4437742829322815,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.4476892054080963,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4146088659763336,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6273062825202942,
+            "mean_movement_cost": 0.4261135756969452,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4275670349597931,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.44076794385910034,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.4376426935195923,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.4262978434562683,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4237726628780365,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.645756459236145,
+          "std": 0.011273238375062626
+        },
+        "policy": {
+          "top1": 0.6383764147758484,
+          "mean_movement_cost": 0.42355966567993164
+        }
+      },
+      "fixed1": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6420664191246033
+        },
+        "random_exact": {
+          "top1": 0.6420664219838667,
+          "mean_movement_cost": 0.42867775027712335,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6568265682656826,
+          "mean_movement_cost": 0.40244505868544217,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.45169001817703247,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6236162185668945,
+            "mean_movement_cost": 0.44278496503829956,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.426195353269577,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.4196494519710541,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4287601411342621,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.44514229893684387,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.42900964617729187,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.43976423144340515,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.43610110878944397,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4350576102733612,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6442804574966431,
+          "std": 0.011300054471855503
+        },
+        "policy": {
+          "top1": 0.6531365513801575,
+          "mean_movement_cost": 0.4439161717891693
+        }
+      },
+      "fixed2": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6346863508224487
+        },
+        "random_exact": {
+          "top1": 0.6420664219838667,
+          "mean_movement_cost": 0.4286777513218542,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6605166051660517,
+          "mean_movement_cost": 0.4160317741540635,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6273062825202942,
+            "mean_movement_cost": 0.43368491530418396,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.445959210395813,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4077644646167755,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.41350942850112915,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.4405176043510437,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.43521422147750854,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.432323694229126,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.45702892541885376,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4384159743785858,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.39851048588752747,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6435424387454987,
+          "std": 0.009237381535289423
+        },
+        "policy": {
+          "top1": 0.6568265557289124,
+          "mean_movement_cost": 0.43754613399505615
+        }
+      },
+      "fixed3": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6051660776138306
+        },
+        "random_exact": {
+          "top1": 0.6469864711110442,
+          "mean_movement_cost": 0.428677748380112,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6642066420664207,
+          "mean_movement_cost": 0.4439901587006901,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.4321344792842865,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.4083034098148346,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.43183252215385437,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4380621314048767,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.42973592877388,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4391375482082367,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.660516619682312,
+            "mean_movement_cost": 0.4476492404937744,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4279036223888397,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.41603443026542664,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.44983619451522827,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6487084984779358,
+          "std": 0.007129818546660671
+        },
+        "policy": {
+          "top1": 0.6273062825202942,
+          "mean_movement_cost": 0.430183470249176
+        }
+      }
+    },
+    "medium": {
+      "fixed0": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.61623615026474
+        },
+        "random_exact": {
+          "top1": 0.6457564585543206,
+          "mean_movement_cost": 0.4286777488474916,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6715867158671587,
+          "mean_movement_cost": 0.3985854853563203,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.42730340361595154,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4437742829322815,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4476892054080963,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4146088659763336,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.4261135756969452,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4275670349597931,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.44076794385910034,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.4376426935195923,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.4262978434562683,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4237726628780365,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.646494472026825,
+          "std": 0.010261558070000358
+        },
+        "policy": {
+          "top1": 0.6420664191246033,
+          "mean_movement_cost": 0.4247509241104126
+        }
+      },
+      "fixed1": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6420664191246033
+        },
+        "random_exact": {
+          "top1": 0.6420664219838667,
+          "mean_movement_cost": 0.42867775027712335,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6568265682656826,
+          "mean_movement_cost": 0.3880901998493174,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.45169001817703247,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6236162185668945,
+            "mean_movement_cost": 0.44278496503829956,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.426195353269577,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.4196494519710541,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4287601411342621,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.44514229893684387,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.42900964617729187,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.43976423144340515,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.43610110878944397,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4350576102733612,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6442804574966431,
+          "std": 0.011300054471855503
+        },
+        "policy": {
+          "top1": 0.6531365513801575,
+          "mean_movement_cost": 0.442386656999588
+        }
+      },
+      "fixed2": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6383764147758484
+        },
+        "random_exact": {
+          "top1": 0.6432964343206469,
+          "mean_movement_cost": 0.4286777513218542,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6605166051660517,
+          "mean_movement_cost": 0.4077954065961921,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6273062825202942,
+            "mean_movement_cost": 0.43368491530418396,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.445959210395813,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4077644646167755,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.41350942850112915,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.4405176043510437,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.660516619682312,
+            "mean_movement_cost": 0.43521422147750854,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.432323694229126,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.45702892541885376,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4384159743785858,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.39851048588752747,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6450184643268585,
+          "std": 0.009809301555666453
+        },
+        "policy": {
+          "top1": 0.660516619682312,
+          "mean_movement_cost": 0.44122403860092163
+        }
+      },
+      "fixed3": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6088560819625854
+        },
+        "random_exact": {
+          "top1": 0.6482164834478245,
+          "mean_movement_cost": 0.428677748380112,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6642066420664207,
+          "mean_movement_cost": 0.4403462477743186,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.4321344792842865,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.4083034098148346,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.43183252215385437,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4380621314048767,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.42973592877388,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4391375482082367,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.4476492404937744,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4279036223888397,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.41603443026542664,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.44983619451522827,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6505535125732422,
+          "std": 0.00739030715530741
+        },
+        "policy": {
+          "top1": 0.6309963464736938,
+          "mean_movement_cost": 0.4297918975353241
+        }
+      }
+    },
+    "heavy": {
+      "fixed0": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6199262142181396
+        },
+        "random_exact": {
+          "top1": 0.6457564585543206,
+          "mean_movement_cost": 0.4286777488474916,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6678966789667896,
+          "mean_movement_cost": 0.3936426812212406,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.42730340361595154,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4437742829322815,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4476892054080963,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4146088659763336,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.4261135756969452,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4275670349597931,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.44076794385910034,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.4376426935195923,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.4262978434562683,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4237726628780365,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.646494472026825,
+          "std": 0.010261558070000358
+        },
+        "policy": {
+          "top1": 0.6420664191246033,
+          "mean_movement_cost": 0.4266912639141083
+        }
+      },
+      "fixed1": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6383764147758484
+        },
+        "random_exact": {
+          "top1": 0.6420664219838667,
+          "mean_movement_cost": 0.42867775027712335,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6568265682656826,
+          "mean_movement_cost": 0.3882886427918593,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.45169001817703247,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6236162185668945,
+            "mean_movement_cost": 0.44278496503829956,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.426195353269577,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6309963464736938,
+            "mean_movement_cost": 0.4196494519710541,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4287601411342621,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.44514229893684387,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.42900964617729187,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.43976423144340515,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.43610110878944397,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4350576102733612,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6442804574966431,
+          "std": 0.011300054471855503
+        },
+        "policy": {
+          "top1": 0.6531365513801575,
+          "mean_movement_cost": 0.44275280833244324
+        }
+      },
+      "fixed2": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6383764147758484
+        },
+        "random_exact": {
+          "top1": 0.6432964343206469,
+          "mean_movement_cost": 0.4286777513218542,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6605166051660517,
+          "mean_movement_cost": 0.40342353410139076,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6273062825202942,
+            "mean_movement_cost": 0.43368491530418396,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.445959210395813,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.4077644646167755,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.41350942850112915,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6346863508224487,
+            "mean_movement_cost": 0.4405176043510437,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.660516619682312,
+            "mean_movement_cost": 0.43521422147750854,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.432323694229126,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.45702892541885376,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4384159743785858,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.39851048588752747,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6450184643268585,
+          "std": 0.009809301555666453
+        },
+        "policy": {
+          "top1": 0.660516619682312,
+          "mean_movement_cost": 0.4434768259525299
+        }
+      },
+      "fixed3": {
+        "episodes": 271,
+        "single": {
+          "top1": 0.6051660776138306
+        },
+        "random_exact": {
+          "top1": 0.6482164834478245,
+          "mean_movement_cost": 0.428677748380112,
+          "episodes": 271.0
+        },
+        "oracle": {
+          "top1": 0.6642066420664207,
+          "mean_movement_cost": 0.439294997747039,
+          "episodes": 271.0
+        },
+        "random_seeds": [
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.4321344792842865,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6568265557289124,
+            "mean_movement_cost": 0.4083034098148346,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.43183252215385437,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6383764147758484,
+            "mean_movement_cost": 0.4380621314048767,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.42973592877388,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6457564830780029,
+            "mean_movement_cost": 0.4391375482082367,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6642066240310669,
+            "mean_movement_cost": 0.4476492404937744,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6494464874267578,
+            "mean_movement_cost": 0.4279036223888397,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6531365513801575,
+            "mean_movement_cost": 0.41603443026542664,
+            "episodes": 271.0
+          },
+          {
+            "top1": 0.6420664191246033,
+            "mean_movement_cost": 0.44983619451522827,
+            "episodes": 271.0
+          }
+        ],
+        "random_10_mean_std": {
+          "mean": 0.6505535125732422,
+          "std": 0.00739030715530741
+        },
+        "policy": {
+          "top1": 0.6309963464736938,
+          "mean_movement_cost": 0.43131548166275024
+        }
+      }
+    }
+  },
+  "random_protocol": "exact expectation plus 10 sampled evaluation seeds",
+  "primary_protocol": "fixed view0, true unseen 5-way, medium synthetic occlusion",
+  "limitations": [
+    "feature-space occlusion proxy because latest dqn_train lacks aligned raw X3D tensors",
+    "clean pose/object trajectories are retained and explicitly audited",
+    "no PPO; supervised offline ranking only"
+  ]
+}

@@ -1,0 +1,11 @@
+# Evaluation-only override for the original 50/5 split.
+# The inherited historical config points at the same legacy data, but used
+# cuda:1 on a machine that currently exposes one GPU as cuda:0.
+base_config: /home/youhan/ws/VPOCLIP_plus_full/config_final_aug_entropy_single_h2.yaml
+
+runtime:
+  device: cuda:0
+
+data:
+  text:
+    xlsx: /home/youhan/ws/VPOCLIP_plus_full/ntu55_global_descriptions.xlsx

@@ -2,6 +2,18 @@
 项目根目录：/home/youhan/ws/VPOCLIP_plus_full
 
 【2026-09-08 最新优先级，覆盖下文旧顺序与双流水线等待条件】
+【2026-09-09 新一轮 VPOCLIP 对齐重训】
+用户提供的 preferred checkpoint recipe 已按新未见类重新启动：
+  A001/A003/A027/A035/A051（零基 [0,2,26,34,50]）。
+Stage A 配置：configs/vpoclip_new50_5_recipe_stage_a.yaml，300 epochs、CE、
+8 prompt、augmentation、class-balanced sampling，按 seen validation Top-1
+保存/选择 best_model.pth；输出 work_dir/allviews_lowview50_5_recipe_stage_a/。
+Stage B 配置：configs/vpoclip_new50_5_recipe_stage_b.yaml，从 Stage A best_model.pth
+初始化，单 prompt、CE+normalized correct-only entropy、lambda_H=2、anchor=100、
+20 epochs、冻结 BN；输出 work_dir/allviews_lowview50_5_recipe_stage_b/。
+后台 tmux：vpoclip_new50_5_recipe_20260909；总日志：
+logs/vpoclip_new50_5_recipe_20260909/train.log。两阶段串行，Stage A 未完成前不启动 B。
+这是重新训练，不读取旧全视角 VPOCLIP 的 last_model；旧权重保留。
 最新 X3D 训练预算：用户要求新50/5改为总共7000次optimizer迭代（不是7000 epochs）。
 warmup 400次，学习率衰减在3500、5810次，每1000次保存/验证，7000次结束。
 CTR-GCN和VPOCLIP训练轮数不变；旧50/5和闭集仍暂停。

@@ -1,0 +1,435 @@
+{
+  "feature_names": [
+    "view0_entropy",
+    "view0_top1_prob",
+    "view0_margin",
+    "latest_entropy",
+    "latest_top1_prob",
+    "latest_margin",
+    "fused_entropy",
+    "fused_top1_prob",
+    "fused_margin",
+    "js_first_latest",
+    "js_first_fused",
+    "logit_cosine_first_latest",
+    "top1_mismatch_first_latest",
+    "top5_disagreement_first_latest",
+    "entropy_gain_fused_minus_view0",
+    "confidence_gain_fused_minus_view0",
+    "margin_gain_fused_minus_view0",
+    "delta_visibility_0",
+    "delta_visibility_1",
+    "delta_visibility_2",
+    "delta_visibility_3",
+    "delta_visibility_4",
+    "delta_visibility_5",
+    "delta_visibility_6",
+    "delta_ambiguity_0",
+    "delta_ambiguity_1",
+    "delta_ambiguity_2",
+    "delta_ambiguity_3",
+    "delta_ambiguity_4",
+    "delta_orientation_0",
+    "delta_orientation_1",
+    "delta_orientation_2",
+    "delta_orientation_3",
+    "delta_orientation_4",
+    "delta_orientation_5",
+    "delta_quality_0",
+    "delta_quality_1",
+    "delta_quality_2",
+    "delta_quality_3",
+    "latest_relative_angle",
+    "latest_abs_angle",
+    "angular_coverage",
+    "views_seen",
+    "remaining_view_count",
+    "remaining_angle_mean",
+    "remaining_angle_min",
+    "remaining_angle_max",
+    "remaining_cost_mean",
+    "remaining_cost_min",
+    "remaining_cost_max",
+    "observed_move_cost"
+  ],
+  "feature_dim": 51,
+  "label_definition": "CONTINUE iff max remaining target-margin gain > epsilon; epsilon=0.02",
+  "train": {
+    "episodes": 2531,
+    "positive": 1561,
+    "prevalence": 0.6167522718293165,
+    "oof": {
+      "oof_subject_holdout": {
+        "logistic": {
+          "n": 2531,
+          "positive": 1561,
+          "negative": 970,
+          "positive_prevalence": 0.6167522718293165,
+          "auroc": 0.6980520681297344,
+          "auprc": 0.7586027004165458,
+          "probability_mean": 0.5168380364025007,
+          "probability_std": 0.17327138371028325
+        },
+        "random_forest": {
+          "n": 2531,
+          "positive": 1561,
+          "negative": 970,
+          "positive_prevalence": 0.6167522718293165,
+          "auroc": 0.7391808713684725,
+          "auprc": 0.7837945296926808,
+          "probability_mean": 0.615014018376105,
+          "probability_std": 0.21819869371955014
+        },
+        "gradient_boosting": {
+          "n": 2531,
+          "positive": 1561,
+          "negative": 970,
+          "positive_prevalence": 0.6167522718293165,
+          "auroc": 0.720029785294914,
+          "auprc": 0.7785178118711562,
+          "probability_mean": 0.6153794721281137,
+          "probability_std": 0.18556213780310726
+        },
+        "mlp": {
+          "n": 2531,
+          "positive": 1561,
+          "negative": 970,
+          "positive_prevalence": 0.6167522718293165,
+          "auroc": 0.6767291651531863,
+          "auprc": 0.7293291406597342,
+          "probability_mean": 0.6034943784178655,
+          "probability_std": 0.437854014951374
+        }
+      },
+      "folds": [
+        {
+          "fold": 0,
+          "train_episodes": 2017,
+          "validation_episodes": 514,
+          "validation_subjects": [
+            "P002",
+            "P026",
+            "P054",
+            "P077",
+            "P091"
+          ],
+          "validation_positive": 307
+        },
+        {
+          "fold": 1,
+          "train_episodes": 2025,
+          "validation_episodes": 506,
+          "validation_subjects": [
+            "P005",
+            "P008",
+            "P024",
+            "P076",
+            "P093"
+          ],
+          "validation_positive": 317
+        },
+        {
+          "fold": 2,
+          "train_episodes": 2023,
+          "validation_episodes": 508,
+          "validation_subjects": [
+            "P012",
+            "P021",
+            "P025",
+            "P044",
+            "P052"
+          ],
+          "validation_positive": 313
+        },
+        {
+          "fold": 3,
+          "train_episodes": 2020,
+          "validation_episodes": 511,
+          "validation_subjects": [
+            "P006",
+            "P032",
+            "P060",
+            "P068",
+            "P081"
+          ],
+          "validation_positive": 312
+        },
+        {
+          "fold": 4,
+          "train_episodes": 2039,
+          "validation_episodes": 492,
+          "validation_subjects": [
+            "P001",
+            "P015",
+            "P056",
+            "P065",
+            "P086"
+          ],
+          "validation_positive": 312
+        }
+      ]
+    }
+  },
+  "splits": {
+    "pseudo_unseen_10": {
+      "logistic": {
+        "n": 245,
+        "positive": 141,
+        "negative": 104,
+        "positive_prevalence": 0.5755102040816327,
+        "auroc": 0.6285460992907801,
+        "auprc": 0.7150463907755256,
+        "probability_mean": 0.5327446641362443,
+        "probability_std": 0.1640343255664821,
+        "best_threshold": {
+          "threshold": 0.32499999999999996,
+          "accuracy": 0.6571428571428571,
+          "precision_continue": 0.6278026905829597,
+          "recall_continue": 0.9929078014184397,
+          "f1_continue": 0.7692307692307692,
+          "tp": 140,
+          "fp": 83,
+          "fn": 1,
+          "tn": 21
+        }
+      },
+      "random_forest": {
+        "n": 245,
+        "positive": 141,
+        "negative": 104,
+        "positive_prevalence": 0.5755102040816327,
+        "auroc": 0.6618930714675395,
+        "auprc": 0.7338276249430252,
+        "probability_mean": 0.6448897381598244,
+        "probability_std": 0.19540079558583068,
+        "best_threshold": {
+          "threshold": 0.075,
+          "accuracy": 0.6571428571428571,
+          "precision_continue": 0.6266666666666667,
+          "recall_continue": 1.0,
+          "f1_continue": 0.7704918032786886,
+          "tp": 141,
+          "fp": 84,
+          "fn": 0,
+          "tn": 20
+        }
+      },
+      "gradient_boosting": {
+        "n": 245,
+        "positive": 141,
+        "negative": 104,
+        "positive_prevalence": 0.5755102040816327,
+        "auroc": 0.6465834697217676,
+        "auprc": 0.7171885706426351,
+        "probability_mean": 0.6345835903773502,
+        "probability_std": 0.166803012264562,
+        "best_threshold": {
+          "threshold": 0.575,
+          "accuracy": 0.6612244897959184,
+          "precision_continue": 0.6294642857142857,
+          "recall_continue": 1.0,
+          "f1_continue": 0.7726027397260274,
+          "tp": 141,
+          "fp": 83,
+          "fn": 0,
+          "tn": 21
+        }
+      },
+      "mlp": {
+        "n": 245,
+        "positive": 141,
+        "negative": 104,
+        "positive_prevalence": 0.5755102040816327,
+        "auroc": 0.591005182760502,
+        "auprc": 0.6593241366689347,
+        "probability_mean": 0.6450729594183304,
+        "probability_std": 0.40414276101962526,
+        "best_threshold": {
+          "threshold": 6.463188765337691e-05,
+          "accuracy": 0.6408163265306123,
+          "precision_continue": 0.6167400881057269,
+          "recall_continue": 0.9929078014184397,
+          "f1_continue": 0.7608695652173914,
+          "tp": 140,
+          "fp": 87,
+          "fn": 1,
+          "tn": 17
+        }
+      }
+    },
+    "seen_test_50": {
+      "logistic": {
+        "n": 2561,
+        "positive": 1595,
+        "negative": 966,
+        "positive_prevalence": 0.6228035923467395,
+        "auroc": 0.6721983164262025,
+        "auprc": 0.7443304648363405,
+        "probability_mean": 0.5169556099501079,
+        "probability_std": 0.1589625437552964,
+        "best_threshold": {
+          "threshold": 0.30408239364624023,
+          "accuracy": 0.7192502928543538,
+          "precision_continue": 0.6897746967071057,
+          "recall_continue": 0.9981191222570532,
+          "f1_continue": 0.8157827312323853,
+          "tp": 1592,
+          "fp": 716,
+          "fn": 3,
+          "tn": 250
+        }
+      },
+      "random_forest": {
+        "n": 2561,
+        "positive": 1595,
+        "negative": 966,
+        "positive_prevalence": 0.6228035923467395,
+        "auroc": 0.722100637992692,
+        "auprc": 0.7826269713112214,
+        "probability_mean": 0.622214087160913,
+        "probability_std": 0.21291879456505888,
+        "best_threshold": {
+          "threshold": 0.5462700128555298,
+          "accuracy": 0.7348691917219836,
+          "precision_continue": 0.701762114537445,
+          "recall_continue": 0.9987460815047022,
+          "f1_continue": 0.824320827943079,
+          "tp": 1593,
+          "fp": 677,
+          "fn": 2,
+          "tn": 289
+        }
+      },
+      "gradient_boosting": {
+        "n": 2561,
+        "positive": 1595,
+        "negative": 966,
+        "positive_prevalence": 0.6228035923467395,
+        "auroc": 0.6918251913004537,
+        "auprc": 0.762338888471998,
+        "probability_mean": 0.6176901816251175,
+        "probability_std": 0.18313496009300853,
+        "best_threshold": {
+          "threshold": 0.5157707929611206,
+          "accuracy": 0.7313549394767669,
+          "precision_continue": 0.6989907854322072,
+          "recall_continue": 0.9987460815047022,
+          "f1_continue": 0.8224057821373258,
+          "tp": 1593,
+          "fp": 686,
+          "fn": 2,
+          "tn": 280
+        }
+      },
+      "mlp": {
+        "n": 2561,
+        "positive": 1595,
+        "negative": 966,
+        "positive_prevalence": 0.6228035923467395,
+        "auroc": 0.6964705958708958,
+        "auprc": 0.7617996293027067,
+        "probability_mean": 0.5936065431734574,
+        "probability_std": 0.41725846120971055,
+        "best_threshold": {
+          "threshold": 0.0002572584489826113,
+          "accuracy": 0.7114408434205388,
+          "precision_continue": 0.6872265966754155,
+          "recall_continue": 0.9849529780564263,
+          "f1_continue": 0.8095851584643132,
+          "tp": 1571,
+          "fp": 715,
+          "fn": 24,
+          "tn": 251
+        }
+      }
+    },
+    "true_unseen_5": {
+      "logistic": {
+        "n": 414,
+        "positive": 286,
+        "negative": 128,
+        "positive_prevalence": 0.6908212560386473,
+        "auroc": 0.43233719405594406,
+        "auprc": 0.6506063247712585,
+        "probability_mean": 0.6792805720714555,
+        "probability_std": 0.1861152167659528,
+        "best_threshold": {
+          "threshold": 0.05,
+          "accuracy": 0.6908212560386473,
+          "precision_continue": 0.6908212560386473,
+          "recall_continue": 1.0,
+          "f1_continue": 0.8171428571428571,
+          "tp": 286,
+          "fp": 128,
+          "fn": 0,
+          "tn": 0
+        }
+      },
+      "random_forest": {
+        "n": 414,
+        "positive": 286,
+        "negative": 128,
+        "positive_prevalence": 0.6908212560386473,
+        "auroc": 0.4777644230769231,
+        "auprc": 0.6728452738229411,
+        "probability_mean": 0.8115472764064724,
+        "probability_std": 0.08556454301609,
+        "best_threshold": {
+          "threshold": 0.05,
+          "accuracy": 0.6908212560386473,
+          "precision_continue": 0.6908212560386473,
+          "recall_continue": 1.0,
+          "f1_continue": 0.8171428571428571,
+          "tp": 286,
+          "fp": 128,
+          "fn": 0,
+          "tn": 0
+        }
+      },
+      "gradient_boosting": {
+        "n": 414,
+        "positive": 286,
+        "negative": 128,
+        "positive_prevalence": 0.6908212560386473,
+        "auroc": 0.46506228146853146,
+        "auprc": 0.663150953367804,
+        "probability_mean": 0.7487836214511291,
+        "probability_std": 0.0605371382590916,
+        "best_threshold": {
+          "threshold": 0.05,
+          "accuracy": 0.6908212560386473,
+          "precision_continue": 0.6908212560386473,
+          "recall_continue": 1.0,
+          "f1_continue": 0.8171428571428571,
+          "tp": 286,
+          "fp": 128,
+          "fn": 0,
+          "tn": 0
+        }
+      },
+      "mlp": {
+        "n": 414,
+        "positive": 286,
+        "negative": 128,
+        "positive_prevalence": 0.6908212560386473,
+        "auroc": 0.5050671984265734,
+        "auprc": 0.7046080873074992,
+        "probability_mean": 0.7945263458368409,
+        "probability_std": 0.34435233267146825,
+        "best_threshold": {
+          "threshold": 0.0003649068239610642,
+          "accuracy": 0.6932367149758454,
+          "precision_continue": 0.6924939467312349,
+          "recall_continue": 1.0,
+          "f1_continue": 0.8183118741058655,
+          "tp": 286,
+          "fp": 127,
+          "fn": 0,
+          "tn": 1
+        }
+      }
+    }
+  },
+  "selected_model": "random_forest",
+  "selected_threshold": 0.075
+}
