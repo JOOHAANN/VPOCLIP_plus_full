@@ -1,0 +1,70 @@
+# Group1 all-view pseudo-unseen probe (stage A).
+# The true unseen classes are [14, 15, 25, 39, 46]; this probe holds out a
+# disjoint five-class group and never reads the true unseen test clips.
+base_config: /home/youhan/ws/VPOCLIP_plus_full/config_final_aug.yaml
+
+runtime:
+  device: cuda:0
+  seed: 20260912
+  amp: true
+  no_show: true
+  cudnn_benchmark: true
+  allow_tf32: true
+  matmul_precision: high
+
+data:
+  train:
+    data_dir: /home/youhan/ws/VPOCLIP_plus_full/data/new50_5_group1_zsl
+    prefix: trimodal_train
+    pose_suffix: _coco17
+    mmap: true
+    pseudo_unseen: [8, 27, 28, 35, 50]
+  val:
+    data_dir: /home/youhan/ws/VPOCLIP_plus_full/data/new50_5_group1_zsl
+    prefix: trimodal_val
+    pose_suffix: _coco17
+    mmap: true
+  pseudo_val:
+    classes: [8, 27, 28, 35, 50]
+    sources:
+      - data_dir: /home/youhan/ws/VPOCLIP_plus_full/data/new50_5_group1_zsl
+        prefix: trimodal_train
+        pose_suffix: _coco17
+      - data_dir: /home/youhan/ws/VPOCLIP_plus_full/data/new50_5_group1_zsl
+        prefix: trimodal_val
+        pose_suffix: _coco17
+  dataloader:
+    batch_size: 2048
+    num_workers: 16
+    persistent_workers: true
+    prefetch_factor: 4
+    train_shuffle: true
+    val_shuffle: false
+    class_balanced_sampling: true
+    pin_memory: true
+    drop_last: true
+
+train:
+  epochs: 300
+  val_interval: 1
+  model_selection: pseudo_zsl
+  checkpoint_every: 0
+  save_every: 1
+  swa_start: null
+  scheduler: cosine
+  min_lr: 1.0e-6
+  grad_clip_norm: 1.0
+  optimizer:
+    name: AdamW
+    lr: 1.0e-4
+    weight_decay: 1.0e-4
+
+outputs:
+  work_dir: /home/youhan/ws/VPOCLIP_plus_full/work_dir/g1_pseudo_p3_stage_a
+  auto_run_dir: false
+  run_name: null
+  best_model: /home/youhan/ws/VPOCLIP_plus_full/work_dir/g1_pseudo_p3_stage_a/best_model.pth
+  last_model: /home/youhan/ws/VPOCLIP_plus_full/work_dir/g1_pseudo_p3_stage_a/last_model.pth
+  history: /home/youhan/ws/VPOCLIP_plus_full/work_dir/g1_pseudo_p3_stage_a/history.json
+  train_curve: /home/youhan/ws/VPOCLIP_plus_full/work_dir/g1_pseudo_p3_stage_a/train_curve.png
+  test_results: /home/youhan/ws/VPOCLIP_plus_full/work_dir/g1_pseudo_p3_stage_a/pseudo_results.json

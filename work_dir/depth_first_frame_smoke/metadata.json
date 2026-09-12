@@ -1,0 +1,18 @@
+{
+  "protocol": "strict_zsl_50_5",
+  "source_data_root": "/home/youhan/ws/VPOCLIP_plus_full/data/new50_5_group1_zsl",
+  "source_video_root": "/home/youhan/ws/ETRI-Activity3D-RGB",
+  "yolo_weights": "/home/youhan/ws/yolov5_full/best.pt",
+  "yolo_detector": "custom50, conf=0.25, iou=0.45; highest-confidence detection per class slot",
+  "frame": "first decoded frame, resized to 640x480",
+  "midas": "MiDaS_small relative inverse depth",
+  "depth_value": "median over central 50% of each detected bounding box",
+  "normalization": "per-frame 5th-95th percentile to [0,1]",
+  "absent_slot": 0.0,
+  "dtype": "float32",
+  "arrays": {
+    "depth_rel_fp32.npy": "[N,50]",
+    "depth_valid_uint8.npy": "[N,50]"
+  },
+  "note": "This is relative depth, not metric XYZ depth."
+}

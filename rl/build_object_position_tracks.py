@@ -79,10 +79,18 @@ def detect_track(
     frames: list[np.ndarray],
     device: torch.device,
     frame_batch: int,
+    include_box_size: bool = False,
 ) -> np.ndarray:
-    """Run YOLO and return [T,50,4] presence/x/y/confidence."""
+    """Run YOLO and return [T,50,C] object tracks.
 
-    output = np.zeros((len(frames), NUM_OBJECT_CLASSES, 4), dtype=np.float32)
+    The historical four-channel format is preserved by default:
+    ``[presence, center_x, center_y, confidence]``.  The optional six-channel
+    format adds normalized bounding-box width and height:
+    ``[presence, center_x, center_y, width, height, confidence]``.
+    """
+
+    channels = 6 if include_box_size else 4
+    output = np.zeros((len(frames), NUM_OBJECT_CLASSES, channels), dtype=np.float32)
     class_to_slot = {index: index for index in range(NUM_OBJECT_CLASSES)}
     for begin in range(0, len(frames), frame_batch):
         chunk = frames[begin : begin + frame_batch]
@@ -103,17 +111,30 @@ def detect_track(
                 x = 2.0 * ((x1 + x2) * 0.5) / max(width, 1) - 1.0
                 y = 2.0 * ((y1 + y2) * 0.5) / max(height, 1) - 1.0
                 if slot not in accum:
-                    accum[slot] = [0.0, 0.0, 0.0]
+                    accum[slot] = [0.0, 0.0, 0.0, 0.0, 0.0]
                 accum[slot][0] += weight
                 accum[slot][1] += weight * x
                 accum[slot][2] += weight * y
-            for slot, (weight, x_sum, y_sum) in accum.items():
-                output[begin + local_index, slot] = (
-                    1.0,
-                    x_sum / weight,
-                    y_sum / weight,
-                    min(weight, 1.0),
-                )
+                if include_box_size:
+                    accum[slot][3] += weight * max(x2 - x1, 0.0) / max(width, 1)
+                    accum[slot][4] += weight * max(y2 - y1, 0.0) / max(height, 1)
+            for slot, (weight, x_sum, y_sum, width_sum, height_sum) in accum.items():
+                if include_box_size:
+                    output[begin + local_index, slot] = (
+                        1.0,
+                        x_sum / weight,
+                        y_sum / weight,
+                        width_sum / weight,
+                        height_sum / weight,
+                        min(weight, 1.0),
+                    )
+                else:
+                    output[begin + local_index, slot] = (
+                        1.0,
+                        x_sum / weight,
+                        y_sum / weight,
+                        min(weight, 1.0),
+                    )
     return output
 
 
@@ -144,6 +165,7 @@ def build_split(
     video_batch: int,
     frame_batch: int,
     max_episodes: int | None,
+    include_box_size: bool = False,
 ) -> dict[str, Any]:
     metadata_path = cache_root / split / "metadata.json"
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
@@ -160,7 +182,8 @@ def build_split(
     n = len(episodes)
     # open_memmap requires the temporary filename itself to end in .npy.
     temp_path = output_root / "object_position_track.tmp.npy"
-    shape = (n, NUM_VIEWS, NUM_FRAMES, NUM_OBJECT_CLASSES, 4)
+    channels = 6 if include_box_size else 4
+    shape = (n, NUM_VIEWS, NUM_FRAMES, NUM_OBJECT_CLASSES, channels)
     if temp_path.exists():
         existing = np.load(temp_path, mmap_mode="r", allow_pickle=False)
         if tuple(existing.shape) != shape:
@@ -217,7 +240,9 @@ def build_split(
             flat_frames.extend(list(frames))
             task_offsets.append((task[0], cursor, cursor + len(frames)))
             cursor += len(frames)
-        flat_track = detect_track(model, flat_frames, device, frame_batch)
+        flat_track = detect_track(
+            model, flat_frames, device, frame_batch, include_box_size=include_box_size
+        )
         task_track = {
             (view_id, tasks[index][1]): flat_track[begin:end]
             for index, (view_id, begin, end) in enumerate(task_offsets)
@@ -253,11 +278,20 @@ def build_split(
     result = {
         "split": split,
         "episodes": n,
-        "shape": [n, NUM_VIEWS, NUM_FRAMES, NUM_OBJECT_CLASSES, 4],
+        "shape": [n, NUM_VIEWS, NUM_FRAMES, NUM_OBJECT_CLASSES, channels],
         "dtype": "float16",
         "frame_shape": [640, 480],
         "sample_frames_source": "cache metadata window.sample_frames",
-        "fields": ["presence", "x", "y", "confidence"],
+        "fields": (
+            ["presence", "x", "y", "width", "height", "confidence"]
+            if include_box_size
+            else ["presence", "x", "y", "confidence"]
+        ),
+        "box_size_normalization": (
+            "width/frame_width, height/frame_height in [0,1]"
+            if include_box_size
+            else None
+        ),
         "coordinate_convention": "normalized image x/y in [-1,1], y down",
         "detector": "YOLO custom50, conf=0.25, iou=0.45",
         "seconds": time.monotonic() - started,
@@ -278,6 +312,11 @@ def main() -> None:
     parser.add_argument("--video-batch", type=int, default=8)
     parser.add_argument("--frame-batch", type=int, default=64)
     parser.add_argument("--max-episodes", type=int, default=None)
+    parser.add_argument(
+        "--include-box-size",
+        action="store_true",
+        help="Append normalized YOLO bbox width/height; changes track shape from C=4 to C=6.",
+    )
     parser.add_argument("--no-half", action="store_true")
     args = parser.parse_args()
     if not torch.cuda.is_available():
@@ -298,6 +337,7 @@ def main() -> None:
             args.video_batch,
             args.frame_batch,
             args.max_episodes,
+            args.include_box_size,
         )
         print("OBJECT_TRACK_COMPLETE", json.dumps(result), flush=True)
 

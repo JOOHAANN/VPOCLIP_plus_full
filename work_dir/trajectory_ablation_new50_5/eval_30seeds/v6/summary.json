@@ -1,0 +1,6030 @@
+{
+  "experiment": "trajectory_policy_new_50_5_unseen_30_seed_ablation",
+  "variant": "v6",
+  "class_bank": [
+    14,
+    15,
+    25,
+    39,
+    46
+  ],
+  "episodes": 271,
+  "cache_root": "/home/youhan/ws/VPOCLIP_plus_full/data/trajectory_latest_vpoclip_new50_5/cache_compat",
+  "track_root": "/home/youhan/ws/VPOCLIP_plus_full/data/no_object_tracks_not_used",
+  "policy_root": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/multistep_angle_object_trajectory_policy_v6_no_object_group1",
+  "train_seeds": [
+    20260909,
+    20260910,
+    20260911
+  ],
+  "random_start_eval_seeds": [
+    20260920,
+    20260921,
+    20260922,
+    20260923,
+    20260924,
+    20260925,
+    20260926,
+    20260927,
+    20260928,
+    20260929,
+    20260930,
+    20260931,
+    20260932,
+    20260933,
+    20260934,
+    20260935,
+    20260936,
+    20260937,
+    20260938,
+    20260939,
+    20260940,
+    20260941,
+    20260942,
+    20260943,
+    20260944,
+    20260945,
+    20260946,
+    20260947,
+    20260948,
+    20260949
+  ],
+  "fixed_protocol": "fixed view0/view1/view2/view3; each random baseline repeated over eval seeds",
+  "random_start_protocol": "each sample independently selects one valid view from 0..3 per evaluation seed",
+  "fixed_results_by_train_seed": {
+    "20260909": {
+      "fixed0": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3937775790691376,
+            "mean_movement_cost": 0.20667588710784912,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38396725058555603,
+            "mean_movement_cost": 0.21136797964572906,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6488314946492513,
+            "mean_entropy": 0.39332613050937654,
+            "mean_movement_cost": 0.20797430823246638,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.009241473026842174,
+            "mean_entropy": 0.0029979175097815825,
+            "mean_movement_cost": 0.007892989898648053,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39144352078437805,
+            "mean_movement_cost": 0.4370783269405365,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3857736587524414,
+            "mean_movement_cost": 0.3894366919994354,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6419434289137522,
+            "mean_entropy": 0.39494334359963734,
+            "mean_movement_cost": 0.4276029298702876,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.007223635617964457,
+            "mean_entropy": 0.0022292190572662106,
+            "mean_movement_cost": 0.013888495127971159,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "fixed1": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.3960915505886078,
+            "mean_movement_cost": 0.206925168633461,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7269372940063477,
+            "mean_entropy": 0.38280966877937317,
+            "mean_movement_cost": 0.2180325984954834,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6452644626299541,
+            "mean_entropy": 0.39013159871101377,
+            "mean_movement_cost": 0.1977219596505165,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.011965936540384324,
+            "mean_entropy": 0.003444492096198936,
+            "mean_movement_cost": 0.010309141982666033,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39256569743156433,
+            "mean_movement_cost": 0.4254382848739624,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3844550549983978,
+            "mean_movement_cost": 0.3910393714904785,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6383763988812764,
+            "mean_entropy": 0.3942444195350011,
+            "mean_movement_cost": 0.4308611790339152,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.007681421492498656,
+            "mean_entropy": 0.0027346999469740705,
+            "mean_movement_cost": 0.011565908144378094,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "fixed2": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3862488865852356,
+            "mean_movement_cost": 0.21227778494358063,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.37675660848617554,
+            "mean_movement_cost": 0.20844261348247528,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6437884469827017,
+            "mean_entropy": 0.38978776236375173,
+            "mean_movement_cost": 0.20739441414674123,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.008770247886686493,
+            "mean_entropy": 0.005304292350888319,
+            "mean_movement_cost": 0.00987081079112961,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3938286602497101,
+            "mean_movement_cost": 0.431253582239151,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38268300890922546,
+            "mean_movement_cost": 0.4052068591117859,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.638991403579712,
+            "mean_entropy": 0.39355180263519285,
+            "mean_movement_cost": 0.42738759418328603,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.007803550149036462,
+            "mean_entropy": 0.002533162017409162,
+            "mean_movement_cost": 0.010443959200352603,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "fixed3": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3986967206001282,
+            "mean_movement_cost": 0.23936963081359863,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6974169611930847,
+            "mean_entropy": 0.3860156536102295,
+            "mean_movement_cost": 0.24967548251152039,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.64415745139122,
+            "mean_entropy": 0.3989856123924255,
+            "mean_movement_cost": 0.2473938783009847,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.00960748556207548,
+            "mean_entropy": 0.0036801928867442185,
+            "mean_movement_cost": 0.00793199707901891,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3925763964653015,
+            "mean_movement_cost": 0.41092702746391296,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38818359375,
+            "mean_movement_cost": 0.4270736277103424,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6452644646167756,
+            "mean_entropy": 0.3976251314083735,
+            "mean_movement_cost": 0.4296497335036596,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.009467095643549209,
+            "mean_entropy": 0.002542905562372757,
+            "mean_movement_cost": 0.009725494793359218,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      }
+    },
+    "20260910": {
+      "fixed0": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39322999119758606,
+            "mean_movement_cost": 0.18270111083984375,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38396725058555603,
+            "mean_movement_cost": 0.21136797964572906,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6488314946492513,
+            "mean_entropy": 0.39332613050937654,
+            "mean_movement_cost": 0.20797430823246638,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.009241473026842174,
+            "mean_entropy": 0.0029979175097815825,
+            "mean_movement_cost": 0.007892989898648053,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39325863122940063,
+            "mean_movement_cost": 0.4072818458080292,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3857736587524414,
+            "mean_movement_cost": 0.3894366919994354,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6419434289137522,
+            "mean_entropy": 0.39494334359963734,
+            "mean_movement_cost": 0.4276029298702876,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.007223635617964457,
+            "mean_entropy": 0.0022292190572662106,
+            "mean_movement_cost": 0.013888495127971159,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "fixed1": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39228618144989014,
+            "mean_movement_cost": 0.20377615094184875,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7269372940063477,
+            "mean_entropy": 0.38280966877937317,
+            "mean_movement_cost": 0.2180325984954834,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6452644626299541,
+            "mean_entropy": 0.39013159871101377,
+            "mean_movement_cost": 0.1977219596505165,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.011965936540384324,
+            "mean_entropy": 0.003444492096198936,
+            "mean_movement_cost": 0.010309141982666033,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3964060842990875,
+            "mean_movement_cost": 0.42868882417678833,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3844550549983978,
+            "mean_movement_cost": 0.3910393714904785,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6383763988812764,
+            "mean_entropy": 0.3942444195350011,
+            "mean_movement_cost": 0.4308611790339152,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.007681421492498656,
+            "mean_entropy": 0.0027346999469740705,
+            "mean_movement_cost": 0.011565908144378094,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "fixed2": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3904755115509033,
+            "mean_movement_cost": 0.2169327586889267,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.37675660848617554,
+            "mean_movement_cost": 0.20844261348247528,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6437884469827017,
+            "mean_entropy": 0.38978776236375173,
+            "mean_movement_cost": 0.20739441414674123,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.008770247886686493,
+            "mean_entropy": 0.005304292350888319,
+            "mean_movement_cost": 0.00987081079112961,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3952980041503906,
+            "mean_movement_cost": 0.4393356144428253,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38268300890922546,
+            "mean_movement_cost": 0.4052068591117859,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.638991403579712,
+            "mean_entropy": 0.39355180263519285,
+            "mean_movement_cost": 0.42738759418328603,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.007803550149036462,
+            "mean_entropy": 0.002533162017409162,
+            "mean_movement_cost": 0.010443959200352603,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "fixed3": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.4006304144859314,
+            "mean_movement_cost": 0.23730891942977905,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6974169611930847,
+            "mean_entropy": 0.3860156536102295,
+            "mean_movement_cost": 0.24967548251152039,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.64415745139122,
+            "mean_entropy": 0.3989856123924255,
+            "mean_movement_cost": 0.2473938783009847,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.00960748556207548,
+            "mean_entropy": 0.0036801928867442185,
+            "mean_movement_cost": 0.00793199707901891,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39548975229263306,
+            "mean_movement_cost": 0.4284694492816925,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38818359375,
+            "mean_movement_cost": 0.4270736277103424,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6452644646167756,
+            "mean_entropy": 0.3976251314083735,
+            "mean_movement_cost": 0.4296497335036596,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.009467095643549209,
+            "mean_entropy": 0.002542905562372757,
+            "mean_movement_cost": 0.009725494793359218,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      }
+    },
+    "20260911": {
+      "fixed0": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.38924288749694824,
+            "mean_movement_cost": 0.22310209274291992,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38396725058555603,
+            "mean_movement_cost": 0.21136797964572906,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6488314946492513,
+            "mean_entropy": 0.39332613050937654,
+            "mean_movement_cost": 0.20797430823246638,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.009241473026842174,
+            "mean_entropy": 0.0029979175097815825,
+            "mean_movement_cost": 0.007892989898648053,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3905547857284546,
+            "mean_movement_cost": 0.4349348247051239,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3857736587524414,
+            "mean_movement_cost": 0.3894366919994354,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6419434289137522,
+            "mean_entropy": 0.39494334359963734,
+            "mean_movement_cost": 0.4276029298702876,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.007223635617964457,
+            "mean_entropy": 0.0022292190572662106,
+            "mean_movement_cost": 0.013888495127971159,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "fixed1": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39784112572669983,
+            "mean_movement_cost": 0.20570704340934753,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7269372940063477,
+            "mean_entropy": 0.38280966877937317,
+            "mean_movement_cost": 0.2180325984954834,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6452644626299541,
+            "mean_entropy": 0.39013159871101377,
+            "mean_movement_cost": 0.1977219596505165,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.011965936540384324,
+            "mean_entropy": 0.003444492096198936,
+            "mean_movement_cost": 0.010309141982666033,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.395623117685318,
+            "mean_movement_cost": 0.43126732110977173,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3844550549983978,
+            "mean_movement_cost": 0.3910393714904785,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6383763988812764,
+            "mean_entropy": 0.3942444195350011,
+            "mean_movement_cost": 0.4308611790339152,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.007681421492498656,
+            "mean_entropy": 0.0027346999469740705,
+            "mean_movement_cost": 0.011565908144378094,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "fixed2": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6236162185668945,
+            "mean_entropy": 0.3919864594936371,
+            "mean_movement_cost": 0.19647006690502167,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.37675660848617554,
+            "mean_movement_cost": 0.20844261348247528,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6437884469827017,
+            "mean_entropy": 0.38978776236375173,
+            "mean_movement_cost": 0.20739441414674123,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.008770247886686493,
+            "mean_entropy": 0.005304292350888319,
+            "mean_movement_cost": 0.00987081079112961,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3934350609779358,
+            "mean_movement_cost": 0.4222990870475769,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38268300890922546,
+            "mean_movement_cost": 0.4052068591117859,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.638991403579712,
+            "mean_entropy": 0.39355180263519285,
+            "mean_movement_cost": 0.42738759418328603,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.007803550149036462,
+            "mean_entropy": 0.002533162017409162,
+            "mean_movement_cost": 0.010443959200352603,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "fixed3": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39456453919410706,
+            "mean_movement_cost": 0.21973349153995514,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6974169611930847,
+            "mean_entropy": 0.3860156536102295,
+            "mean_movement_cost": 0.24967548251152039,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.64415745139122,
+            "mean_entropy": 0.3989856123924255,
+            "mean_movement_cost": 0.2473938783009847,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.00960748556207548,
+            "mean_entropy": 0.0036801928867442185,
+            "mean_movement_cost": 0.00793199707901891,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39614030718803406,
+            "mean_movement_cost": 0.3940618932247162,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38818359375,
+            "mean_movement_cost": 0.4270736277103424,
+            "episodes": 271.0
+          },
+          "random_mean": {
+            "top1": 0.6452644646167756,
+            "mean_entropy": 0.3976251314083735,
+            "mean_movement_cost": 0.4296497335036596,
+            "episodes": 271.0
+          },
+          "random_std": {
+            "top1": 0.009467095643549209,
+            "mean_entropy": 0.002542905562372757,
+            "mean_movement_cost": 0.009725494793359218,
+            "episodes": 0.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      }
+    }
+  },
+  "random_start_results_by_train_seed": {
+    "20260909": {
+      "20260920": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6014760136604309,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3971971571445465,
+            "mean_movement_cost": 0.21140365302562714,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39404821395874023,
+            "mean_movement_cost": 0.23384317755699158,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.3867645263671875,
+            "mean_movement_cost": 0.22690404951572418,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6014760136604309,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39282187819480896,
+            "mean_movement_cost": 0.414149671792984,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39444786310195923,
+            "mean_movement_cost": 0.42900943756103516,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3870011866092682,
+            "mean_movement_cost": 0.4142484664916992,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260921": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39250993728637695,
+            "mean_movement_cost": 0.20964227616786957,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.3880314230918884,
+            "mean_movement_cost": 0.20787863433361053,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38127002120018005,
+            "mean_movement_cost": 0.23142868280410767,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39138591289520264,
+            "mean_movement_cost": 0.409902423620224,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3944551944732666,
+            "mean_movement_cost": 0.4390348792076111,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3856341540813446,
+            "mean_movement_cost": 0.4080490171909332,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260922": {
+        "moves_1": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39776313304901123,
+            "mean_movement_cost": 0.2211410403251648,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3979632556438446,
+            "mean_movement_cost": 0.21196803450584412,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38474270701408386,
+            "mean_movement_cost": 0.2258564978837967,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39235424995422363,
+            "mean_movement_cost": 0.4193204343318939,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39451873302459717,
+            "mean_movement_cost": 0.4320051372051239,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38754960894584656,
+            "mean_movement_cost": 0.4000491797924042,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260923": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39496371150016785,
+            "mean_movement_cost": 0.20283949375152588,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39454296231269836,
+            "mean_movement_cost": 0.2113378643989563,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.39005985856056213,
+            "mean_movement_cost": 0.22222839295864105,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3954639732837677,
+            "mean_movement_cost": 0.41836634278297424,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.4023808538913727,
+            "mean_movement_cost": 0.41794466972351074,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.388479083776474,
+            "mean_movement_cost": 0.4021236002445221,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260924": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3927605450153351,
+            "mean_movement_cost": 0.2057839334011078,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.39566126465797424,
+            "mean_movement_cost": 0.20797069370746613,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.3818710446357727,
+            "mean_movement_cost": 0.22789953649044037,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39214888215065,
+            "mean_movement_cost": 0.4146369397640228,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39321169257164,
+            "mean_movement_cost": 0.4446529448032379,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.38471540808677673,
+            "mean_movement_cost": 0.42016708850860596,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260925": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6642066240310669,
+            "mean_entropy": 0.39822205901145935,
+            "mean_movement_cost": 0.2302865982055664,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3958148658275604,
+            "mean_movement_cost": 0.22010843455791473,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.38638338446617126,
+            "mean_movement_cost": 0.21441984176635742,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39191192388534546,
+            "mean_movement_cost": 0.44126611948013306,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3985768258571625,
+            "mean_movement_cost": 0.4245428442955017,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38566967844963074,
+            "mean_movement_cost": 0.41566523909568787,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260926": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39064568281173706,
+            "mean_movement_cost": 0.2197689563035965,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3880772590637207,
+            "mean_movement_cost": 0.20569556951522827,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38180145621299744,
+            "mean_movement_cost": 0.22940877079963684,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6236162185668945,
+            "mean_entropy": 0.3924088776111603,
+            "mean_movement_cost": 0.42592641711235046,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3962428867816925,
+            "mean_movement_cost": 0.4173460602760315,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.3851555585861206,
+            "mean_movement_cost": 0.3974475562572479,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260927": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3848854601383209,
+            "mean_movement_cost": 0.20591717958450317,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6642066240310669,
+            "mean_entropy": 0.3887045383453369,
+            "mean_movement_cost": 0.209089994430542,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.37867769598960876,
+            "mean_movement_cost": 0.2215069681406021,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.38981103897094727,
+            "mean_movement_cost": 0.4198169410228729,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39415451884269714,
+            "mean_movement_cost": 0.4199713170528412,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38594895601272583,
+            "mean_movement_cost": 0.4023151099681854,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260928": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.395825058221817,
+            "mean_movement_cost": 0.228271022439003,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3901323974132538,
+            "mean_movement_cost": 0.21321707963943481,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.3802163600921631,
+            "mean_movement_cost": 0.22301006317138672,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39218664169311523,
+            "mean_movement_cost": 0.42402708530426025,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3945162892341614,
+            "mean_movement_cost": 0.43787577748298645,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38396385312080383,
+            "mean_movement_cost": 0.4034702479839325,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260929": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.39258962869644165,
+            "mean_movement_cost": 0.21719147264957428,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.398911714553833,
+            "mean_movement_cost": 0.20273226499557495,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7158671617507935,
+            "mean_entropy": 0.38428011536598206,
+            "mean_movement_cost": 0.23124682903289795,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39263269305229187,
+            "mean_movement_cost": 0.42851436138153076,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3964214324951172,
+            "mean_movement_cost": 0.41525399684906006,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38597962260246277,
+            "mean_movement_cost": 0.3969799280166626,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260930": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39075782895088196,
+            "mean_movement_cost": 0.21767301857471466,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.38861289620399475,
+            "mean_movement_cost": 0.21256785094738007,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38205069303512573,
+            "mean_movement_cost": 0.2195248007774353,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39079272747039795,
+            "mean_movement_cost": 0.43101558089256287,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3889201879501343,
+            "mean_movement_cost": 0.4464465081691742,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.384120374917984,
+            "mean_movement_cost": 0.40373945236206055,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260931": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6642066240310669,
+            "mean_entropy": 0.3848010003566742,
+            "mean_movement_cost": 0.20956498384475708,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39509981870651245,
+            "mean_movement_cost": 0.19211849570274353,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.37778645753860474,
+            "mean_movement_cost": 0.21030627191066742,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3882328271865845,
+            "mean_movement_cost": 0.4224969148635864,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39563605189323425,
+            "mean_movement_cost": 0.4408579468727112,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.3846741020679474,
+            "mean_movement_cost": 0.41214272379875183,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260932": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3919687271118164,
+            "mean_movement_cost": 0.22343604266643524,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3876197040081024,
+            "mean_movement_cost": 0.2324499785900116,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.3825446665287018,
+            "mean_movement_cost": 0.23263202607631683,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3967915177345276,
+            "mean_movement_cost": 0.43257951736450195,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.39618247747421265,
+            "mean_movement_cost": 0.41683724522590637,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3849760591983795,
+            "mean_movement_cost": 0.41704919934272766,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260933": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3988836705684662,
+            "mean_movement_cost": 0.20306478440761566,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3898357152938843,
+            "mean_movement_cost": 0.21371237933635712,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38118672370910645,
+            "mean_movement_cost": 0.22046822309494019,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3944026529788971,
+            "mean_movement_cost": 0.40686923265457153,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3939671218395233,
+            "mean_movement_cost": 0.4229798913002014,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.3851093053817749,
+            "mean_movement_cost": 0.41732412576675415,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260934": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.3974916934967041,
+            "mean_movement_cost": 0.21516092121601105,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3829768896102905,
+            "mean_movement_cost": 0.21741247177124023,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.38102176785469055,
+            "mean_movement_cost": 0.20892783999443054,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.39523473381996155,
+            "mean_movement_cost": 0.41424107551574707,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3964521884918213,
+            "mean_movement_cost": 0.4236097037792206,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.3845675587654114,
+            "mean_movement_cost": 0.3991205394268036,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260935": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3890381157398224,
+            "mean_movement_cost": 0.22419926524162292,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.40043845772743225,
+            "mean_movement_cost": 0.20867282152175903,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7011070251464844,
+            "mean_entropy": 0.376610666513443,
+            "mean_movement_cost": 0.22646945714950562,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3863612711429596,
+            "mean_movement_cost": 0.4346822500228882,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39177483320236206,
+            "mean_movement_cost": 0.4415157735347748,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3825988173484802,
+            "mean_movement_cost": 0.40633007884025574,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260936": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3947617709636688,
+            "mean_movement_cost": 0.21756313741207123,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3980865478515625,
+            "mean_movement_cost": 0.22274845838546753,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7011070251464844,
+            "mean_entropy": 0.3818824589252472,
+            "mean_movement_cost": 0.23072446882724762,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3943335711956024,
+            "mean_movement_cost": 0.4284001588821411,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39167720079421997,
+            "mean_movement_cost": 0.4096459448337555,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38567227125167847,
+            "mean_movement_cost": 0.40822675824165344,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260937": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.38894957304000854,
+            "mean_movement_cost": 0.2125348597764969,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3878043591976166,
+            "mean_movement_cost": 0.20801250636577606,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.3812193274497986,
+            "mean_movement_cost": 0.23181407153606415,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3941848576068878,
+            "mean_movement_cost": 0.423395037651062,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39299333095550537,
+            "mean_movement_cost": 0.428587943315506,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.38386809825897217,
+            "mean_movement_cost": 0.39404037594795227,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260938": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6199262142181396,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3877356946468353,
+            "mean_movement_cost": 0.2043534517288208,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39808568358421326,
+            "mean_movement_cost": 0.2052861899137497,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38117924332618713,
+            "mean_movement_cost": 0.23103053867816925,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6199262142181396,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3903186023235321,
+            "mean_movement_cost": 0.40803155303001404,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3908731937408447,
+            "mean_movement_cost": 0.40869393944740295,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3843374252319336,
+            "mean_movement_cost": 0.38711440563201904,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260939": {
+        "moves_1": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.39790254831314087,
+            "mean_movement_cost": 0.23364658653736115,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3937824070453644,
+            "mean_movement_cost": 0.22156253457069397,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7011070251464844,
+            "mean_entropy": 0.3804161846637726,
+            "mean_movement_cost": 0.22539258003234863,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39171093702316284,
+            "mean_movement_cost": 0.4460035264492035,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3960469663143158,
+            "mean_movement_cost": 0.44286203384399414,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3848814070224762,
+            "mean_movement_cost": 0.4040830433368683,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260940": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6531365513801575,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3952209949493408,
+            "mean_movement_cost": 0.21166297793388367,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3912853002548218,
+            "mean_movement_cost": 0.2112749069929123,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7158671617507935,
+            "mean_entropy": 0.37927162647247314,
+            "mean_movement_cost": 0.21688048541545868,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6531365513801575,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.394174724817276,
+            "mean_movement_cost": 0.42460864782333374,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3946804702281952,
+            "mean_movement_cost": 0.44065621495246887,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3838874399662018,
+            "mean_movement_cost": 0.39777466654777527,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260941": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.391498863697052,
+            "mean_movement_cost": 0.21603547036647797,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3937426209449768,
+            "mean_movement_cost": 0.21052664518356323,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.3785941004753113,
+            "mean_movement_cost": 0.21639646589756012,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3883291184902191,
+            "mean_movement_cost": 0.4439830183982849,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3955930471420288,
+            "mean_movement_cost": 0.4415002167224884,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3832895755767822,
+            "mean_movement_cost": 0.4126172661781311,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260942": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3828088939189911,
+            "mean_movement_cost": 0.2134091854095459,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3876417279243469,
+            "mean_movement_cost": 0.21877941489219666,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.723247230052948,
+            "mean_entropy": 0.3794229328632355,
+            "mean_movement_cost": 0.2229698747396469,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.38912901282310486,
+            "mean_movement_cost": 0.42615556716918945,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39588111639022827,
+            "mean_movement_cost": 0.4229022264480591,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38521167635917664,
+            "mean_movement_cost": 0.39798790216445923,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260943": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3876768946647644,
+            "mean_movement_cost": 0.2174893468618393,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39496752619743347,
+            "mean_movement_cost": 0.21382594108581543,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3813037574291229,
+            "mean_movement_cost": 0.2287074625492096,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.392203152179718,
+            "mean_movement_cost": 0.41976651549339294,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3930036425590515,
+            "mean_movement_cost": 0.42875564098358154,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.3860315978527069,
+            "mean_movement_cost": 0.4060535132884979,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260944": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3939848244190216,
+            "mean_movement_cost": 0.22922468185424805,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.3880971074104309,
+            "mean_movement_cost": 0.21139566600322723,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38076433539390564,
+            "mean_movement_cost": 0.2139231264591217,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3945457935333252,
+            "mean_movement_cost": 0.4454987645149231,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3939037322998047,
+            "mean_movement_cost": 0.39673370122909546,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38383302092552185,
+            "mean_movement_cost": 0.4063591957092285,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260945": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39822590351104736,
+            "mean_movement_cost": 0.21396759152412415,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.38847750425338745,
+            "mean_movement_cost": 0.20756375789642334,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.379042387008667,
+            "mean_movement_cost": 0.2289663851261139,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39463692903518677,
+            "mean_movement_cost": 0.4122224450111389,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39401429891586304,
+            "mean_movement_cost": 0.41300591826438904,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6752767562866211,
+            "mean_entropy": 0.3832368850708008,
+            "mean_movement_cost": 0.4041738510131836,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260946": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39403337240219116,
+            "mean_movement_cost": 0.2178456336259842,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39416933059692383,
+            "mean_movement_cost": 0.21137063205242157,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38111865520477295,
+            "mean_movement_cost": 0.2158622294664383,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39334216713905334,
+            "mean_movement_cost": 0.4304663836956024,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.39097729325294495,
+            "mean_movement_cost": 0.4194592237472534,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.38431835174560547,
+            "mean_movement_cost": 0.3999124765396118,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260947": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6678966879844666,
+            "mean_entropy": 0.39706292748451233,
+            "mean_movement_cost": 0.20405800640583038,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39013609290122986,
+            "mean_movement_cost": 0.21419598162174225,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.3865278363227844,
+            "mean_movement_cost": 0.2386230230331421,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39398807287216187,
+            "mean_movement_cost": 0.4135645925998688,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.396144300699234,
+            "mean_movement_cost": 0.4239024221897125,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38575971126556396,
+            "mean_movement_cost": 0.39577043056488037,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260948": {
+        "moves_1": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.38497447967529297,
+            "mean_movement_cost": 0.21017670631408691,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3903217017650604,
+            "mean_movement_cost": 0.2162119746208191,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.3814246356487274,
+            "mean_movement_cost": 0.22258713841438293,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.38508573174476624,
+            "mean_movement_cost": 0.42422717809677124,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39398398995399475,
+            "mean_movement_cost": 0.4246281087398529,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.38559675216674805,
+            "mean_movement_cost": 0.4258118271827698,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260949": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.4009678363800049,
+            "mean_movement_cost": 0.2166617512702942,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6199262142181396,
+            "mean_entropy": 0.3958568572998047,
+            "mean_movement_cost": 0.20862239599227905,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38775771856307983,
+            "mean_movement_cost": 0.2220432609319687,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3914390206336975,
+            "mean_movement_cost": 0.4252704083919525,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3968503773212433,
+            "mean_movement_cost": 0.446107417345047,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.3864542841911316,
+            "mean_movement_cost": 0.4106500446796417,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      }
+    },
+    "20260910": {
+      "20260920": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6014760136604309,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3986465036869049,
+            "mean_movement_cost": 0.22743070125579834,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39404821395874023,
+            "mean_movement_cost": 0.23384317755699158,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.3867645263671875,
+            "mean_movement_cost": 0.22690404951572418,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6014760136604309,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39650237560272217,
+            "mean_movement_cost": 0.43775174021720886,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39444786310195923,
+            "mean_movement_cost": 0.42900943756103516,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3870011866092682,
+            "mean_movement_cost": 0.4142484664916992,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260921": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39499375224113464,
+            "mean_movement_cost": 0.1981082409620285,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.3880314230918884,
+            "mean_movement_cost": 0.20787863433361053,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38127002120018005,
+            "mean_movement_cost": 0.23142868280410767,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3927701413631439,
+            "mean_movement_cost": 0.418690025806427,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3944551944732666,
+            "mean_movement_cost": 0.4390348792076111,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3856341540813446,
+            "mean_movement_cost": 0.4080490171909332,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260922": {
+        "moves_1": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3976685404777527,
+            "mean_movement_cost": 0.219201922416687,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3979632556438446,
+            "mean_movement_cost": 0.21196803450584412,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38474270701408386,
+            "mean_movement_cost": 0.2258564978837967,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39720335602760315,
+            "mean_movement_cost": 0.43199896812438965,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39451873302459717,
+            "mean_movement_cost": 0.4320051372051239,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38754960894584656,
+            "mean_movement_cost": 0.4000491797924042,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260923": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.40111276507377625,
+            "mean_movement_cost": 0.20720089972019196,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39454296231269836,
+            "mean_movement_cost": 0.2113378643989563,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.39005985856056213,
+            "mean_movement_cost": 0.22222839295864105,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3959375321865082,
+            "mean_movement_cost": 0.4393302798271179,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.4023808538913727,
+            "mean_movement_cost": 0.41794466972351074,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.388479083776474,
+            "mean_movement_cost": 0.4021236002445221,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260924": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39632654190063477,
+            "mean_movement_cost": 0.19743134081363678,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.39566126465797424,
+            "mean_movement_cost": 0.20797069370746613,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.3818710446357727,
+            "mean_movement_cost": 0.22789953649044037,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39599043130874634,
+            "mean_movement_cost": 0.41194280982017517,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39321169257164,
+            "mean_movement_cost": 0.4446529448032379,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.38471540808677673,
+            "mean_movement_cost": 0.42016708850860596,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260925": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39007410407066345,
+            "mean_movement_cost": 0.2298271805047989,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3958148658275604,
+            "mean_movement_cost": 0.22010843455791473,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.38638338446617126,
+            "mean_movement_cost": 0.21441984176635742,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3940134644508362,
+            "mean_movement_cost": 0.44390183687210083,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3985768258571625,
+            "mean_movement_cost": 0.4245428442955017,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38566967844963074,
+            "mean_movement_cost": 0.41566523909568787,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260926": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39514005184173584,
+            "mean_movement_cost": 0.2035590261220932,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3880772590637207,
+            "mean_movement_cost": 0.20569556951522827,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38180145621299744,
+            "mean_movement_cost": 0.22940877079963684,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3961063027381897,
+            "mean_movement_cost": 0.4022788107395172,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3962428867816925,
+            "mean_movement_cost": 0.4173460602760315,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.3851555585861206,
+            "mean_movement_cost": 0.3974475562572479,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260927": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.3877066373825073,
+            "mean_movement_cost": 0.18428762257099152,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6642066240310669,
+            "mean_entropy": 0.3887045383453369,
+            "mean_movement_cost": 0.209089994430542,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.37867769598960876,
+            "mean_movement_cost": 0.2215069681406021,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39363354444503784,
+            "mean_movement_cost": 0.38747480511665344,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39415451884269714,
+            "mean_movement_cost": 0.4199713170528412,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38594895601272583,
+            "mean_movement_cost": 0.4023151099681854,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260928": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3909163773059845,
+            "mean_movement_cost": 0.21121792495250702,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3901323974132538,
+            "mean_movement_cost": 0.21321707963943481,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.3802163600921631,
+            "mean_movement_cost": 0.22301006317138672,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39429304003715515,
+            "mean_movement_cost": 0.4273347854614258,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3945162892341614,
+            "mean_movement_cost": 0.43787577748298645,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38396385312080383,
+            "mean_movement_cost": 0.4034702479839325,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260929": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39263251423835754,
+            "mean_movement_cost": 0.2105555534362793,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.398911714553833,
+            "mean_movement_cost": 0.20273226499557495,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7158671617507935,
+            "mean_entropy": 0.38428011536598206,
+            "mean_movement_cost": 0.23124682903289795,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3941965699195862,
+            "mean_movement_cost": 0.4189768433570862,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3964214324951172,
+            "mean_movement_cost": 0.41525399684906006,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38597962260246277,
+            "mean_movement_cost": 0.3969799280166626,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260930": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39180538058280945,
+            "mean_movement_cost": 0.20951375365257263,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.38861289620399475,
+            "mean_movement_cost": 0.21256785094738007,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38205069303512573,
+            "mean_movement_cost": 0.2195248007774353,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3971289098262787,
+            "mean_movement_cost": 0.4354899525642395,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3889201879501343,
+            "mean_movement_cost": 0.4464465081691742,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.384120374917984,
+            "mean_movement_cost": 0.40373945236206055,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260931": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.38848045468330383,
+            "mean_movement_cost": 0.20537781715393066,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39509981870651245,
+            "mean_movement_cost": 0.19211849570274353,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.37778645753860474,
+            "mean_movement_cost": 0.21030627191066742,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3929111659526825,
+            "mean_movement_cost": 0.4310254156589508,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39563605189323425,
+            "mean_movement_cost": 0.4408579468727112,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.3846741020679474,
+            "mean_movement_cost": 0.41214272379875183,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260932": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3953688442707062,
+            "mean_movement_cost": 0.21178577840328217,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3876197040081024,
+            "mean_movement_cost": 0.2324499785900116,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.3825446665287018,
+            "mean_movement_cost": 0.23263202607631683,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3990960419178009,
+            "mean_movement_cost": 0.43716976046562195,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.39618247747421265,
+            "mean_movement_cost": 0.41683724522590637,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3849760591983795,
+            "mean_movement_cost": 0.41704919934272766,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260933": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3987360894680023,
+            "mean_movement_cost": 0.192358136177063,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3898357152938843,
+            "mean_movement_cost": 0.21371237933635712,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38118672370910645,
+            "mean_movement_cost": 0.22046822309494019,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3974166810512543,
+            "mean_movement_cost": 0.41883355379104614,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3939671218395233,
+            "mean_movement_cost": 0.4229798913002014,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.3851093053817749,
+            "mean_movement_cost": 0.41732412576675415,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260934": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6642066240310669,
+            "mean_entropy": 0.39799490571022034,
+            "mean_movement_cost": 0.22365601360797882,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3829768896102905,
+            "mean_movement_cost": 0.21741247177124023,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.38102176785469055,
+            "mean_movement_cost": 0.20892783999443054,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39566850662231445,
+            "mean_movement_cost": 0.43204227089881897,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3964521884918213,
+            "mean_movement_cost": 0.4236097037792206,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.3845675587654114,
+            "mean_movement_cost": 0.3991205394268036,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260935": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3941038250923157,
+            "mean_movement_cost": 0.19815970957279205,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.40043845772743225,
+            "mean_movement_cost": 0.20867282152175903,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7011070251464844,
+            "mean_entropy": 0.376610666513443,
+            "mean_movement_cost": 0.22646945714950562,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3927660882472992,
+            "mean_movement_cost": 0.4237714409828186,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39177483320236206,
+            "mean_movement_cost": 0.4415157735347748,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3825988173484802,
+            "mean_movement_cost": 0.40633007884025574,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260936": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39454424381256104,
+            "mean_movement_cost": 0.20924970507621765,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3980865478515625,
+            "mean_movement_cost": 0.22274845838546753,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7011070251464844,
+            "mean_entropy": 0.3818824589252472,
+            "mean_movement_cost": 0.23072446882724762,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.394600510597229,
+            "mean_movement_cost": 0.42404142022132874,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39167720079421997,
+            "mean_movement_cost": 0.4096459448337555,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38567227125167847,
+            "mean_movement_cost": 0.40822675824165344,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260937": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39723995327949524,
+            "mean_movement_cost": 0.2070332020521164,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3878043591976166,
+            "mean_movement_cost": 0.20801250636577606,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.3812193274497986,
+            "mean_movement_cost": 0.23181407153606415,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39642831683158875,
+            "mean_movement_cost": 0.41928720474243164,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39299333095550537,
+            "mean_movement_cost": 0.428587943315506,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.38386809825897217,
+            "mean_movement_cost": 0.39404037594795227,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260938": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6199262142181396,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39305174350738525,
+            "mean_movement_cost": 0.1945057362318039,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39808568358421326,
+            "mean_movement_cost": 0.2052861899137497,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38117924332618713,
+            "mean_movement_cost": 0.23103053867816925,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6199262142181396,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3946375846862793,
+            "mean_movement_cost": 0.40952587127685547,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3908731937408447,
+            "mean_movement_cost": 0.40869393944740295,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3843374252319336,
+            "mean_movement_cost": 0.38711440563201904,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260939": {
+        "moves_1": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39905887842178345,
+            "mean_movement_cost": 0.207596555352211,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3937824070453644,
+            "mean_movement_cost": 0.22156253457069397,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7011070251464844,
+            "mean_entropy": 0.3804161846637726,
+            "mean_movement_cost": 0.22539258003234863,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3949769139289856,
+            "mean_movement_cost": 0.4273819029331207,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3960469663143158,
+            "mean_movement_cost": 0.44286203384399414,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3848814070224762,
+            "mean_movement_cost": 0.4040830433368683,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260940": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6531365513801575,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39492717385292053,
+            "mean_movement_cost": 0.2092009037733078,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3912853002548218,
+            "mean_movement_cost": 0.2112749069929123,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7158671617507935,
+            "mean_entropy": 0.37927162647247314,
+            "mean_movement_cost": 0.21688048541545868,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6531365513801575,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39515188336372375,
+            "mean_movement_cost": 0.43031057715415955,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3946804702281952,
+            "mean_movement_cost": 0.44065621495246887,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3838874399662018,
+            "mean_movement_cost": 0.39777466654777527,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260941": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3962928354740143,
+            "mean_movement_cost": 0.19577018916606903,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3937426209449768,
+            "mean_movement_cost": 0.21052664518356323,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.3785941004753113,
+            "mean_movement_cost": 0.21639646589756012,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39351460337638855,
+            "mean_movement_cost": 0.4113970994949341,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3955930471420288,
+            "mean_movement_cost": 0.4415002167224884,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3832895755767822,
+            "mean_movement_cost": 0.4126172661781311,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260942": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.38373878598213196,
+            "mean_movement_cost": 0.2123294472694397,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3876417279243469,
+            "mean_movement_cost": 0.21877941489219666,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.723247230052948,
+            "mean_entropy": 0.3794229328632355,
+            "mean_movement_cost": 0.2229698747396469,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39233508706092834,
+            "mean_movement_cost": 0.4270760416984558,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39588111639022827,
+            "mean_movement_cost": 0.4229022264480591,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38521167635917664,
+            "mean_movement_cost": 0.39798790216445923,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260943": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3874847888946533,
+            "mean_movement_cost": 0.21993356943130493,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39496752619743347,
+            "mean_movement_cost": 0.21382594108581543,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3813037574291229,
+            "mean_movement_cost": 0.2287074625492096,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3921566903591156,
+            "mean_movement_cost": 0.43273472785949707,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3930036425590515,
+            "mean_movement_cost": 0.42875564098358154,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.3860315978527069,
+            "mean_movement_cost": 0.4060535132884979,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260944": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39547601342201233,
+            "mean_movement_cost": 0.21571895480155945,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.3880971074104309,
+            "mean_movement_cost": 0.21139566600322723,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38076433539390564,
+            "mean_movement_cost": 0.2139231264591217,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.39457374811172485,
+            "mean_movement_cost": 0.4342851936817169,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3939037322998047,
+            "mean_movement_cost": 0.39673370122909546,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38383302092552185,
+            "mean_movement_cost": 0.4063591957092285,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260945": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.391873300075531,
+            "mean_movement_cost": 0.21644136309623718,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.38847750425338745,
+            "mean_movement_cost": 0.20756375789642334,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.379042387008667,
+            "mean_movement_cost": 0.2289663851261139,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39640089869499207,
+            "mean_movement_cost": 0.4294555187225342,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39401429891586304,
+            "mean_movement_cost": 0.41300591826438904,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6752767562866211,
+            "mean_entropy": 0.3832368850708008,
+            "mean_movement_cost": 0.4041738510131836,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260946": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.39437440037727356,
+            "mean_movement_cost": 0.21717672049999237,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39416933059692383,
+            "mean_movement_cost": 0.21137063205242157,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38111865520477295,
+            "mean_movement_cost": 0.2158622294664383,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3952353298664093,
+            "mean_movement_cost": 0.4385024607181549,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.39097729325294495,
+            "mean_movement_cost": 0.4194592237472534,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.38431835174560547,
+            "mean_movement_cost": 0.3999124765396118,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260947": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3939605951309204,
+            "mean_movement_cost": 0.2064967304468155,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39013609290122986,
+            "mean_movement_cost": 0.21419598162174225,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.3865278363227844,
+            "mean_movement_cost": 0.2386230230331421,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39446261525154114,
+            "mean_movement_cost": 0.4265926778316498,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.396144300699234,
+            "mean_movement_cost": 0.4239024221897125,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38575971126556396,
+            "mean_movement_cost": 0.39577043056488037,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260948": {
+        "moves_1": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6199262142181396,
+            "mean_entropy": 0.38482552766799927,
+            "mean_movement_cost": 0.19981631636619568,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3903217017650604,
+            "mean_movement_cost": 0.2162119746208191,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.3814246356487274,
+            "mean_movement_cost": 0.22258713841438293,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3891497552394867,
+            "mean_movement_cost": 0.4122164845466614,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39398398995399475,
+            "mean_movement_cost": 0.4246281087398529,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.38559675216674805,
+            "mean_movement_cost": 0.4258118271827698,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260949": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.4038972854614258,
+            "mean_movement_cost": 0.19777265191078186,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6199262142181396,
+            "mean_entropy": 0.3958568572998047,
+            "mean_movement_cost": 0.20862239599227905,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38775771856307983,
+            "mean_movement_cost": 0.2220432609319687,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39540186524391174,
+            "mean_movement_cost": 0.4164889454841614,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3968503773212433,
+            "mean_movement_cost": 0.446107417345047,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.3864542841911316,
+            "mean_movement_cost": 0.4106500446796417,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      }
+    },
+    "20260911": {
+      "20260920": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6014760136604309,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6236162185668945,
+            "mean_entropy": 0.3948203921318054,
+            "mean_movement_cost": 0.21631960570812225,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39404821395874023,
+            "mean_movement_cost": 0.23384317755699158,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.3867645263671875,
+            "mean_movement_cost": 0.22690404951572418,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6014760136604309,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6199262142181396,
+            "mean_entropy": 0.39934200048446655,
+            "mean_movement_cost": 0.42180198431015015,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39444786310195923,
+            "mean_movement_cost": 0.42900943756103516,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3870011866092682,
+            "mean_movement_cost": 0.4142484664916992,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260921": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3933659493923187,
+            "mean_movement_cost": 0.2050112634897232,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.3880314230918884,
+            "mean_movement_cost": 0.20787863433361053,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38127002120018005,
+            "mean_movement_cost": 0.23142868280410767,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3936307728290558,
+            "mean_movement_cost": 0.4238583743572235,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3944551944732666,
+            "mean_movement_cost": 0.4390348792076111,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3856341540813446,
+            "mean_movement_cost": 0.4080490171909332,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260922": {
+        "moves_1": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.39447933435440063,
+            "mean_movement_cost": 0.22050000727176666,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3979632556438446,
+            "mean_movement_cost": 0.21196803450584412,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38474270701408386,
+            "mean_movement_cost": 0.2258564978837967,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3966745436191559,
+            "mean_movement_cost": 0.4401881992816925,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39451873302459717,
+            "mean_movement_cost": 0.4320051372051239,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38754960894584656,
+            "mean_movement_cost": 0.4000491797924042,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260923": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39555326104164124,
+            "mean_movement_cost": 0.2251279205083847,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39454296231269836,
+            "mean_movement_cost": 0.2113378643989563,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.39005985856056213,
+            "mean_movement_cost": 0.22222839295864105,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6199262142181396,
+            "mean_entropy": 0.39523759484291077,
+            "mean_movement_cost": 0.43395182490348816,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.4023808538913727,
+            "mean_movement_cost": 0.41794466972351074,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.388479083776474,
+            "mean_movement_cost": 0.4021236002445221,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260924": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3888595402240753,
+            "mean_movement_cost": 0.2099965214729309,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.39566126465797424,
+            "mean_movement_cost": 0.20797069370746613,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.3818710446357727,
+            "mean_movement_cost": 0.22789953649044037,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3917233645915985,
+            "mean_movement_cost": 0.4362989068031311,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39321169257164,
+            "mean_movement_cost": 0.4446529448032379,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.38471540808677673,
+            "mean_movement_cost": 0.42016708850860596,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260925": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39733564853668213,
+            "mean_movement_cost": 0.21105843782424927,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3958148658275604,
+            "mean_movement_cost": 0.22010843455791473,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.38638338446617126,
+            "mean_movement_cost": 0.21441984176635742,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39237189292907715,
+            "mean_movement_cost": 0.42184892296791077,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3985768258571625,
+            "mean_movement_cost": 0.4245428442955017,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38566967844963074,
+            "mean_movement_cost": 0.41566523909568787,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260926": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.39142730832099915,
+            "mean_movement_cost": 0.2013407051563263,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3880772590637207,
+            "mean_movement_cost": 0.20569556951522827,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38180145621299744,
+            "mean_movement_cost": 0.22940877079963684,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3923499882221222,
+            "mean_movement_cost": 0.41680896282196045,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3962428867816925,
+            "mean_movement_cost": 0.4173460602760315,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.3851555585861206,
+            "mean_movement_cost": 0.3974475562572479,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260927": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.39036640524864197,
+            "mean_movement_cost": 0.18979868292808533,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6642066240310669,
+            "mean_entropy": 0.3887045383453369,
+            "mean_movement_cost": 0.209089994430542,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.37867769598960876,
+            "mean_movement_cost": 0.2215069681406021,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3949800729751587,
+            "mean_movement_cost": 0.41023144125938416,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39415451884269714,
+            "mean_movement_cost": 0.4199713170528412,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38594895601272583,
+            "mean_movement_cost": 0.4023151099681854,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260928": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3909871578216553,
+            "mean_movement_cost": 0.2100737988948822,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3901323974132538,
+            "mean_movement_cost": 0.21321707963943481,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7195572257041931,
+            "mean_entropy": 0.3802163600921631,
+            "mean_movement_cost": 0.22301006317138672,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.392619252204895,
+            "mean_movement_cost": 0.41301557421684265,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3945162892341614,
+            "mean_movement_cost": 0.43787577748298645,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38396385312080383,
+            "mean_movement_cost": 0.4034702479839325,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260929": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.61623615026474,
+            "mean_entropy": 0.3829843997955322,
+            "mean_movement_cost": 0.21179479360580444,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.398911714553833,
+            "mean_movement_cost": 0.20273226499557495,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7158671617507935,
+            "mean_entropy": 0.38428011536598206,
+            "mean_movement_cost": 0.23124682903289795,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3906206786632538,
+            "mean_movement_cost": 0.4155707359313965,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3964214324951172,
+            "mean_movement_cost": 0.41525399684906006,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38597962260246277,
+            "mean_movement_cost": 0.3969799280166626,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260930": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39605712890625,
+            "mean_movement_cost": 0.20920848846435547,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.38861289620399475,
+            "mean_movement_cost": 0.21256785094738007,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38205069303512573,
+            "mean_movement_cost": 0.2195248007774353,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6125461459159851,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39526423811912537,
+            "mean_movement_cost": 0.41713470220565796,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3889201879501343,
+            "mean_movement_cost": 0.4464465081691742,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.384120374917984,
+            "mean_movement_cost": 0.40373945236206055,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260931": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3843211829662323,
+            "mean_movement_cost": 0.20075829327106476,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39509981870651245,
+            "mean_movement_cost": 0.19211849570274353,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.37778645753860474,
+            "mean_movement_cost": 0.21030627191066742,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3897845149040222,
+            "mean_movement_cost": 0.4081529378890991,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39563605189323425,
+            "mean_movement_cost": 0.4408579468727112,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.3846741020679474,
+            "mean_movement_cost": 0.41214272379875183,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260932": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39545971155166626,
+            "mean_movement_cost": 0.21492251753807068,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3876197040081024,
+            "mean_movement_cost": 0.2324499785900116,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.3825446665287018,
+            "mean_movement_cost": 0.23263202607631683,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39411646127700806,
+            "mean_movement_cost": 0.4316501021385193,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.39618247747421265,
+            "mean_movement_cost": 0.41683724522590637,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3849760591983795,
+            "mean_movement_cost": 0.41704919934272766,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260933": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3963998258113861,
+            "mean_movement_cost": 0.2036338597536087,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3898357152938843,
+            "mean_movement_cost": 0.21371237933635712,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38118672370910645,
+            "mean_movement_cost": 0.22046822309494019,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3939831256866455,
+            "mean_movement_cost": 0.40493911504745483,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3939671218395233,
+            "mean_movement_cost": 0.4229798913002014,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.3851093053817749,
+            "mean_movement_cost": 0.41732412576675415,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260934": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39255040884017944,
+            "mean_movement_cost": 0.21153239905834198,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3829768896102905,
+            "mean_movement_cost": 0.21741247177124023,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.38102176785469055,
+            "mean_movement_cost": 0.20892783999443054,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.39462244510650635,
+            "mean_movement_cost": 0.417496919631958,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3964521884918213,
+            "mean_movement_cost": 0.4236097037792206,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.3845675587654114,
+            "mean_movement_cost": 0.3991205394268036,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260935": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3908786177635193,
+            "mean_movement_cost": 0.20537126064300537,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.40043845772743225,
+            "mean_movement_cost": 0.20867282152175903,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7011070251464844,
+            "mean_entropy": 0.376610666513443,
+            "mean_movement_cost": 0.22646945714950562,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3911253809928894,
+            "mean_movement_cost": 0.42383190989494324,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39177483320236206,
+            "mean_movement_cost": 0.4415157735347748,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3825988173484802,
+            "mean_movement_cost": 0.40633007884025574,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260936": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39057955145835876,
+            "mean_movement_cost": 0.22723595798015594,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3980865478515625,
+            "mean_movement_cost": 0.22274845838546753,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7011070251464844,
+            "mean_entropy": 0.3818824589252472,
+            "mean_movement_cost": 0.23072446882724762,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6051660776138306,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.38852283358573914,
+            "mean_movement_cost": 0.427541583776474,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39167720079421997,
+            "mean_movement_cost": 0.4096459448337555,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38567227125167847,
+            "mean_movement_cost": 0.40822675824165344,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260937": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3964582681655884,
+            "mean_movement_cost": 0.20430360734462738,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3878043591976166,
+            "mean_movement_cost": 0.20801250636577606,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.3812193274497986,
+            "mean_movement_cost": 0.23181407153606415,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6494464874267578,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3921176493167877,
+            "mean_movement_cost": 0.41562914848327637,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39299333095550537,
+            "mean_movement_cost": 0.428587943315506,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.38386809825897217,
+            "mean_movement_cost": 0.39404037594795227,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260938": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6199262142181396,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3934868574142456,
+            "mean_movement_cost": 0.20059573650360107,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.39808568358421326,
+            "mean_movement_cost": 0.2052861899137497,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.38117924332618713,
+            "mean_movement_cost": 0.23103053867816925,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6199262142181396,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3927517831325531,
+            "mean_movement_cost": 0.4170670211315155,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3908731937408447,
+            "mean_movement_cost": 0.40869393944740295,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3843374252319336,
+            "mean_movement_cost": 0.38711440563201904,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260939": {
+        "moves_1": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39136162400245667,
+            "mean_movement_cost": 0.21163837611675262,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3937824070453644,
+            "mean_movement_cost": 0.22156253457069397,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7011070251464844,
+            "mean_entropy": 0.3804161846637726,
+            "mean_movement_cost": 0.22539258003234863,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39101189374923706,
+            "mean_movement_cost": 0.41315028071403503,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3960469663143158,
+            "mean_movement_cost": 0.44286203384399414,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3848814070224762,
+            "mean_movement_cost": 0.4040830433368683,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260940": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6531365513801575,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.39580410718917847,
+            "mean_movement_cost": 0.20733149349689484,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3912853002548218,
+            "mean_movement_cost": 0.2112749069929123,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7158671617507935,
+            "mean_entropy": 0.37927162647247314,
+            "mean_movement_cost": 0.21688048541545868,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6531365513801575,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39294537901878357,
+            "mean_movement_cost": 0.42097580432891846,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3946804702281952,
+            "mean_movement_cost": 0.44065621495246887,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3838874399662018,
+            "mean_movement_cost": 0.39777466654777527,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260941": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.38547325134277344,
+            "mean_movement_cost": 0.21793973445892334,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.3937426209449768,
+            "mean_movement_cost": 0.21052664518356323,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7121771574020386,
+            "mean_entropy": 0.3785941004753113,
+            "mean_movement_cost": 0.21639646589756012,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6236162185668945,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39205819368362427,
+            "mean_movement_cost": 0.42531919479370117,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3955930471420288,
+            "mean_movement_cost": 0.4415002167224884,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3832895755767822,
+            "mean_movement_cost": 0.4126172661781311,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260942": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3867766857147217,
+            "mean_movement_cost": 0.21138642728328705,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3876417279243469,
+            "mean_movement_cost": 0.21877941489219666,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.723247230052948,
+            "mean_entropy": 0.3794229328632355,
+            "mean_movement_cost": 0.2229698747396469,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6457564830780029,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3913382887840271,
+            "mean_movement_cost": 0.41262486577033997,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39588111639022827,
+            "mean_movement_cost": 0.4229022264480591,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38521167635917664,
+            "mean_movement_cost": 0.39798790216445923,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260943": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6125461459159851,
+            "mean_entropy": 0.3887096643447876,
+            "mean_movement_cost": 0.21594956517219543,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39496752619743347,
+            "mean_movement_cost": 0.21382594108581543,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.3813037574291229,
+            "mean_movement_cost": 0.2287074625492096,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.3920229375362396,
+            "mean_movement_cost": 0.4302261173725128,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3930036425590515,
+            "mean_movement_cost": 0.42875564098358154,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.3860315978527069,
+            "mean_movement_cost": 0.4060535132884979,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260944": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.3949359357357025,
+            "mean_movement_cost": 0.19754528999328613,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.660516619682312,
+            "mean_entropy": 0.3880971074104309,
+            "mean_movement_cost": 0.21139566600322723,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38076433539390564,
+            "mean_movement_cost": 0.2139231264591217,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6346863508224487,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3925013840198517,
+            "mean_movement_cost": 0.41190239787101746,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.3939037322998047,
+            "mean_movement_cost": 0.39673370122909546,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6937269568443298,
+            "mean_entropy": 0.38383302092552185,
+            "mean_movement_cost": 0.4063591957092285,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260945": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6199262142181396,
+            "mean_entropy": 0.3912479281425476,
+            "mean_movement_cost": 0.22291676700115204,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.38847750425338745,
+            "mean_movement_cost": 0.20756375789642334,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.379042387008667,
+            "mean_movement_cost": 0.2289663851261139,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6236162185668945,
+            "mean_entropy": 0.39718374609947205,
+            "mean_movement_cost": 0.4315182566642761,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.39401429891586304,
+            "mean_movement_cost": 0.41300591826438904,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6752767562866211,
+            "mean_entropy": 0.3832368850708008,
+            "mean_movement_cost": 0.4041738510131836,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260946": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.38867485523223877,
+            "mean_movement_cost": 0.2136562168598175,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39416933059692383,
+            "mean_movement_cost": 0.21137063205242157,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38111865520477295,
+            "mean_movement_cost": 0.2158622294664383,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6383764147758484,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39624497294425964,
+            "mean_movement_cost": 0.4303872585296631,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.39097729325294495,
+            "mean_movement_cost": 0.4194592237472534,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.38431835174560547,
+            "mean_movement_cost": 0.3999124765396118,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260947": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6236162185668945,
+            "mean_entropy": 0.39078497886657715,
+            "mean_movement_cost": 0.21264392137527466,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39013609290122986,
+            "mean_movement_cost": 0.21419598162174225,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7084870934486389,
+            "mean_entropy": 0.3865278363227844,
+            "mean_movement_cost": 0.2386230230331421,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6273062825202942,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.395145446062088,
+            "mean_movement_cost": 0.4132861793041229,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.396144300699234,
+            "mean_movement_cost": 0.4239024221897125,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38575971126556396,
+            "mean_movement_cost": 0.39577043056488037,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260948": {
+        "moves_1": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.38814225792884827,
+            "mean_movement_cost": 0.21504326164722443,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3903217017650604,
+            "mean_movement_cost": 0.2162119746208191,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.3814246356487274,
+            "mean_movement_cost": 0.22258713841438293,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.61623615026474,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3904772698879242,
+            "mean_movement_cost": 0.45158714056015015,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39398398995399475,
+            "mean_movement_cost": 0.4246281087398529,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6900368928909302,
+            "mean_entropy": 0.38559675216674805,
+            "mean_movement_cost": 0.4258118271827698,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      },
+      "20260949": {
+        "moves_1": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6309963464736938,
+            "mean_entropy": 0.3942720293998718,
+            "mean_movement_cost": 0.20264656841754913,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6199262142181396,
+            "mean_entropy": 0.3958568572998047,
+            "mean_movement_cost": 0.20862239599227905,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.7047970294952393,
+            "mean_entropy": 0.38775771856307983,
+            "mean_movement_cost": 0.2220432609319687,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 1,
+          "fusion_views": 2
+        },
+        "moves_2": {
+          "single": {
+            "top1": 0.6088560819625854,
+            "episodes": 271.0
+          },
+          "policy": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.39157816767692566,
+            "mean_movement_cost": 0.42722734808921814,
+            "episodes": 271.0
+          },
+          "random": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3968503773212433,
+            "mean_movement_cost": 0.446107417345047,
+            "episodes": 271.0
+          },
+          "oracle": {
+            "top1": 0.6789668202400208,
+            "mean_entropy": 0.3864542841911316,
+            "mean_movement_cost": 0.4106500446796417,
+            "episodes": 271.0
+          },
+          "episodes": 271,
+          "moves": 2,
+          "fusion_views": 3
+        }
+      }
+    }
+  },
+  "fixed_aggregates": {
+    "fixed0_moves_1": {
+      "episodes": 271,
+      "single_top1": 0.6125461459159851,
+      "policy_top1_mean": 0.6371463934580485,
+      "policy_top1_std_over_train_seeds": 0.0062718559438809775,
+      "random_top1_mean": 0.6488314946492513,
+      "random_top1_std_mean": 0.009241473026842174,
+      "oracle_top1_mean": 0.7084870934486389,
+      "policy_minus_random": -0.011685101191202807
+    },
+    "fixed0_moves_2": {
+      "episodes": 271,
+      "single_top1": 0.6125461459159851,
+      "policy_top1_mean": 0.6371463934580485,
+      "policy_top1_std_over_train_seeds": 0.007582312289647119,
+      "random_top1_mean": 0.6419434289137522,
+      "random_top1_std_mean": 0.007223635617964457,
+      "oracle_top1_mean": 0.6863468885421753,
+      "policy_minus_random": -0.0047970354557037576
+    },
+    "fixed1_moves_1": {
+      "episodes": 271,
+      "single_top1": 0.6457564830780029,
+      "policy_top1_mean": 0.6519065300623575,
+      "policy_top1_std_over_train_seeds": 0.007582312289647119,
+      "random_top1_mean": 0.6452644626299541,
+      "random_top1_std_mean": 0.011965936540384324,
+      "oracle_top1_mean": 0.7269372940063477,
+      "policy_minus_random": 0.006642067432403476
+    },
+    "fixed1_moves_2": {
+      "episodes": 271,
+      "single_top1": 0.6457564830780029,
+      "policy_top1_mean": 0.6322263479232788,
+      "policy_top1_std_over_train_seeds": 0.004602291799625574,
+      "random_top1_mean": 0.6383763988812764,
+      "random_top1_std_mean": 0.007681421492498656,
+      "oracle_top1_mean": 0.6863468885421753,
+      "policy_minus_random": -0.006150050957997588
+    },
+    "fixed2_moves_1": {
+      "episodes": 271,
+      "single_top1": 0.6346863508224487,
+      "policy_top1_mean": 0.6383763750394186,
+      "policy_top1_std_over_train_seeds": 0.010863179901427293,
+      "random_top1_mean": 0.6437884469827017,
+      "random_top1_std_mean": 0.008770247886686493,
+      "oracle_top1_mean": 0.7121771574020386,
+      "policy_minus_random": -0.005412071943283081
+    },
+    "fixed2_moves_2": {
+      "episodes": 271,
+      "single_top1": 0.6346863508224487,
+      "policy_top1_mean": 0.6396064162254333,
+      "policy_top1_std_over_train_seeds": 0.006271848150925931,
+      "random_top1_mean": 0.638991403579712,
+      "random_top1_std_mean": 0.007803550149036462,
+      "oracle_top1_mean": 0.6826568245887756,
+      "policy_minus_random": 0.0006150126457213911
+    },
+    "fixed3_moves_1": {
+      "episodes": 271,
+      "single_top1": 0.6051660776138306,
+      "policy_top1_mean": 0.645756463209788,
+      "policy_top1_std_over_train_seeds": 0.005218482293123863,
+      "random_top1_mean": 0.64415745139122,
+      "random_top1_std_mean": 0.00960748556207548,
+      "oracle_top1_mean": 0.6974169611930847,
+      "policy_minus_random": 0.0015990118185679192
+    },
+    "fixed3_moves_2": {
+      "episodes": 271,
+      "single_top1": 0.6051660776138306,
+      "policy_top1_mean": 0.6396063963572184,
+      "policy_top1_std_over_train_seeds": 0.0034789975613822442,
+      "random_top1_mean": 0.6452644646167756,
+      "random_top1_std_mean": 0.009467095643549209,
+      "oracle_top1_mean": 0.6863468885421753,
+      "policy_minus_random": -0.00565806825955717
+    }
+  },
+  "random_start_aggregates": {
+    "random_start_moves_1": {
+      "episodes": 271,
+      "single_top1_mean": 0.6250922580560049,
+      "policy_top1_mean_over_train_seeds": 0.6445674578348796,
+      "policy_top1_std_over_eval_seeds": 0.007788887319872712,
+      "random_top1_mean_over_eval_seeds": 0.644649455944697,
+      "random_top1_std_over_eval_seeds": 0.01082759866905797,
+      "oracle_top1_mean_over_train_seeds": 0.7076260844866434,
+      "policy_minus_random": -8.199810981746047e-05
+    },
+    "random_start_moves_2": {
+      "episodes": 271,
+      "single_top1_mean": 0.6250922580560049,
+      "policy_top1_mean_over_train_seeds": 0.6395654128657448,
+      "policy_top1_std_over_eval_seeds": 0.005213503656323772,
+      "random_top1_mean_over_eval_seeds": 0.6435424486796061,
+      "random_top1_std_over_eval_seeds": 0.008061973297264038,
+      "oracle_top1_mean_over_train_seeds": 0.6862238725026448,
+      "policy_minus_random": -0.003977035813861329
+    }
+  }
+}

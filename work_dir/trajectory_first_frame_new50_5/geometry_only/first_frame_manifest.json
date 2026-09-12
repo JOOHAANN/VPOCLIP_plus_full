@@ -1,0 +1,48 @@
+{
+  "experiment": "trajectory_first_sampled_frame",
+  "variant": "geometry_only",
+  "what_changed": "Each 13-frame per-view sensor sequence is truncated to its first sampled frame before state construction.",
+  "what_did_not_change": [
+    "VPOCLIP logits and frozen recognizer",
+    "seen/pseudo-unseen/true-unseen split",
+    "delta-margin target reward",
+    "listwise + pairwise ranking loss",
+    "candidate geometry and reachability",
+    "two-view/multi-step evaluation protocol"
+  ],
+  "temporal_input": {
+    "original_frames": 13,
+    "used_frames": 1,
+    "sample_frame_index": 0,
+    "pose_shape_per_view": [
+      1,
+      17,
+      2
+    ],
+    "object_track_shape_per_view": [
+      1,
+      50
+    ]
+  },
+  "class_split": {
+    "true_unseen": [
+      14,
+      15,
+      25,
+      39,
+      46
+    ],
+    "pseudo_unseen": [
+      0,
+      2,
+      9,
+      10,
+      11,
+      17,
+      26,
+      34,
+      49,
+      50
+    ]
+  }
+}

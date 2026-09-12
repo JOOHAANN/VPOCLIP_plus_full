@@ -310,15 +310,25 @@ def build_dataloaders(config, config_path):
 
     num_workers = int(loader_config.get("num_workers", 4))
     persistent_workers = bool(loader_config.get("persistent_workers", False)) and num_workers > 0
+    # Keep the input pipeline fed on large cached feature sets.  Older
+    # configs did not expose prefetch_factor, so preserve the previous
+    # behaviour when it is absent while allowing high-throughput runs to
+    # request a deeper worker queue.
+    loader_common = {
+        "num_workers": num_workers,
+        "persistent_workers": persistent_workers,
+        "pin_memory": loader_config.get("pin_memory", True),
+    }
+    if num_workers > 0 and loader_config.get("prefetch_factor") is not None:
+        loader_common["prefetch_factor"] = max(1, int(loader_config["prefetch_factor"]))
+
     train_loader = Data.DataLoader(
         train_dataset,
         batch_size=loader_config["batch_size"],
         shuffle=train_shuffle,
         sampler=train_sampler,
-        num_workers=num_workers,
-        persistent_workers=persistent_workers,
-        pin_memory=loader_config.get("pin_memory", True),
         drop_last=loader_config.get("drop_last", True),
+        **loader_common,
     )
     pseudo_val_loader = None
     if pseudo_val_dataset is not None:
@@ -326,20 +336,16 @@ def build_dataloaders(config, config_path):
             pseudo_val_dataset,
             batch_size=loader_config["batch_size"],
             shuffle=False,
-            num_workers=num_workers,
-            persistent_workers=persistent_workers,
-            pin_memory=loader_config.get("pin_memory", True),
             drop_last=False,
+            **loader_common,
         )
 
     val_loader = Data.DataLoader(
         val_dataset,
         batch_size=loader_config["batch_size"],
         shuffle=loader_config.get("val_shuffle", False),
-        num_workers=num_workers,
-        persistent_workers=persistent_workers,
-        pin_memory=loader_config.get("pin_memory", True),
         drop_last=False,
+        **loader_common,
     )
     return train_loader, val_loader, pseudo_val_loader
 
@@ -1197,6 +1203,26 @@ def set_seed(seed):
         torch.cuda.manual_seed_all(seed)
 
 
+def configure_performance(runtime_config):
+    """Enable safe CUDA throughput options without changing reproducibility.
+
+    The cached feature tensors are convolution/attention heavy and run on a
+    recent NVIDIA GPU.  TF32 and cuDNN autotuning materially increase
+    throughput; callers can turn either option off in a config if an exact
+    bitwise-reproducible run is needed.
+    """
+    if not torch.cuda.is_available():
+        return
+    if bool(runtime_config.get("cudnn_benchmark", True)):
+        torch.backends.cudnn.benchmark = True
+    allow_tf32 = bool(runtime_config.get("allow_tf32", True))
+    torch.backends.cuda.matmul.allow_tf32 = allow_tf32
+    torch.backends.cudnn.allow_tf32 = allow_tf32
+    precision = runtime_config.get("matmul_precision", "high")
+    if precision:
+        torch.set_float32_matmul_precision(str(precision))
+
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Train CLIPGCN contrastive model.")
     parser.add_argument("--config", default="config.yaml", help="Path to YAML config file.")
@@ -1221,6 +1247,12 @@ def parse_args():
         default=None,
         help="Override train.init_checkpoint (used by chained fine-tuning runs).",
     )
+    parser.add_argument(
+        "--epochs",
+        type=int,
+        default=None,
+        help="Override train.epochs for pseudo-selected stopping points.",
+    )
     return parser.parse_args()
 
 
@@ -1241,7 +1273,12 @@ def main():
         config.setdefault("outputs", {})["run_name"] = args.run_name
     if args.init_checkpoint:
         config.setdefault("train", {})["init_checkpoint"] = os.path.abspath(args.init_checkpoint)
+    if args.epochs is not None:
+        if args.epochs <= 0:
+            raise ValueError("--epochs must be positive.")
+        config.setdefault("train", {})["epochs"] = args.epochs
     set_seed(int(config["runtime"].get("seed", 20260616)))
+    configure_performance(config.get("runtime", {}))
     print(f"Seed: {config['runtime'].get('seed')}")
     run_dir = prepare_output_paths(config, config_path)
     print(f"Run output directory: {run_dir}")

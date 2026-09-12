@@ -1,0 +1,5497 @@
+{
+  "experiment": "fusion_rule_based_v1",
+  "cache_root": "/home/youhan/ws/VPOCLIP_plus_full/data/rl_raw_new50_5_group1_g1_pseudo_selected_stage_b/cache",
+  "gate_checkpoint_for_common_comparison": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_lightweight_gating_v1/models/seed_20260910/best.pt",
+  "eval_seeds": [
+    20260920,
+    20260921,
+    20260922,
+    20260923,
+    20260924,
+    20260925,
+    20260926,
+    20260927,
+    20260928,
+    20260929,
+    20260930,
+    20260931,
+    20260932,
+    20260933,
+    20260934,
+    20260935,
+    20260936,
+    20260937,
+    20260938,
+    20260939,
+    20260940,
+    20260941,
+    20260942,
+    20260943,
+    20260944,
+    20260945,
+    20260946,
+    20260947,
+    20260948,
+    20260949
+  ],
+  "methods": [
+    "equal_mean",
+    "lightweight_gating",
+    "rule_cls",
+    "rule_geo",
+    "rule_combined"
+  ],
+  "rule_weights": {
+    "rule_cls": {
+      "entropy": 0.5,
+      "margin": 0.5
+    },
+    "rule_geo": {
+      "visibility": 0.5,
+      "orientation": 0.5
+    },
+    "rule_combined": {
+      "entropy": 0.3,
+      "margin": 0.3,
+      "visibility": 0.2,
+      "orientation": 0.2
+    }
+  },
+  "orientation_rule_degrees": {
+    "front": 0.8,
+    "30_to_90": 1.0,
+    "150": 0.4,
+    "back": 0.2
+  },
+  "orientation_source": "sample-specific view_geometry azimuth; angle=acos(cos_azimuth)",
+  "visibility_source": "13-frame cached pose joint-presence ratio",
+  "no_true_unseen_tuning": true,
+  "recognizer_frozen": true,
+  "anchor_preserved": true,
+  "results": {
+    "seen": {
+      "fixed0": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8141466420209488,
+              "top1_ci95": [
+                0.8003937153419594,
+                0.8274556377079483
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2705
+            },
+            "lightweight_gating": {
+              "top1": 0.8135428219346889,
+              "top1_ci95": [
+                0.7999867529266788,
+                0.8270240295748613
+              ],
+              "delta_vs_equal_mean": -0.0006038200862600123,
+              "delta_vs_equal_mean_ci95": [
+                -0.0017498459642637091,
+                0.00045594577942082565
+              ],
+              "episodes": 2705
+            },
+            "rule_cls": {
+              "top1": 0.8121996303142329,
+              "top1_ci95": [
+                0.7986072088724585,
+                0.8256820702402957
+              ],
+              "delta_vs_equal_mean": -0.0019470117067159583,
+              "delta_vs_equal_mean_ci95": [
+                -0.004362600123228589,
+                0.0003946395563770754
+              ],
+              "episodes": 2705
+            },
+            "rule_geo": {
+              "top1": 0.8137399876771412,
+              "top1_ci95": [
+                0.7996167590881083,
+                0.8274808995687001
+              ],
+              "delta_vs_equal_mean": -0.00040665434380776345,
+              "delta_vs_equal_mean_ci95": [
+                -0.0018484288354898336,
+                0.0009735058533579788
+              ],
+              "episodes": 2705
+            },
+            "rule_combined": {
+              "top1": 0.8133333333333334,
+              "top1_ci95": [
+                0.7996173752310537,
+                0.8274430067775723
+              ],
+              "delta_vs_equal_mean": -0.0008133086876155267,
+              "delta_vs_equal_mean_ci95": [
+                -0.0026001232285890324,
+                0.0008379544054220577
+              ],
+              "episodes": 2705
+            }
+          },
+          "episodes": 2705,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed0/details/fixed0_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8129390018484288,
+              "top1_ci95": [
+                0.7981515711645102,
+                0.8273567467652495
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2705
+            },
+            "lightweight_gating": {
+              "top1": 0.811090573012939,
+              "top1_ci95": [
+                0.7963031423290203,
+                0.8262476894639557
+              ],
+              "delta_vs_equal_mean": -0.0018484288354898336,
+              "delta_vs_equal_mean_ci95": [
+                -0.0036968576709796672,
+                0.0
+              ],
+              "episodes": 2705
+            },
+            "rule_cls": {
+              "top1": 0.8088724584103512,
+              "top1_ci95": [
+                0.7940850277264325,
+                0.8236598890942699
+              ],
+              "delta_vs_equal_mean": -0.004066543438077634,
+              "delta_vs_equal_mean_ci95": [
+                -0.008133086876155268,
+                0.0
+              ],
+              "episodes": 2705
+            },
+            "rule_geo": {
+              "top1": 0.811090573012939,
+              "top1_ci95": [
+                0.7963031423290203,
+                0.8255083179297596
+              ],
+              "delta_vs_equal_mean": -0.0018484288354898336,
+              "delta_vs_equal_mean_ci95": [
+                -0.0044362292051756,
+                0.0007393715341959334
+              ],
+              "episodes": 2705
+            },
+            "rule_combined": {
+              "top1": 0.8096118299445472,
+              "top1_ci95": [
+                0.7948243992606284,
+                0.8244085027726431
+              ],
+              "delta_vs_equal_mean": -0.0033271719038817007,
+              "delta_vs_equal_mean_ci95": [
+                -0.006284658040665434,
+                -0.0003696857670979667
+              ],
+              "episodes": 2705
+            }
+          },
+          "episodes": 2705,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed0/details/fixed0_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8269395066832025,
+              "top1_ci95": [
+                0.8122085572550642,
+                0.8413393964448118
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.8272013228606863,
+              "top1_ci95": [
+                0.8129378531073446,
+                0.8408161085848146
+              ],
+              "delta_vs_equal_mean": 0.0002618161774838088,
+              "delta_vs_equal_mean_ci95": [
+                -0.0005925313490423039,
+                0.0011850626980846079
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8261953975471957,
+              "top1_ci95": [
+                0.8121262229571448,
+                0.8401405539479123
+              ],
+              "delta_vs_equal_mean": -0.0007441091360066145,
+              "delta_vs_equal_mean_ci95": [
+                -0.0033212760093702634,
+                0.0019016122364613473
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8269119470855726,
+              "top1_ci95": [
+                0.8131593633732948,
+                0.8410086812732535
+              ],
+              "delta_vs_equal_mean": -2.7559597629874436e-05,
+              "delta_vs_equal_mean_ci95": [
+                -0.0016811354554223507,
+                0.001639796058977539
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.8271186440677966,
+              "top1_ci95": [
+                0.812620917734601,
+                0.8413263056359378
+              ],
+              "delta_vs_equal_mean": 0.0001791373845941852,
+              "delta_vs_equal_mean_ci95": [
+                -0.0015846768637177895,
+                0.001956731431721097
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed0/details/fixed0_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8325754443985118,
+              "top1_ci95": [
+                0.8176932616783795,
+                0.847457627118644
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.8334022323274081,
+              "top1_ci95": [
+                0.8185200496072758,
+                0.8478710210830922
+              ],
+              "delta_vs_equal_mean": 0.0008267879288962381,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008267879288962381,
+                0.0024803637866887144
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8325754443985118,
+              "top1_ci95": [
+                0.8176932616783795,
+                0.847457627118644
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.0037205456800330715,
+                0.00413393964448119
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8317486564696155,
+              "top1_ci95": [
+                0.8168664737494833,
+                0.8466308391897478
+              ],
+              "delta_vs_equal_mean": -0.0008267879288962381,
+              "delta_vs_equal_mean_ci95": [
+                -0.0037205456800330715,
+                0.002066969822240595
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.8338156262918561,
+              "top1_ci95": [
+                0.819346837536172,
+                0.8482844150475403
+              ],
+              "delta_vs_equal_mean": 0.0012401818933443572,
+              "delta_vs_equal_mean_ci95": [
+                -0.0016535758577924762,
+                0.00413393964448119
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed0/details/fixed0_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8344370860927153,
+              "top1_ci95": [
+                0.8195364238410596,
+                0.8489238410596026
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2416
+            },
+            "lightweight_gating": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.8199503311258278,
+                0.8497516556291391
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012417218543046358,
+                0.0020695364238410598
+              ],
+              "episodes": 2416
+            },
+            "rule_cls": {
+              "top1": 0.8311258278145696,
+              "top1_ci95": [
+                0.8162251655629139,
+                0.8451986754966887
+              ],
+              "delta_vs_equal_mean": -0.0033112582781456954,
+              "delta_vs_equal_mean_ci95": [
+                -0.0074503311258278145,
+                0.0004139072847682119
+              ],
+              "episodes": 2416
+            },
+            "rule_geo": {
+              "top1": 0.8352649006622517,
+              "top1_ci95": [
+                0.820364238410596,
+                0.8493377483443708
+              ],
+              "delta_vs_equal_mean": 0.0008278145695364238,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008381622516556256,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            },
+            "rule_combined": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.8195364238410596,
+                0.8497516556291391
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0020695364238410598,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            }
+          },
+          "episodes": 2416,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed0/details/fixed0_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      },
+      "fixed1": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8097966728280961,
+              "top1_ci95": [
+                0.796141404805915,
+                0.8230569932224276
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2705
+            },
+            "lightweight_gating": {
+              "top1": 0.8092421441774492,
+              "top1_ci95": [
+                0.7955135551447936,
+                0.823007393715342
+              ],
+              "delta_vs_equal_mean": -0.00055452865064695,
+              "delta_vs_equal_mean_ci95": [
+                -0.0017128773875539124,
+                0.00044362292051756014
+              ],
+              "episodes": 2705
+            },
+            "rule_cls": {
+              "top1": 0.8093037584719656,
+              "top1_ci95": [
+                0.7959085027726434,
+                0.8228484288354898
+              ],
+              "delta_vs_equal_mean": -0.0004929143561306223,
+              "delta_vs_equal_mean_ci95": [
+                -0.0028712261244608745,
+                0.0017498459642637091
+              ],
+              "episodes": 2705
+            },
+            "rule_geo": {
+              "top1": 0.8094886013555144,
+              "top1_ci95": [
+                0.7953170055452864,
+                0.8230070856438695
+              ],
+              "delta_vs_equal_mean": -0.000308071472581639,
+              "delta_vs_equal_mean_ci95": [
+                -0.00133086876155268,
+                0.0005175600739371534
+              ],
+              "episodes": 2705
+            },
+            "rule_combined": {
+              "top1": 0.8094269870609981,
+              "top1_ci95": [
+                0.7953046826863832,
+                0.8234753542821934
+              ],
+              "delta_vs_equal_mean": -0.0003696857670979667,
+              "delta_vs_equal_mean_ci95": [
+                -0.0019470117067159581,
+                0.0010720887245841033
+              ],
+              "episodes": 2705
+            }
+          },
+          "episodes": 2705,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed1/details/fixed1_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8066543438077634,
+              "top1_ci95": [
+                0.7922365988909427,
+                0.8214417744916821
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2705
+            },
+            "lightweight_gating": {
+              "top1": 0.8051756007393716,
+              "top1_ci95": [
+                0.7900184842883549,
+                0.8203327171903881
+              ],
+              "delta_vs_equal_mean": -0.0014787430683918669,
+              "delta_vs_equal_mean_ci95": [
+                -0.0029574861367837337,
+                -0.0003696857670979667
+              ],
+              "episodes": 2705
+            },
+            "rule_cls": {
+              "top1": 0.8059149722735675,
+              "top1_ci95": [
+                0.7907578558225509,
+                0.8210720887245841
+              ],
+              "delta_vs_equal_mean": -0.0007393715341959334,
+              "delta_vs_equal_mean_ci95": [
+                -0.0044362292051756,
+                0.0029574861367837337
+              ],
+              "episodes": 2705
+            },
+            "rule_geo": {
+              "top1": 0.8066543438077634,
+              "top1_ci95": [
+                0.7914972273567468,
+                0.8207024029574861
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.0018484288354898336,
+                0.0018484288354898336
+              ],
+              "episodes": 2705
+            },
+            "rule_combined": {
+              "top1": 0.8055452865064695,
+              "top1_ci95": [
+                0.7903881700554528,
+                0.8203327171903881
+              ],
+              "delta_vs_equal_mean": -0.0011090573012939,
+              "delta_vs_equal_mean_ci95": [
+                -0.0033271719038817007,
+                0.0011090573012939
+              ],
+              "episodes": 2705
+            }
+          },
+          "episodes": 2705,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed1/details/fixed1_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.82525837122778,
+              "top1_ci95": [
+                0.8106652197877912,
+                0.8396586054843599
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.8252997106242248,
+              "top1_ci95": [
+                0.8108433236874741,
+                0.8388752239217308
+              ],
+              "delta_vs_equal_mean": 4.133939644481199e-05,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008405677277111754,
+                0.0009508061182306737
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8241146479261403,
+              "top1_ci95": [
+                0.810031349042304,
+                0.8383908639933856
+              ],
+              "delta_vs_equal_mean": -0.001143723301639796,
+              "delta_vs_equal_mean_ci95": [
+                -0.003803224472922695,
+                0.001502342565798535
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8249552156538515,
+              "top1_ci95": [
+                0.811189196637729,
+                0.8391487529282072
+              ],
+              "delta_vs_equal_mean": -0.00030315557392862055,
+              "delta_vs_equal_mean_ci95": [
+                -0.001818933443571724,
+                0.00122640209452942
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.8247071792751826,
+              "top1_ci95": [
+                0.8099348904505995,
+                0.8388869367507233
+              ],
+              "delta_vs_equal_mean": -0.0005511919525974919,
+              "delta_vs_equal_mean_ci95": [
+                -0.0022877910982499654,
+                0.0011988424968995455
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed1/details/fixed1_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8313352625051674,
+              "top1_ci95": [
+                0.8160396858205871,
+                0.8462174452252997
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.8305084745762712,
+              "top1_ci95": [
+                0.8152128978916908,
+                0.8449772633319553
+              ],
+              "delta_vs_equal_mean": -0.0008267879288962381,
+              "delta_vs_equal_mean_ci95": [
+                -0.0024803637866887144,
+                0.0008267879288962381
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8280281107895825,
+              "top1_ci95": [
+                0.8131459280694502,
+                0.8429102935097148
+              ],
+              "delta_vs_equal_mean": -0.0033071517155849523,
+              "delta_vs_equal_mean_ci95": [
+                -0.007854485324514262,
+                0.0012401818933443572
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8292682926829268,
+              "top1_ci95": [
+                0.8139727159983464,
+                0.8441504754030591
+              ],
+              "delta_vs_equal_mean": -0.002066969822240595,
+              "delta_vs_equal_mean_ci95": [
+                -0.004960727573377429,
+                0.0008267879288962381
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.830095080611823,
+              "top1_ci95": [
+                0.8152128978916908,
+                0.8445742042166183
+              ],
+              "delta_vs_equal_mean": -0.0012401818933443572,
+              "delta_vs_equal_mean_ci95": [
+                -0.0045473336089293095,
+                0.002066969822240595
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed1/details/fixed1_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8344370860927153,
+              "top1_ci95": [
+                0.8195364238410596,
+                0.8489238410596026
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2416
+            },
+            "lightweight_gating": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.8199503311258278,
+                0.8497516556291391
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012417218543046358,
+                0.0020695364238410598
+              ],
+              "episodes": 2416
+            },
+            "rule_cls": {
+              "top1": 0.8311258278145696,
+              "top1_ci95": [
+                0.8162251655629139,
+                0.8451986754966887
+              ],
+              "delta_vs_equal_mean": -0.0033112582781456954,
+              "delta_vs_equal_mean_ci95": [
+                -0.0074503311258278145,
+                0.0004139072847682119
+              ],
+              "episodes": 2416
+            },
+            "rule_geo": {
+              "top1": 0.8352649006622517,
+              "top1_ci95": [
+                0.820364238410596,
+                0.8493377483443708
+              ],
+              "delta_vs_equal_mean": 0.0008278145695364238,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008381622516556256,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            },
+            "rule_combined": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.8195364238410596,
+                0.8497516556291391
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0020695364238410598,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            }
+          },
+          "episodes": 2416,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed1/details/fixed1_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      },
+      "fixed2": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8170593909328924,
+              "top1_ci95": [
+                0.8031417941298057,
+                0.8309218685407193
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.8165495383767396,
+              "top1_ci95": [
+                0.8025217031831337,
+                0.8299300675210141
+              ],
+              "delta_vs_equal_mean": -0.0005098525561526801,
+              "delta_vs_equal_mean_ci95": [
+                -0.0013232051812043543,
+                0.00026181617748380874
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8162877221992558,
+              "top1_ci95": [
+                0.8023701253961693,
+                0.829931789995866
+              ],
+              "delta_vs_equal_mean": -0.0007716687336364886,
+              "delta_vs_equal_mean_ci95": [
+                -0.002838638555877084,
+                0.0014193192779385425
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8169767121400027,
+              "top1_ci95": [
+                0.80321034862891,
+                0.830770290753755
+              ],
+              "delta_vs_equal_mean": -8.26787928896237e-05,
+              "delta_vs_equal_mean_ci95": [
+                -0.001047264709935235,
+                0.000909466721785862
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.817376326305636,
+              "top1_ci95": [
+                0.8031555739286207,
+                0.8310741353176244
+              ],
+              "delta_vs_equal_mean": 0.000316935372743558,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008819071241559872,
+                0.0016260162601626016
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed2/details/fixed2_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8168664737494833,
+              "top1_ci95": [
+                0.8015708970649028,
+                0.8317589913187265
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.8168664737494833,
+              "top1_ci95": [
+                0.8011575031004547,
+                0.8321620504340637
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012401818933443572,
+                0.0012401818933443572
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8156262918561389,
+              "top1_ci95": [
+                0.8003307151715585,
+                0.8305084745762712
+              ],
+              "delta_vs_equal_mean": -0.0012401818933443572,
+              "delta_vs_equal_mean_ci95": [
+                -0.005374121537825548,
+                0.0028937577511368336
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8176932616783795,
+              "top1_ci95": [
+                0.801984291029351,
+                0.832999173212071
+              ],
+              "delta_vs_equal_mean": 0.0008267879288962381,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012401818933443572,
+                0.0033071517155849523
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.8176932616783795,
+              "top1_ci95": [
+                0.802397684993799,
+                0.8329888383629599
+              ],
+              "delta_vs_equal_mean": 0.0008267879288962381,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008371227780074375,
+                0.0028937577511368336
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed2/details/fixed2_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8262918561389003,
+              "top1_ci95": [
+                0.811795163290616,
+                0.840555325892242
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.8265536723163842,
+              "top1_ci95": [
+                0.8122622984704423,
+                0.8400303155573928
+              ],
+              "delta_vs_equal_mean": 0.0002618161774838088,
+              "delta_vs_equal_mean_ci95": [
+                -0.0007165495383767396,
+                0.001267741490974232
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8256579853934134,
+              "top1_ci95": [
+                0.8117789720270083,
+                0.8395755821965
+              ],
+              "delta_vs_equal_mean": -0.0006338707454871161,
+              "delta_vs_equal_mean_ci95": [
+                -0.003252032520325203,
+                0.0020673143172109643
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8255477470028938,
+              "top1_ci95": [
+                0.8118637177897203,
+                0.8396444811905746
+              ],
+              "delta_vs_equal_mean": -0.0007441091360066144,
+              "delta_vs_equal_mean_ci95": [
+                -0.0020535345183960315,
+                0.0005515364475678604
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.8257682237839328,
+              "top1_ci95": [
+                0.8115333471131322,
+                0.8398511781727986
+              ],
+              "delta_vs_equal_mean": -0.0005236323549676173,
+              "delta_vs_equal_mean_ci95": [
+                -0.0021909880115750305,
+                0.0010748243075651095
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed2/details/fixed2_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8272013228606863,
+              "top1_ci95": [
+                0.812319140140554,
+                0.8416701116163704
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.8272013228606863,
+              "top1_ci95": [
+                0.8119057461761058,
+                0.8416701116163704
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.0016535758577924762,
+                0.0016535758577924762
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8243075651095494,
+              "top1_ci95": [
+                0.8085985944605208,
+                0.8387763538652335
+              ],
+              "delta_vs_equal_mean": -0.0028937577511368336,
+              "delta_vs_equal_mean_ci95": [
+                -0.007027697395618024,
+                0.0012401818933443572
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8272013228606863,
+              "top1_ci95": [
+                0.8119057461761058,
+                0.8424968995452666
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.0016535758577924762,
+                0.0016535758577924762
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.8267879288962381,
+              "top1_ci95": [
+                0.8119057461761058,
+                0.8416701116163704
+              ],
+              "delta_vs_equal_mean": -0.00041339396444811904,
+              "delta_vs_equal_mean_ci95": [
+                -0.0028937577511368336,
+                0.002066969822240595
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed2/details/fixed2_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8344370860927153,
+              "top1_ci95": [
+                0.8195364238410596,
+                0.8489238410596026
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2416
+            },
+            "lightweight_gating": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.8199503311258278,
+                0.8497516556291391
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012417218543046358,
+                0.0020695364238410598
+              ],
+              "episodes": 2416
+            },
+            "rule_cls": {
+              "top1": 0.8311258278145696,
+              "top1_ci95": [
+                0.8162251655629139,
+                0.8451986754966887
+              ],
+              "delta_vs_equal_mean": -0.0033112582781456954,
+              "delta_vs_equal_mean_ci95": [
+                -0.0074503311258278145,
+                0.0004139072847682119
+              ],
+              "episodes": 2416
+            },
+            "rule_geo": {
+              "top1": 0.8352649006622517,
+              "top1_ci95": [
+                0.820364238410596,
+                0.8493377483443708
+              ],
+              "delta_vs_equal_mean": 0.0008278145695364238,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008381622516556256,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            },
+            "rule_combined": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.8195364238410596,
+                0.8497516556291391
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0020695364238410598,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            }
+          },
+          "episodes": 2416,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed2/details/fixed2_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      },
+      "fixed3": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8152317880794702,
+              "top1_ci95": [
+                0.800550841611479,
+                0.8299006622516556
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2416
+            },
+            "lightweight_gating": {
+              "top1": 0.8143763796909492,
+              "top1_ci95": [
+                0.8001365894039735,
+                0.8280639486754966
+              ],
+              "delta_vs_equal_mean": -0.0008554083885209714,
+              "delta_vs_equal_mean_ci95": [
+                -0.0019315673289183224,
+                0.00019315673289183215
+              ],
+              "episodes": 2416
+            },
+            "rule_cls": {
+              "top1": 0.8135209713024283,
+              "top1_ci95": [
+                0.7989504001103753,
+                0.8278283664459161
+              ],
+              "delta_vs_equal_mean": -0.0017108167770419425,
+              "delta_vs_equal_mean_ci95": [
+                -0.004429152869757174,
+                0.0008692052980132452
+              ],
+              "episodes": 2416
+            },
+            "rule_geo": {
+              "top1": 0.8140314569536423,
+              "top1_ci95": [
+                0.7994612306843267,
+                0.8283529939293597
+              ],
+              "delta_vs_equal_mean": -0.0012003311258278148,
+              "delta_vs_equal_mean_ci95": [
+                -0.0027045391832229582,
+                0.00028973509933774826
+              ],
+              "episodes": 2416
+            },
+            "rule_combined": {
+              "top1": 0.8145695364238411,
+              "top1_ci95": [
+                0.8001517660044151,
+                0.8283112582781457
+              ],
+              "delta_vs_equal_mean": -0.0006622516556291393,
+              "delta_vs_equal_mean_ci95": [
+                -0.0023316777041942605,
+                0.0010627069536423793
+              ],
+              "episodes": 2416
+            }
+          },
+          "episodes": 2416,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed3/details/fixed3_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8195364238410596,
+              "top1_ci95": [
+                0.8042218543046358,
+                0.8348509933774835
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2416
+            },
+            "lightweight_gating": {
+              "top1": 0.8191225165562914,
+              "top1_ci95": [
+                0.8033940397350994,
+                0.8344370860927153
+              ],
+              "delta_vs_equal_mean": -0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0020695364238410598,
+                0.0012417218543046358
+              ],
+              "episodes": 2416
+            },
+            "rule_cls": {
+              "top1": 0.8158112582781457,
+              "top1_ci95": [
+                0.8009002483443709,
+                0.8302980132450332
+              ],
+              "delta_vs_equal_mean": -0.0037251655629139072,
+              "delta_vs_equal_mean_ci95": [
+                -0.008278145695364239,
+                0.0008278145695364238
+              ],
+              "episodes": 2416
+            },
+            "rule_geo": {
+              "top1": 0.8158112582781457,
+              "top1_ci95": [
+                0.8004966887417219,
+                0.8311258278145696
+              ],
+              "delta_vs_equal_mean": -0.0037251655629139072,
+              "delta_vs_equal_mean_ci95": [
+                -0.006622516556291391,
+                -0.0008278145695364238
+              ],
+              "episodes": 2416
+            },
+            "rule_combined": {
+              "top1": 0.8170529801324503,
+              "top1_ci95": [
+                0.8009105960264901,
+                0.8323778973509932
+              ],
+              "delta_vs_equal_mean": -0.0024834437086092716,
+              "delta_vs_equal_mean_ci95": [
+                -0.005380794701986755,
+                0.0
+              ],
+              "episodes": 2416
+            }
+          },
+          "episodes": 2416,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed3/details/fixed3_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8276628035320088,
+              "top1_ci95": [
+                0.8130791252759383,
+                0.8423985927152318
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2416
+            },
+            "lightweight_gating": {
+              "top1": 0.8276766004415012,
+              "top1_ci95": [
+                0.8135875413907284,
+                0.8412665562913907
+              ],
+              "delta_vs_equal_mean": 1.3796909492273682e-05,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008140176600441503,
+                0.0008278145695364236
+              ],
+              "episodes": 2416
+            },
+            "rule_cls": {
+              "top1": 0.8276490066225165,
+              "top1_ci95": [
+                0.8133961092715231,
+                0.8415562913907285
+              ],
+              "delta_vs_equal_mean": -1.3796909492273636e-05,
+              "delta_vs_equal_mean_ci95": [
+                -0.0026903973509933773,
+                0.0028145695364238414
+              ],
+              "episodes": 2416
+            },
+            "rule_geo": {
+              "top1": 0.8278007726269315,
+              "top1_ci95": [
+                0.8134644039735098,
+                0.8415980270419426
+              ],
+              "delta_vs_equal_mean": 0.00013796909492273728,
+              "delta_vs_equal_mean_ci95": [
+                -0.001338300220750552,
+                0.0015866445916114791
+              ],
+              "episodes": 2416
+            },
+            "rule_combined": {
+              "top1": 0.8280491169977925,
+              "top1_ci95": [
+                0.8137413769315673,
+                0.8416532146799117
+              ],
+              "delta_vs_equal_mean": 0.0003863134657836645,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012141280353200883,
+                0.0019453642384105962
+              ],
+              "episodes": 2416
+            }
+          },
+          "episodes": 2416,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed3/details/fixed3_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8249172185430463,
+              "top1_ci95": [
+                0.8100165562913907,
+                0.8402317880794702
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2416
+            },
+            "lightweight_gating": {
+              "top1": 0.8253311258278145,
+              "top1_ci95": [
+                0.8104304635761589,
+                0.8402317880794702
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008278145695364238,
+                0.0020695364238410598
+              ],
+              "episodes": 2416
+            },
+            "rule_cls": {
+              "top1": 0.8232615894039735,
+              "top1_ci95": [
+                0.8075331125827815,
+                0.8381622516556292
+              ],
+              "delta_vs_equal_mean": -0.0016556291390728477,
+              "delta_vs_equal_mean_ci95": [
+                -0.005794701986754967,
+                0.0024834437086092716
+              ],
+              "episodes": 2416
+            },
+            "rule_geo": {
+              "top1": 0.8253311258278145,
+              "top1_ci95": [
+                0.8100165562913907,
+                0.8402317880794702
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012417218543046358,
+                0.0020695364238410598
+              ],
+              "episodes": 2416
+            },
+            "rule_combined": {
+              "top1": 0.8253311258278145,
+              "top1_ci95": [
+                0.8100165562913907,
+                0.839817880794702
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0020695364238410598,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            }
+          },
+          "episodes": 2416,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed3/details/fixed3_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8344370860927153,
+              "top1_ci95": [
+                0.8195364238410596,
+                0.8489238410596026
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2416
+            },
+            "lightweight_gating": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.8199503311258278,
+                0.8497516556291391
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012417218543046358,
+                0.0020695364238410598
+              ],
+              "episodes": 2416
+            },
+            "rule_cls": {
+              "top1": 0.8311258278145696,
+              "top1_ci95": [
+                0.8162251655629139,
+                0.8451986754966887
+              ],
+              "delta_vs_equal_mean": -0.0033112582781456954,
+              "delta_vs_equal_mean_ci95": [
+                -0.0074503311258278145,
+                0.0004139072847682119
+              ],
+              "episodes": 2416
+            },
+            "rule_geo": {
+              "top1": 0.8352649006622517,
+              "top1_ci95": [
+                0.820364238410596,
+                0.8493377483443708
+              ],
+              "delta_vs_equal_mean": 0.0008278145695364238,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008381622516556256,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            },
+            "rule_combined": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.8195364238410596,
+                0.8497516556291391
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0020695364238410598,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            }
+          },
+          "episodes": 2416,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/fixed3/details/fixed3_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      },
+      "random_start": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8118176216882317,
+              "top1_ci95": [
+                0.7988530499075785,
+                0.8243995686999384
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2705
+            },
+            "lightweight_gating": {
+              "top1": 0.8109303758471965,
+              "top1_ci95": [
+                0.7978311768330252,
+                0.8239069624152804
+              ],
+              "delta_vs_equal_mean": -0.0008872458410351201,
+              "delta_vs_equal_mean_ci95": [
+                -0.0019346888478126926,
+                -6.161429451632772e-05
+              ],
+              "episodes": 2705
+            },
+            "rule_cls": {
+              "top1": 0.8099199014171287,
+              "top1_ci95": [
+                0.7964990757855822,
+                0.8233906346272335
+              ],
+              "delta_vs_equal_mean": -0.0018977202711028957,
+              "delta_vs_equal_mean_ci95": [
+                -0.003820086260012323,
+                -0.0001232285890326552
+              ],
+              "episodes": 2705
+            },
+            "rule_geo": {
+              "top1": 0.8110289587184227,
+              "top1_ci95": [
+                0.7975585335797906,
+                0.8241897720271103
+              ],
+              "delta_vs_equal_mean": -0.0007886629698089955,
+              "delta_vs_equal_mean_ci95": [
+                -0.0019346888478126922,
+                0.00016019716574245234
+              ],
+              "episodes": 2705
+            },
+            "rule_combined": {
+              "top1": 0.811004313000616,
+              "top1_ci95": [
+                0.797756931608133,
+                0.8237957486136784
+              ],
+              "delta_vs_equal_mean": -0.0008133086876155266,
+              "delta_vs_equal_mean_ci95": [
+                -0.002279728897104128,
+                0.00044362292051756014
+              ],
+              "episodes": 2705
+            }
+          },
+          "episodes": 2705,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/random_start/details/random_start_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8115341959334565,
+              "top1_ci95": [
+                0.7973746149106593,
+                0.8253367221195318
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2705
+            },
+            "lightweight_gating": {
+              "top1": 0.8101910043130006,
+              "top1_ci95": [
+                0.7960930375847197,
+                0.8236845348120764
+              ],
+              "delta_vs_equal_mean": -0.0013431916204559458,
+              "delta_vs_equal_mean_ci95": [
+                -0.0026001232285890324,
+                -0.00024645717806531103
+              ],
+              "episodes": 2705
+            },
+            "rule_cls": {
+              "top1": 0.8085767097966727,
+              "top1_ci95": [
+                0.794478743068392,
+                0.822427911275416
+              ],
+              "delta_vs_equal_mean": -0.0029574861367837337,
+              "delta_vs_equal_mean_ci95": [
+                -0.00582902033271719,
+                -0.0002711028958718421
+              ],
+              "episodes": 2705
+            },
+            "rule_geo": {
+              "top1": 0.8098213185459027,
+              "top1_ci95": [
+                0.7960560690080098,
+                0.8235616142945164
+              ],
+              "delta_vs_equal_mean": -0.0017128773875539124,
+              "delta_vs_equal_mean_ci95": [
+                -0.003536660505237215,
+                -0.00011090573012938995
+              ],
+              "episodes": 2705
+            },
+            "rule_combined": {
+              "top1": 0.8094269870609981,
+              "top1_ci95": [
+                0.7954528650646949,
+                0.823230437461491
+              ],
+              "delta_vs_equal_mean": -0.0021072088724584104,
+              "delta_vs_equal_mean_ci95": [
+                -0.003968268638324091,
+                -0.00044362292051756003
+              ],
+              "episodes": 2705
+            }
+          },
+          "episodes": 2705,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/random_start/details/random_start_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8261678379495659,
+              "top1_ci95": [
+                0.8120569794680998,
+                0.8403062560286618
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.826140278351936,
+              "top1_ci95": [
+                0.8118640622846908,
+                0.8402097974369573
+              ],
+              "delta_vs_equal_mean": -2.755959762987455e-05,
+              "delta_vs_equal_mean_ci95": [
+                -0.0008543475265261126,
+                0.0007578889348215516
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8255201874052639,
+              "top1_ci95": [
+                0.8111616370400991,
+                0.8392448670249414
+              ],
+              "delta_vs_equal_mean": -0.0006476505443020533,
+              "delta_vs_equal_mean_ci95": [
+                -0.003155573928620642,
+                0.0018051536447567867
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8257406641863029,
+              "top1_ci95": [
+                0.8117403885903266,
+                0.8394519085021358
+              ],
+              "delta_vs_equal_mean": -0.0004271737632630564,
+              "delta_vs_equal_mean_ci95": [
+                -0.0017500344494970374,
+                0.0008819071241559875
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.8259887005649719,
+              "top1_ci95": [
+                0.8114510128152129,
+                0.8401002480363786
+              ],
+              "delta_vs_equal_mean": -0.00017913738459418498,
+              "delta_vs_equal_mean_ci95": [
+                -0.0017224748518671624,
+                0.001391759680308667
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/random_start/details/random_start_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8288411189196638,
+              "top1_ci95": [
+                0.8142875844012679,
+                0.8433657158605484
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2419
+            },
+            "lightweight_gating": {
+              "top1": 0.8290202563042579,
+              "top1_ci95": [
+                0.8145369987598181,
+                0.8431590188783243
+              ],
+              "delta_vs_equal_mean": 0.00017913738459418493,
+              "delta_vs_equal_mean_ci95": [
+                -0.0009783657158605485,
+                0.00137797988149373
+              ],
+              "episodes": 2419
+            },
+            "rule_cls": {
+              "top1": 0.8267603692986083,
+              "top1_ci95": [
+                0.8118644067796611,
+                0.8409962794543199
+              ],
+              "delta_vs_equal_mean": -0.0020807496210555327,
+              "delta_vs_equal_mean_ci95": [
+                -0.005264227642276423,
+                0.0011854071930549766
+              ],
+              "episodes": 2419
+            },
+            "rule_geo": {
+              "top1": 0.8282348077718066,
+              "top1_ci95": [
+                0.8136957420421662,
+                0.8426209177346011
+              ],
+              "delta_vs_equal_mean": -0.0006063111478572412,
+              "delta_vs_equal_mean_ci95": [
+                -0.0022598870056497176,
+                0.001075168802535478
+              ],
+              "episodes": 2419
+            },
+            "rule_combined": {
+              "top1": 0.8287308805291443,
+              "top1_ci95": [
+                0.8138614441229157,
+                0.8434225575306602
+              ],
+              "delta_vs_equal_mean": -0.0001102383905194984,
+              "delta_vs_equal_mean_ci95": [
+                -0.0021772082127600938,
+                0.0020121951219512144
+              ],
+              "episodes": 2419
+            }
+          },
+          "episodes": 2419,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/random_start/details/random_start_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.8344370860927153,
+              "top1_ci95": [
+                0.8191225165562914,
+                0.8493377483443708
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 2416
+            },
+            "lightweight_gating": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.820364238410596,
+                0.8489238410596026
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012417218543046358,
+                0.0024834437086092716
+              ],
+              "episodes": 2416
+            },
+            "rule_cls": {
+              "top1": 0.8311258278145696,
+              "top1_ci95": [
+                0.8162251655629139,
+                0.8464403973509934
+              ],
+              "delta_vs_equal_mean": -0.0033112582781456954,
+              "delta_vs_equal_mean_ci95": [
+                -0.007036423841059603,
+                0.0004139072847682119
+              ],
+              "episodes": 2416
+            },
+            "rule_geo": {
+              "top1": 0.8352649006622517,
+              "top1_ci95": [
+                0.8199503311258278,
+                0.8497516556291391
+              ],
+              "delta_vs_equal_mean": 0.0008278145695364238,
+              "delta_vs_equal_mean_ci95": [
+                -0.0012417218543046358,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            },
+            "rule_combined": {
+              "top1": 0.8348509933774835,
+              "top1_ci95": [
+                0.8195364238410596,
+                0.8493377483443708
+              ],
+              "delta_vs_equal_mean": 0.0004139072847682119,
+              "delta_vs_equal_mean_ci95": [
+                -0.0020695364238410598,
+                0.0028973509933774835
+              ],
+              "episodes": 2416
+            }
+          },
+          "episodes": 2416,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/seen/random_start/details/random_start_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      }
+    },
+    "true_unseen_5way": {
+      "fixed0": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6896678966789667,
+              "top1_ci95": [
+                0.6371463714637147,
+                0.7404704797047971
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6886838868388684,
+              "top1_ci95": [
+                0.6359102091020911,
+                0.7377644526445264
+              ],
+              "delta_vs_equal_mean": -0.0009840098400984009,
+              "delta_vs_equal_mean_ci95": [
+                -0.0029520295202952033,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6944649446494464,
+              "top1_ci95": [
+                0.6413222632226323,
+                0.7460024600246002
+              ],
+              "delta_vs_equal_mean": 0.004797047970479704,
+              "delta_vs_equal_mean_ci95": [
+                -0.006888068880688806,
+                0.015990159901599018
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6929889298892989,
+              "top1_ci95": [
+                0.641820418204182,
+                0.7426814268142681
+              ],
+              "delta_vs_equal_mean": 0.003321033210332103,
+              "delta_vs_equal_mean_ci95": [
+                -0.000984009840098401,
+                0.008364083640836408
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6915129151291514,
+              "top1_ci95": [
+                0.638619311193112,
+                0.7436654366543666
+              ],
+              "delta_vs_equal_mean": 0.0018450184501845018,
+              "delta_vs_equal_mean_ci95": [
+                -0.004182041820418204,
+                0.007503075030750307
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed0/details/fixed0_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6715867158671587,
+              "top1_ci95": [
+                0.6125461254612546,
+                0.7269372693726938
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6715867158671587,
+              "top1_ci95": [
+                0.6162361623616236,
+                0.7269372693726938
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6937269372693727,
+              "top1_ci95": [
+                0.6383763837638377,
+                0.7490774907749077
+              ],
+              "delta_vs_equal_mean": 0.02214022140221402,
+              "delta_vs_equal_mean_ci95": [
+                0.007380073800738007,
+                0.04059040590405904
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6789667896678967,
+              "top1_ci95": [
+                0.6236162361623616,
+                0.7343173431734318
+              ],
+              "delta_vs_equal_mean": 0.007380073800738007,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.01845018450184502
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6789667896678967,
+              "top1_ci95": [
+                0.6199261992619927,
+                0.7343173431734318
+              ],
+              "delta_vs_equal_mean": 0.007380073800738007,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.01845018450184502
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed0/details/fixed0_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.695448954489545,
+              "top1_ci95": [
+                0.6421863468634686,
+                0.7482257072570724
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6963099630996311,
+              "top1_ci95": [
+                0.6421832718327183,
+                0.7461285362853629
+              ],
+              "delta_vs_equal_mean": 0.0008610086100861007,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.002583025830258302
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6891758917589176,
+              "top1_ci95": [
+                0.6346832718327183,
+                0.7408425584255841
+              ],
+              "delta_vs_equal_mean": -0.006273062730627306,
+              "delta_vs_equal_mean_ci95": [
+                -0.016485239852398522,
+                0.0018450184501845014
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6899138991389914,
+              "top1_ci95": [
+                0.6357902829028291,
+                0.7424384993849937
+              ],
+              "delta_vs_equal_mean": -0.005535055350553505,
+              "delta_vs_equal_mean_ci95": [
+                -0.012546125461254614,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6940959409594095,
+              "top1_ci95": [
+                0.6388683886838868,
+                0.7495756457564574
+              ],
+              "delta_vs_equal_mean": -0.0013530135301353012,
+              "delta_vs_equal_mean_ci95": [
+                -0.005289052890528905,
+                0.0017220172201722014
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed0/details/fixed0_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6974169741697417,
+              "top1_ci95": [
+                0.6420664206642066,
+                0.7490774907749077
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.7011070110701108,
+              "top1_ci95": [
+                0.6457564575645757,
+                0.7527675276752768
+              ],
+              "delta_vs_equal_mean": 0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6974169741697417,
+              "top1_ci95": [
+                0.6420664206642066,
+                0.7527675276752768
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6937269372693727,
+              "top1_ci95": [
+                0.6383763837638377,
+                0.7490774907749077
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.7011070110701108,
+              "top1_ci95": [
+                0.6457564575645757,
+                0.7564575645756457
+              ],
+              "delta_vs_equal_mean": 0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed0/details/fixed0_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6826568265682657,
+              "top1_ci95": [
+                0.6273062730627307,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.02214022140221402,
+                0.014760147601476014
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed0/details/fixed0_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      },
+      "fixed1": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6960639606396064,
+              "top1_ci95": [
+                0.6434163591635917,
+                0.7463714637146371
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6974169741697417,
+              "top1_ci95": [
+                0.6447693726937269,
+                0.7463714637146371
+              ],
+              "delta_vs_equal_mean": 0.0013530135301353015,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.004059040590405905
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.7004920049200491,
+              "top1_ci95": [
+                0.6489514145141452,
+                0.751420664206642
+              ],
+              "delta_vs_equal_mean": 0.004428044280442805,
+              "delta_vs_equal_mean_ci95": [
+                -0.008364083640836406,
+                0.016482164821648215
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6984009840098401,
+              "top1_ci95": [
+                0.6461223862238624,
+                0.7484655596555966
+              ],
+              "delta_vs_equal_mean": 0.0023370233702337023,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.006150061500615005
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.697539975399754,
+              "top1_ci95": [
+                0.6435424354243543,
+                0.7501845018450185
+              ],
+              "delta_vs_equal_mean": 0.0014760147601476016,
+              "delta_vs_equal_mean_ci95": [
+                -0.0036900369003690036,
+                0.007134071340713407
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed1/details/fixed1_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.7011070110701108,
+              "top1_ci95": [
+                0.6457564575645757,
+                0.7564575645756457
+              ],
+              "delta_vs_equal_mean": 0.014760147601476014,
+              "delta_vs_equal_mean_ci95": [
+                -0.007380073800738007,
+                0.03690036900369004
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6900369003690037,
+              "top1_ci95": [
+                0.6383763837638377,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": 0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6937269372693727,
+              "top1_ci95": [
+                0.6383763837638377,
+                0.7490774907749077
+              ],
+              "delta_vs_equal_mean": 0.007380073800738007,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.01845018450184502
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed1/details/fixed1_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6955719557195572,
+              "top1_ci95": [
+                0.6427982779827798,
+                0.747970479704797
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6964329643296433,
+              "top1_ci95": [
+                0.641820418204182,
+                0.7464944649446494
+              ],
+              "delta_vs_equal_mean": 0.0008610086100861009,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0025830258302583023
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6895448954489545,
+              "top1_ci95": [
+                0.6357933579335794,
+                0.7413345633456334
+              ],
+              "delta_vs_equal_mean": -0.006027060270602706,
+              "delta_vs_equal_mean_ci95": [
+                -0.016608241082410824,
+                0.0030750307503075026
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6921279212792127,
+              "top1_ci95": [
+                0.6380073800738008,
+                0.7442865928659285
+              ],
+              "delta_vs_equal_mean": -0.0034440344403444036,
+              "delta_vs_equal_mean_ci95": [
+                -0.007626076260762608,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6928659286592866,
+              "top1_ci95": [
+                0.6376383763837639,
+                0.7466174661746616
+              ],
+              "delta_vs_equal_mean": -0.0027060270602706025,
+              "delta_vs_equal_mean_ci95": [
+                -0.007626076260762607,
+                0.0012300123001230013
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed1/details/fixed1_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6937269372693727,
+              "top1_ci95": [
+                0.6383763837638377,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6974169741697417,
+              "top1_ci95": [
+                0.6420664206642066,
+                0.7527675276752768
+              ],
+              "delta_vs_equal_mean": 0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6900369003690037,
+              "top1_ci95": [
+                0.6346863468634686,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.01845018450184502,
+                0.007380073800738007
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6900369003690037,
+              "top1_ci95": [
+                0.6346863468634686,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6974169741697417,
+              "top1_ci95": [
+                0.6420664206642066,
+                0.7527675276752768
+              ],
+              "delta_vs_equal_mean": 0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed1/details/fixed1_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6826568265682657,
+              "top1_ci95": [
+                0.6273062730627307,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.02214022140221402,
+                0.014760147601476014
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed1/details/fixed1_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      },
+      "fixed2": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6853628536285362,
+              "top1_ci95": [
+                0.632961254612546,
+                0.7376383763837637
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6857318573185731,
+              "top1_ci95": [
+                0.6318511685116851,
+                0.7356734317343173
+              ],
+              "delta_vs_equal_mean": 0.00036900369003690047,
+              "delta_vs_equal_mean_ci95": [
+                -0.0029520295202952033,
+                0.004059040590405905
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6913899138991391,
+              "top1_ci95": [
+                0.63849938499385,
+                0.7429305043050429
+              ],
+              "delta_vs_equal_mean": 0.006027060270602707,
+              "delta_vs_equal_mean_ci95": [
+                -0.003075030750307502,
+                0.017097170971709718
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6865928659286593,
+              "top1_ci95": [
+                0.6325922509225093,
+                0.7382656826568263
+              ],
+              "delta_vs_equal_mean": 0.0012300123001230015,
+              "delta_vs_equal_mean_ci95": [
+                -0.0019680196801968018,
+                0.005166051660516606
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6892988929889299,
+              "top1_ci95": [
+                0.6346863468634686,
+                0.7425615006150061
+              ],
+              "delta_vs_equal_mean": 0.003936039360393604,
+              "delta_vs_equal_mean_ci95": [
+                -0.0009840098400984007,
+                0.00947109471094711
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed2/details/fixed2_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6937269372693727,
+              "top1_ci95": [
+                0.6383763837638377,
+                0.7490774907749077
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6900369003690037,
+              "top1_ci95": [
+                0.6346863468634686,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.7047970479704797,
+              "top1_ci95": [
+                0.6531365313653137,
+                0.7601476014760148
+              ],
+              "delta_vs_equal_mean": 0.01107011070110701,
+              "delta_vs_equal_mean_ci95": [
+                -0.007380073800738007,
+                0.02952029520295203
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6900369003690037,
+              "top1_ci95": [
+                0.6346863468634686,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6974169741697417,
+              "top1_ci95": [
+                0.6420664206642066,
+                0.7527675276752768
+              ],
+              "delta_vs_equal_mean": 0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.007380073800738007,
+                0.014760147601476014
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed2/details/fixed2_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6915129151291513,
+              "top1_ci95": [
+                0.6380073800738008,
+                0.7448954489544896
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6923739237392373,
+              "top1_ci95": [
+                0.6371402214022139,
+                0.7430504305043051
+              ],
+              "delta_vs_equal_mean": 0.0008610086100861009,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0025830258302583023
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6821648216482165,
+              "top1_ci95": [
+                0.6287699876998769,
+                0.7351783517835179
+              ],
+              "delta_vs_equal_mean": -0.00934809348093481,
+              "delta_vs_equal_mean_ci95": [
+                -0.020049200492004923,
+                -0.0004920049200492008
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6894218942189421,
+              "top1_ci95": [
+                0.6350553505535055,
+                0.7424354243542435
+              ],
+              "delta_vs_equal_mean": -0.002091020910209102,
+              "delta_vs_equal_mean_ci95": [
+                -0.005535055350553505,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6896678966789667,
+              "top1_ci95": [
+                0.6332103321033211,
+                0.7437945879458794
+              ],
+              "delta_vs_equal_mean": -0.0018450184501845018,
+              "delta_vs_equal_mean_ci95": [
+                -0.006765067650676506,
+                0.0017220172201722018
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed2/details/fixed2_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6937269372693727,
+              "top1_ci95": [
+                0.6383763837638377,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6937269372693727,
+              "top1_ci95": [
+                0.6383763837638377,
+                0.7490774907749077
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6752767527675276,
+              "top1_ci95": [
+                0.6199261992619927,
+                0.7306273062730627
+              ],
+              "delta_vs_equal_mean": -0.01845018450184502,
+              "delta_vs_equal_mean_ci95": [
+                -0.03690036900369004,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6900369003690037,
+              "top1_ci95": [
+                0.6346863468634686,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6900369003690037,
+              "top1_ci95": [
+                0.6346863468634686,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.0
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed2/details/fixed2_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6826568265682657,
+              "top1_ci95": [
+                0.6273062730627307,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.02214022140221402,
+                0.014760147601476014
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed2/details/fixed2_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      },
+      "fixed3": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6801968019680196,
+              "top1_ci95": [
+                0.6287822878228783,
+                0.7312423124231242
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6801968019680196,
+              "top1_ci95": [
+                0.6259532595325954,
+                0.7295264452644525
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6872078720787207,
+              "top1_ci95": [
+                0.6343173431734318,
+                0.7376414514145141
+              ],
+              "delta_vs_equal_mean": 0.0070110701107011075,
+              "delta_vs_equal_mean_ci95": [
+                -0.003936039360393603,
+                0.019437269372693685
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6801968019680196,
+              "top1_ci95": [
+                0.6277952029520295,
+                0.7321033210332103
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6788437884378843,
+              "top1_ci95": [
+                0.6264452644526445,
+                0.7324723247232472
+              ],
+              "delta_vs_equal_mean": -0.0013530135301353012,
+              "delta_vs_equal_mean_ci95": [
+                -0.004059040590405904,
+                0.0
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed3/details/fixed3_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6715867158671587,
+              "top1_ci95": [
+                0.6162361623616236,
+                0.7269372693726938
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6715867158671587,
+              "top1_ci95": [
+                0.6162361623616236,
+                0.7269372693726938
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6789667896678967,
+              "top1_ci95": [
+                0.6236162361623616,
+                0.7343173431734318
+              ],
+              "delta_vs_equal_mean": 0.007380073800738007,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.01845018450184502
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6715867158671587,
+              "top1_ci95": [
+                0.6162361623616236,
+                0.7306273062730627
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6715867158671587,
+              "top1_ci95": [
+                0.6162361623616236,
+                0.7269372693726938
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed3/details/fixed3_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6908979089790898,
+              "top1_ci95": [
+                0.6384932349323492,
+                0.7437884378843789
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6908979089790898,
+              "top1_ci95": [
+                0.6357933579335794,
+                0.7408394833948339
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6842558425584256,
+              "top1_ci95": [
+                0.630750307503075,
+                0.7365344403444035
+              ],
+              "delta_vs_equal_mean": -0.006642066420664206,
+              "delta_vs_equal_mean_ci95": [
+                -0.016728167281672816,
+                0.0025830258302583023
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6878228782287822,
+              "top1_ci95": [
+                0.6338253382533825,
+                0.7410824108241082
+              ],
+              "delta_vs_equal_mean": -0.003075030750307503,
+              "delta_vs_equal_mean_ci95": [
+                -0.007749077490774908,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6880688806888069,
+              "top1_ci95": [
+                0.6328351783517835,
+                0.7425615006150061
+              ],
+              "delta_vs_equal_mean": -0.0028290282902829027,
+              "delta_vs_equal_mean_ci95": [
+                -0.007134071340713407,
+                0.0
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed3/details/fixed3_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6900369003690037,
+              "top1_ci95": [
+                0.6346863468634686,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6900369003690037,
+              "top1_ci95": [
+                0.6346863468634686,
+                0.7453874538745388
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6789667896678967,
+              "top1_ci95": [
+                0.6236162361623616,
+                0.7343173431734318
+              ],
+              "delta_vs_equal_mean": -0.01107011070110701,
+              "delta_vs_equal_mean_ci95": [
+                -0.02952029520295203,
+                0.0036900369003690036
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.0
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed3/details/fixed3_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6826568265682657,
+              "top1_ci95": [
+                0.6273062730627307,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.02214022140221402,
+                0.014760147601476014
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/fixed3/details/fixed3_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      },
+      "random_start": {
+        "Random-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6861008610086101,
+              "top1_ci95": [
+                0.6339483394833949,
+                0.7366543665436655
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6350553505535055,
+                0.7369034440344403
+              ],
+              "delta_vs_equal_mean": 0.0002460024600246001,
+              "delta_vs_equal_mean_ci95": [
+                -0.0011070110701107013,
+                0.0018450184501845014
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.691758917589176,
+              "top1_ci95": [
+                0.6399723247232472,
+                0.7426875768757686
+              ],
+              "delta_vs_equal_mean": 0.005658056580565807,
+              "delta_vs_equal_mean_ci95": [
+                -0.0024600246002460017,
+                0.014268142681426815
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6878228782287823,
+              "top1_ci95": [
+                0.6351783517835178,
+                0.7391174661746618
+              ],
+              "delta_vs_equal_mean": 0.0017220172201722018,
+              "delta_vs_equal_mean_ci95": [
+                -0.0002460024600246004,
+                0.004182041820418204
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6878228782287822,
+              "top1_ci95": [
+                0.6353013530135302,
+                0.7393634686346863
+              ],
+              "delta_vs_equal_mean": 0.0017220172201722018,
+              "delta_vs_equal_mean_ci95": [
+                -0.0009840098400984013,
+                0.004797047970479705
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/random_start/details/random_start_random_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-2": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6769987699876999,
+              "top1_ci95": [
+                0.6236162361623616,
+                0.7280473554735547
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6761377613776138,
+              "top1_ci95": [
+                0.6226322263222632,
+                0.7273124231242312
+              ],
+              "delta_vs_equal_mean": -0.0008610086100861009,
+              "delta_vs_equal_mean_ci95": [
+                -0.0025830258302583023,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6913899138991391,
+              "top1_ci95": [
+                0.6371463714637147,
+                0.7431765067650676
+              ],
+              "delta_vs_equal_mean": 0.014391143911439112,
+              "delta_vs_equal_mean_ci95": [
+                0.002829028290282903,
+                0.028536285362853627
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6789667896678967,
+              "top1_ci95": [
+                0.6250922509225092,
+                0.7323523985239851
+              ],
+              "delta_vs_equal_mean": 0.0019680196801968018,
+              "delta_vs_equal_mean_ci95": [
+                -0.0017220172201722018,
+                0.006765067650676505
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6816728167281674,
+              "top1_ci95": [
+                0.6279212792127921,
+                0.7340713407134072
+              ],
+              "delta_vs_equal_mean": 0.004674046740467405,
+              "delta_vs_equal_mean_ci95": [
+                -0.0004920049200492005,
+                0.011439114391143913
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/random_start/details/random_start_preferred_orthogonal_2.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Random-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6933579335793357,
+              "top1_ci95": [
+                0.6388653136531366,
+                0.7456365313653136
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6942189421894218,
+              "top1_ci95": [
+                0.6402183271832719,
+                0.7460024600246004
+              ],
+              "delta_vs_equal_mean": 0.0008610086100861007,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.002583025830258302
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.686469864698647,
+              "top1_ci95": [
+                0.6324630996309962,
+                0.7383763837638376
+              ],
+              "delta_vs_equal_mean": -0.006888068880688807,
+              "delta_vs_equal_mean_ci95": [
+                -0.01623616236162362,
+                0.0011070110701107006
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6895448954489545,
+              "top1_ci95": [
+                0.6348031980319803,
+                0.7419434194341943
+              ],
+              "delta_vs_equal_mean": -0.003813038130381304,
+              "delta_vs_equal_mean_ci95": [
+                -0.00897908979089791,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6906519065190652,
+              "top1_ci95": [
+                0.6365221402214023,
+                0.7435424354243543
+              ],
+              "delta_vs_equal_mean": -0.002706027060270603,
+              "delta_vs_equal_mean_ci95": [
+                -0.007380073800738007,
+                0.001476014760147601
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/random_start/details/random_start_random_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "Preferred-Orthogonal-3": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6912669126691268,
+              "top1_ci95": [
+                0.6343142681426814,
+                0.7434225092250922
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6939729397293973,
+              "top1_ci95": [
+                0.638130381303813,
+                0.7450184501845019
+              ],
+              "delta_vs_equal_mean": 0.002706027060270603,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.00811808118081181
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.684870848708487,
+              "top1_ci95": [
+                0.6276691266912668,
+                0.738130381303813
+              ],
+              "delta_vs_equal_mean": -0.0063960639606396065,
+              "delta_vs_equal_mean_ci95": [
+                -0.019068265682656828,
+                0.005412054120541206
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6885608856088561,
+              "top1_ci95": [
+                0.6344372693726938,
+                0.7426845018450183
+              ],
+              "delta_vs_equal_mean": -0.002706027060270603,
+              "delta_vs_equal_mean_ci95": [
+                -0.007134071340713408,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6924969249692497,
+              "top1_ci95": [
+                0.6372632226322262,
+                0.745390528905289
+              ],
+              "delta_vs_equal_mean": 0.0012300123001230013,
+              "delta_vs_equal_mean_ci95": [
+                -0.004428044280442805,
+                0.00811808118081181
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/random_start/details/random_start_preferred_orthogonal_3.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        },
+        "All-valid": {
+          "methods": {
+            "equal_mean": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7380996309963086
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "lightweight_gating": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            },
+            "rule_cls": {
+              "top1": 0.6826568265682657,
+              "top1_ci95": [
+                0.6273062730627307,
+                0.7380073800738007
+              ],
+              "delta_vs_equal_mean": -0.0036900369003690036,
+              "delta_vs_equal_mean_ci95": [
+                -0.02214022140221402,
+                0.014760147601476014
+              ],
+              "episodes": 271
+            },
+            "rule_geo": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                0.0,
+                0.0
+              ],
+              "episodes": 271
+            },
+            "rule_combined": {
+              "top1": 0.6863468634686347,
+              "top1_ci95": [
+                0.6309963099630996,
+                0.7416974169741697
+              ],
+              "delta_vs_equal_mean": 0.0,
+              "delta_vs_equal_mean_ci95": [
+                -0.01107011070110701,
+                0.01107011070110701
+              ],
+              "episodes": 271
+            }
+          },
+          "episodes": 271,
+          "eval_seeds": [
+            20260920,
+            20260921,
+            20260922,
+            20260923,
+            20260924,
+            20260925,
+            20260926,
+            20260927,
+            20260928,
+            20260929,
+            20260930,
+            20260931,
+            20260932,
+            20260933,
+            20260934,
+            20260935,
+            20260936,
+            20260937,
+            20260938,
+            20260939,
+            20260940,
+            20260941,
+            20260942,
+            20260943,
+            20260944,
+            20260945,
+            20260946,
+            20260947,
+            20260948,
+            20260949
+          ],
+          "details": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_rule_based_v1/true_unseen_5way/random_start/details/random_start_all_valid.npz",
+          "paired_bootstrap": {
+            "samples": 5000,
+            "unit": "sample; random-seed results averaged per sample before resampling",
+            "confidence": 0.95
+          }
+        }
+      }
+    }
+  }
+}

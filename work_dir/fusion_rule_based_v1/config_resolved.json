@@ -1,0 +1,71 @@
+{
+  "experiment": "fusion_rule_based_v1",
+  "cache_root": "/home/youhan/ws/VPOCLIP_plus_full/data/rl_raw_new50_5_group1_g1_pseudo_selected_stage_b/cache",
+  "gate_checkpoint_for_common_comparison": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_lightweight_gating_v1/models/seed_20260910/best.pt",
+  "eval_seeds": [
+    20260920,
+    20260921,
+    20260922,
+    20260923,
+    20260924,
+    20260925,
+    20260926,
+    20260927,
+    20260928,
+    20260929,
+    20260930,
+    20260931,
+    20260932,
+    20260933,
+    20260934,
+    20260935,
+    20260936,
+    20260937,
+    20260938,
+    20260939,
+    20260940,
+    20260941,
+    20260942,
+    20260943,
+    20260944,
+    20260945,
+    20260946,
+    20260947,
+    20260948,
+    20260949
+  ],
+  "methods": [
+    "equal_mean",
+    "lightweight_gating",
+    "rule_cls",
+    "rule_geo",
+    "rule_combined"
+  ],
+  "rule_weights": {
+    "rule_cls": {
+      "entropy": 0.5,
+      "margin": 0.5
+    },
+    "rule_geo": {
+      "visibility": 0.5,
+      "orientation": 0.5
+    },
+    "rule_combined": {
+      "entropy": 0.3,
+      "margin": 0.3,
+      "visibility": 0.2,
+      "orientation": 0.2
+    }
+  },
+  "orientation_rule_degrees": {
+    "front": 0.8,
+    "30_to_90": 1.0,
+    "150": 0.4,
+    "back": 0.2
+  },
+  "orientation_source": "sample-specific view_geometry azimuth; angle=acos(cos_azimuth)",
+  "visibility_source": "13-frame cached pose joint-presence ratio",
+  "no_true_unseen_tuning": true,
+  "recognizer_frozen": true,
+  "anchor_preserved": true
+}

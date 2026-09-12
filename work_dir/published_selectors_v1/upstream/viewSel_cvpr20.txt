@@ -1,0 +1,647 @@
+                     Active Vision for Early Recognition of Human Actions
+
+                                     Boyu Wang1 , Lihan Huang1 , Minh Hoai1,2
+                                1
+                                  Stony Brook University, 2 VinAI Research Vietnam
+                               {boywang, lihahuang, minhhoai}@cs.stonybrook.edu
+
+
+
+                         Abstract                                                    Scene and camera locations           Camera view
+
+                                                                                                                                        1
+                                                                                                                          Sofa Table
+   We propose a method for early recognition of human
+actions, one that can take advantages of multiple cameras                1
+                                                                                                                  2
+while satisfying the constraints due to limited communica-                                                                              2
+tion bandwidth and processing power. Our method consid-
+ers multiple cameras, and at each time step, it will decide                                                                             3
+the best camera to use so that a confident recognition deci-
+sion can be reached as soon as possible. We formulate the
+camera selection problem as a sequential decision process,                                                                              4
+                                                                                                4                     3
+and learn a view selection policy based on reinforcement                       TV
+
+
+learning. We also develop a novel recurrent neural network            Figure 1: Early recognition of human actions with mul-
+architecture to account for the unobserved video frames and           tiple cameras. Camera 1 is frontal but occluded by a sofa
+the irregular intervals between the observed frames. Ex-              and a coffee table. Camera 2 shows a top-down view from
+periments on three datasets demonstrate the effectiveness             far away. Camera 3 does not observe the action. Camera
+of our approach for early recognition of human actions.               4 only sees from the side. Due to the limited network and
+                                                                      processing bandwidths, only one camera can be analyzed at
+                                                                      a time. Which camera should be used at each time step, if
+1. Introduction                                                       no camera is always superior to the others?
+   We propose a method for early recognition of human ac-             ture. Multiple cameras will require more communication
+tions using multiple video cameras. Early recognition aims            bandwidth and processing power. In many situations, com-
+to recognize an action as soon as possible. This task arises          munication bandwidth and processing power cannot be in-
+in many situations, and the ability to make early and re-             creased, putting an upper limit on the processing through-
+liable decisions will enable a wide range of applications,            put. Although many cameras can be installed and the cam-
+from robotics to surveillance and health care.                        eras might have high frame rates, not all the frames cap-
+   Early recognition is an emerging research area, and sev-           tured by the cameras can be transmitted and analyzed. Thus,
+eral methods have been proposed in the last few years [1,             temporal downsampling, i.e., frame dropping, is unavoid-
+3, 6, 10, 13, 14, 16, 17, 21, 24, 30, 41, 42, 49–51, 53, 57].         able. A simple approach is to apply the same downsam-
+However, existing methods only consider scenarios where               pling factor to all cameras to satisfy the overall throughput
+temporal events can be wholly observed by a single camera             limit. However, this uniform resource allocation strategy
+at a fixed viewpoint. Unfortunately, human actions usually            is unlikely to be optimal because some cameras might pro-
+spread out in time and space, and a single camera with a              vide more information about the ongoing human action than
+fixed viewpoint cannot fully capture the progression of ac-           other cameras, as illustrated in Fig. 1.
+tion due to limited view and coverage of the camera.
+   The limitations of a single camera can be overcome by                  If processing power is not constrained and if limited
+using multiple cameras. Compared to systems with a sin-               communication bandwidth is the only issue that we need
+gle camera, the advantages of having multiple cameras are             to address, one may wonder if we can use low-resolution
+obvious: wider coverage and multiple perspectives. Unfor-             image or high compression factor instead. However, spa-
+tunately, these obvious benefits of multiple cameras might            tial downsampling and compression can reduce the accu-
+be difficult to realize in practice due to the lack of a method       racy of the system especially when the camera is far away
+that can handle the constraints of the physical infrastruc-           from the scene of human action. Furthermore, to save com-
+
+
+                                                                  1
+munication bandwidth, compression must be done prior to           era selection. View-invariant features have been proposed
+transmission using extra hardware equipment. This might           in [2, 25, 44] for cross-view action recognition. But hav-
+be bulky, expensive, and not applicable to all cameras.           ing a view-invariant representation is insufficient. Due to
+    In this paper, we consider a scenario where there are k       factors such as distance and occlusion, some views provide
+cameras, each with the maximum frame rate of l frames             little information, and it is important not to select bad views.
+per second. However, the total processing throughput of               Active sensing is an important research area in robotics.
+the entire system is limited to l frames per second. Thus,        However, most works in robotics are for search-and-rescue
+the duration between two time steps is 1/l second; and at         or static object recognition, e.g., [4, 12, 27, 37, 59], and they
+each time step, only one frame from a camera can be ana-          are not applicable to early recognition of human actions.
+lyzed. Considering the importance of this scenario, we pro-           Most similar to our work are the view selection meth-
+pose a framework for camera selection and early recogni-          ods [11, 46, 47]. Spurlock et al. [47] used a keyframe
+tion of human actions. Our framework is developed based           classifier for view selection, while Darrell and Pentland
+on reinforcement learning, treating camera selection as the       [11], Spurlock and Souvenir [46] also used reinforcement
+decision of an artificial agent that is interested in maximiz-    learning. However, these methods considered simpler types
+ing its ability to recognize human actions as early as possi-     of human actions, where the classifier and the view se-
+ble. The agent maintains a belief state based on the history      lection policy can be defined based on individual frames.
+of its observations from multiple cameras. We use a set of        These methods are unsuitable for complex human actions,
+Recurrent Neural Networks (RNNs) [40] to model the be-            where the dynamics of the actions cannot be recognized
+lief state of the agent, from which the policy of the agent is    accurately without integrating multiple observations over
+parameterized and learned.                                        time. Empirically, these methods do not work well for com-
+    Reinforcement learning is a well-established framework        plex human actions, as will be seen in Sec. 5. In this paper,
+for sequential decision making. But this framework is very        we explicitly address the need for integrating observations
+general with numerous design choices, and defining the            over time for early decision making. This, in turn, requires
+right state space or choosing the right reward function is not    a novel RNN architecture that can handle missing frames.
+trivial. Our first contribution is a well-developed solution      This RNN architecture is a technical novelty by itself, and
+for camera selection and early recognition. We explicitly         the whole framework is significantly different from the ex-
+address the need for integrating observations over time for       isting view selection methods.
+early recognition of human actions. We use recurrent net-             Another related work is by Possas et al. [34] for hu-
+works for modeling the dynamics of human actions, but our         man activity recognition. Their setting, however, is different
+situation requires a network architecture that is robust to the   from ours. In their setting, an ego-centric camera and a mo-
+variable frame rate of an input video sequence (due to unob-      tion sensor can both record data about human activity. The
+served video frames). To this end, the second contribution        data from the motion sensor is always analyzed, while the
+of our work is the development of a novel recurrent network       data from the camera might not be analyzed due to the need
+architecture that can estimate the missing values based on        to reserve power. Possas et al. [34] learn a power-efficient
+the last observed values and the elapsed time from the last       policy to confidently recognize what already happened in-
+observation. Another contribution is the approach for in-         stead of what is happening.
+tegrating information from multiple cameras for view selec-           Our work should not be confused with camera selection
+tion and action recognition. Our framework and its compo-         in TV broadcast [9, 38], where the selection policy sees
+nents have been empirically validated on three multi-view         all views before making the selection (no communication
+or multi-modality datasets. The experiments show that the         bandwidth problem). Meanwhile, we need to select a view
+proposed recurrent network can robustly account for unob-         without seeing the content of the views. Furthermore, the
+served frames, and the learned policy for camera selection        view selection policy for TV broadcast [9, 38] is mainly
+improves the early recognition ability of the camera system.      based on the visibility and changes of the human silhouette;
+                                                                  it is not designed for action recognition.
+2. Related Work
+                                                                  3. Overview of Proposed Framework
+   Using multiple views for human action and activity
+recognition has been studied before [5, 18, 19, 33, 35, 45,          Our framework for camera selection and early recogni-
+48, 54, 56]. These studies can be divided into two broad          tion is based on reinforcement learning. The core of the
+categories: explicitly building 3D models [48, 54] and in-        framework is an artificial agent that represents the system
+tegrating different 2D views. However, most prior studies         of multiple cameras. Camera selection is a sequential de-
+were for offline recognition, and they assumed the cameras        cision process of the agent, where the goal is to maximize
+could be simultaneously used. They neither considered the         the accuracy and minimize the latency in recognizing hu-
+early recognition problem nor addressed the need for cam-         man actions. At each time step, the agent acquires an image
+from one camera, analyzes the images, predicts the prob-                                                        reward    GT action
+
+abilities of the action classes. The goal of the agent is to                                   ⇡t                pt
+maximize its sum of rewards, where the rewards depend on                                       View            View
+                                                                                                            Integration
+how accurate and early human actions can be detected and                                     Selection
+
+recognized.                                                                          mfRNN               mfRNN             mfRNN
+
+                                                                                      X11
+Belief state. The belief state will integrate information from              View 1
+
+multiple sequences of images from multiple cameras. We                               mfRNN               mfRNN             mfRNN
+
+will model the belief state based on RNNs [40] (including                   View 2                                           X23
+LSTMs [15] and IndRNNs [29]), but we extend them to
+                                                                                                         mfRNN
+account for missing observations and variable frame rates.                           mfRNN                                 mfRNN
+
+How the belief state is modeled and the novelty of our ar-                  View 3                        X32
+
+chitecture will be described in the next section.
+                                                                 Figure 2: Overview of our system with three main mod-                11
+Action and policy. At each time step, the agent will: 1)         ules: mfRNN, view integration, and view selection. xit rep-
+predict the class of the ongoing action, and 2) select a cam-    resents the input from view j at time t. A solid box means
+era to acquire an image and analyze the scene. We will learn     the view is selected while a dash box is not. View integra-
+a probabilistic policy for both action recognition and view      tion and selection are performed at every step. This figure
+selection. For action recognition, the output at time t is the   shows one step only. See Sec. 4 for more details.
+probability vector pt for the action classes. For view se-
+lection, the output at time t is the probability vector πt for   action classification methods, e.g., non-local network [52]
+camera selection: the ith camera will be selected with the       due to the requirement of early recognition, i.e., to output
+probability πt (i).                                              the action probability at every time step without looking
+                                                                 into the future.
+Reward. The reward is calculated based on the agreement
+                                                                    We will model the belief state with multiple RNNs, one
+between the recognition output and what action is occur-
+                                                                 for each camera. Each RNN is a recurrent network that inte-
+ring. Suppose there are m action classes. The recognition
+                                                                 grates observations over time, and it outputs the probability
+output of the agent at time t is an m×1 probability vec-
+                                                                 vector for the action classes in consideration. Each RNN
+tor pt where pt (c) is the estimated probability for class
+                                                                 analyzes its data stream independently of other RNNs, and
+c occurring at time t. Let gt ∈ {0, 1}m be the ground
+                                                                 each has its own ability to deal with unobserved frames.
+truth binary indicator vector for what action classes occur
+                                                                 The combined recognition output is the weighted average
+at time t; gt (c) = 1 if class c is occurring and 0 other-
+                                                                 of the outputs of the individual RNNs, where the weights
+wise. We will consider the!reward function that is the sum
+                              m                                  are learned. For camera selection, we learn a policy that
+of log likelihood: rt =       c=1 gt (c) log pt (c). The goal    makes decision based on the concatenated hidden state vec-
+of the agent!is to maximize the average running reward:
+               T                                                 tors of the RNNs. Fig. 2 provides an overview of the system.
+limT →∞ T1 t=1 rt . By maximizing the average running
+                                                                 We will describe below how to handle unobserved video
+reward, the agent will maximize the agreement between the
+                                                                 frames, how to integrate recognition outputs from multiple
+predicted probabilities and the ground truth category vector
+                                                                 RNNs, and how to learn the policy for camera selection.
+at multiple time steps, leading to early recognition ability.
+                                                                 4.1. Analyzing observations from a single camera
+4. Belief state modeling and policy learning
+                                                                    For each camera, we will train and use an RNN to inte-
+   Modeling the belief state and learning the policy are two
+                                                                 grate the observed video frames from the camera to obtain
+most crucial steps for the success of the proposed method.
+                                                                 the predicted probability vector for multiple action classes.
+The belief state must encode relevant information, and the
+                                                                 Using RNNs for integrating a sequence of observations is a
+policy must be appropriately parameterized for two tasks:
+                                                                 powerful and popular approach for recognition, but most
+1) early recognition of human actions; and 2) camera se-
+                                                                 existing works often analyze and process observations at
+lection. Unlike previous view selection methods [11, 46]
+                                                                 a regular interval, assuming the video frames are always
+that define the belief state based on individual frames, ours
+                                                                 observed. In our case, not all video frames can be ob-
+can integrate observations overtime to capture the dynam-
+                                                                 served and analyzed at the same time, due to limited system
+ics of human actions. Our work is based on the recurrent
+                                                                 throughput. In this section, we briefly review RNN and then
+network architecture [40], including LSTM [15] and In-
+                                                                 propose a novel extension to address missing observations.
+dRNN [29], and we will commonly refer to them as as
+RNNs for brevity. We introduce novel extensions to RNNs          RNN and its limitation. An RNN (including LSTM and
+for handling missing observations and integrating informa-       IndRNN) is a recurrent network that integrates observations
+tion from multiple cameras. We use RNNs instead of other         sequentially. Consider a camera, and let x1 , x2 , · · · , xt be
+the sequence of image frames (or their feature representa-       is the ground truth action class, and pt (c) is the predicted
+tions) that are supposedly observed by the camera. At time       probability for this class. The loss for a particular
+                                                                                                                     !training
+t, the RNN analyzes an input xt , updates its internal state     sequence is the sum of the losses at all time steps: t lt . By
+ht , and computes the output pt . Here pt is the predicted       optimizing the total loss over multiple time steps, we force
+probabilities for the action classes in consideration. The re-   the mfRNN to make a correct prediction for partial actions,
+current updates are:                                             enabling early recognition ability. This loss function is con-
+                                                                 sistent with the reward function defined in Sec. 3.
+ht = updateState(ht−1 , xt ); pt = computeOutput(ht ).               We can learn the parameters of an mfRNN for each cam-
+                                                                 era using multiple training video sequences from the cam-
+Both updateState and computeOutput are parametric                era. From each video sequence, we can generate multi-
+functions with learnable parameters. These functions have        ple training video sequences by randomly dropping some
+specific forms, such as the ones proposed in [15, 29, 40].       frames. This yields an augmented set of training data,
+What is important to note here is that the RNN expects the       proactively preparing the mfRNN for missing observations
+input xt at every step. Without the input, the state vector      and also increasing its generalization ability for no missing
+cannot be updated and the output cannot be produced. One         observation cases.
+can possibly skip the update procedure until the next obser-         The extension we proposed here is not specific to any
+vation, but this approach performs poorly in practice.           recurrent network architecture. In our experiments, we ex-
+RNN for Missing Frames (mfRNN). We now describe an               periment with both LSTMs [15] and IndRNNs [29], which
+RNN extension that can account for missing video frames.         are recurrent network architectures that achieved state-of-
+Consider a camera, and let xt be the video frame that is         the-art performance on many sequence modeling tasks. For
+supposedly observed by the camera at time t, but the actual      brevity, we will refer to all recurrent networks with the ex-
+xt might or might not be observed. If xt is not observed,        tension to handle missing frame estimation as mfRNNs.
+let t′ < t be the last time step where the video frame xt′       When it is necessary to specify the underlying architecture,
+is observed. Let ∆t be the elapsed time from the last ob-        we will refer to them as either mfLSTM or mfIndRNN.
+servation: ∆t = t − t′ . For an unobserved frame xt , we
+estimate the missing values based on the last observation        4.2. Integrating information from multiple cameras
+and the elapsed duration ∆t :                                        To integrate information from multiple cameras, we
+                                                                 compute a weighted average of the mfRNNs’ outputs. Re-
+            x̂t = wt ⊙ xt′ + (1 − wt ) ⊙ xnull ,          (1)
+                                                                 call from the previous subsection that there is one mfRNN
+            wt = exp(− max(0, ∆t u + v)).                 (2)    for each camera, and the output of each mfRNN is a vector
+    We assume two nearby video frames are similar and the        of class probabilities. Let pit be the output at time t of the
+level of similarity depends on the time difference between       mfRNN for the ith camera. We propose to aggregate multi-
+the two frames. In the above, the symbol ⊙ denotes the           ple outputs by computing their weighted average, where the
+element-wise product between two vectors. The missing            weights are determined based on the elapsed times from the
+values are estimated based on the last observed values, tak-     last observations. The intuition is that for a certain view,
+ing into account the elapsed time from the last observation.     if the elapsed time from last observation is large, the out-
+We parameterize x̂t as a weighted linear combination of xt′      put of the corresponding mfRNN is unreliable, so it should
+and a default observation vector xnull . The linear combi-       contribute less to the consolidated output. Let ∆it denote
+nation is controlled by the weight vector wt , which is a        the elapsed time from the last observation for the ith cam-
+function of the elapsed time ∆t . The entries of wt are de-      era. We combine the outputs of the mfRNNs as follows:
+                                                                        !k
+cay functions of time; they are approximately one if the last    pt = i=1 ω i (∆1t , · · · , ∆kt )pit . Here ω i (∆1t , · · · , ∆kt ) is
+observation is recent, and close to zero if the last observa-    the weight for the ith view; and it is a function of the elapsed
+tion is a distant past. The parameters of the decay functions    times ∆1t , · · · , ∆kt . The set of weight functions can be seen
+are u, v, and the default vector for filling missing values is   as a network with k inputs and k outputs, mapping from the
+xnull ; all these vectors have the same dimensionality as xt .   elapsed times ∆1t , · · · , ∆kt to the contribution weights. In
+    The learnable parameters of an mfRNN are u, v, xnull ,       this work, we use a simple network with two linear layers, a
+and the normal parameters of an RNN. At time t, the input        Leaky ReLU of 0.2 as the activation layer, and one soft-max
+to the mfRNN is either xt or x̂t , depending on whether the      layer. The parameters of this network are learned during the
+frame at time t is observed or not. The output of the mfRNN      training phase.
+is the class probability vector pt of m dimensions, where m
+                                                                 4.3. Learning the view selection policy
+is the number of action classes. To learn the parameters of
+mfRNN, we minimize the negative log probability of the              To decide which camera to analyze at every step, a pol-
+correct class at each time step t: lt = − log pt (c), where c    icy needs to be learned for camera selection based on the
+history of previous observations. The input to the pol-                        is symmetric, so only the upper triangular matrix is kept,
+icy needs to contain information about what has been ob-                       vectorized, and used as the feature representation for a hu-
+served and what has been selected for observation. We                          man performer. For a video frame and an action class with
+therefore parameterize the policy function so that the in-                     two performers, we concatenate the representation vectors
+put to the function has two parts: 1) the hidden states                        of the two performers. For a video frame with only one per-
+of mfRNNs, 2) the elapsed times from the last observa-                         former, the feature representation vector of the performer is
+tions. Formally, the input of the policy function is: st =                     duplicated. The length of the feature vectors is 600.
+[h1t , · · · , hkt , ∆1t , · · · , ∆kt ], where hit is the hidden state of     IXMAS dataset contains 11 action classes and 10 actors.
+the ith mfRNN and ∆it is the elapsed time from the last                        Each action was performed three times by each actor. The
+observation for the ith camera. This input vector st is es-                    actions were recorded by four side-view cameras and one
+sentially the belief state of the reinforcement learning agent                 top-view camera. This dataset only contains RGB frames.
+for the view selection policy. We parameterize the policy                      We used the pre-trained I3D model [7] to densely extract
+function as a multi-layer perceptron that takes st as input                    features for each frame.
+and outputs the selection probability for each camera.
+    Let π denote this multi-layer perceptron policy function                   nvGesture dataset contains 25 different gesture classes, in-
+and θ the parameters of the policy. Let π(a|st , θ) be an out-                 tended for human-computer interaction. A total of 20 sub-
+put of the policy function, specifying the probability for se-                 jects participated in data collection. The data was captured
+lecting camera a. We use the advantage actor-critic [23, 31]                   using two different cameras: one SoftKinetic depth cam-
+(A2C) to learn the parameters θ . Each training instance                       era recording depth and RGB frames in the front and an-
+is a set of video sequences from all cameras. Following                        other top-mounted DUO 3D camera capturing stereo IR.
+the current policy π(·|·, θ) on the training instance, we ob-                  In addition, optical flow can be computed from the color
+tain a training episode of belief states, actions, and rewards:                stream and IR disparity map can be computed from IR-
+s1 , a1 , r1 , s2 , a2 , r2 , · · · . For each step t of the episode           stereo pair, resulting in five different modalities. For each
+t = 0, 1, · · · , the return Gt for time t is computed                as a     modality, there are 1,050 training and 482 test videos. As
+                                                            !T                 shown in [32], among all five modalities, the IR disparity
+discounted sum of future rewards: Gt =                        j=t γ j−t
+                                                                        rj ,
+where γ the discounted factor. We then update the pa-                          performs worst and barely provides any benefit. In our ex-
+rameters of the policy function using the formula: θ :=                        periments, we excluded the IR disparity modality. For this
+θ + αGt ∇θ log π(at |st , θ).                                                  dataset, all sequences in the same modality have same tem-
+                                                                               poral length. We uniformly split each sequence into 20 seg-
+5. Experiments                                                                 ments and used pre-trained I3D model to extract features
+                                                                               for each segments. The I3D model was trained on three-
+5.1. Datasets and implementation details                                       channel RGB images and one-channel flow images. To ap-
+   We perform experiments on three multi-view or multi-                        ply them to one-channel depth or IR images, we inflated
+modality datasets: NTU RGB-D dataset [43], IXMAS                               the one-channel images into three-channel images and fine-
+dataset [54], and nvGesture dataset [32].                                      tuned the I3D model on these modalities. This is a weakly-
+                                                                               labeled dataset, and some parts of the videos do not contain
+NTU RGB-D dataset is the largest multi-view dataset for                        gestures. We therefore discarded the first three and last three
+action recognition. This dataset is collected by three Mi-                     segments. We only used the center segments, within which
+crosoft Kinects, capturing human actions from different                        most gestures occur.
+views simultaneously. The dataset contains 60 different ac-
+tion classes: 40 daily actions, 9 health-related actions, and                  Overlapping views. Although NTU and IXMAS datasets
+11 mutual actions of two people. There are 40 distinct sub-                    contain certain overlapping camera views, they are still
+jects. We used cross-subject evaluation as in [43], i.e., 20                   valid to compare different view selection policies, as also
+subjects for training and 20 other subjects for testing. We                    adopted by others [38, 46, 47]. Despite overlapping views,
+excluded a small portion of data that does not have three                      camera perspectives are drastically different and some
+views. In total, there are 39,984 training and 16,395 testing                  views are more informative than others.
+sequences from all three views.                                                Implementation details. The mfRNNs for different cam-
+   The dataset contains RGB images and skeleton informa-                       eras are trained separately. For the NTU dataset, we adopted
+tion, but we only use the skeleton information in our ex-                      IndRNN [29], which is an RNN architecture that achieved
+periments. Following [39], we use the distance matrix be-                      state-of-the-art performance on this dataset (for recognition,
+tween skeleton joints to represent a skeleton. At time t, the                  not early recognition). We used the same network architec-
+original skeleton information is a vector of the 3D locations                  ture: 6-layer IndRNN with the hidden layer of 512 units
+of 25 body joints, and we replace it with the pairwise dis-                    and the dropout rate of 0.25. Note that our results are not
+tance matrix between the body joints. The distance matrix                      directly comparable to [20, 28, 29, 39, 60] due to: 1) we
+                                  View 1 View 2 View 3           Integration method             TestScenario 1 TestScenario 2
+  Test Scenario 1                                                Uniform weights                     75.35           79.76
+                                                                 Learned weights (proposed)          76.66           81.28
+  IndRNN                       63.84        59.83   56.34
+  IndRNN + data augmentation 65.62          61.08   58.66        Table 2: Comparison of two integration methods. The
+  IndRNN + input interpolation 66.03        62.33   59.75        first method is based on uniform averaging, and the second
+  mfIndRNN (proposed)          70.53        65.38   60.99        is based on weighted averaging with learned weights.
+  Test Scenario 2                                                use linear interpolation to fill the missing values (we assume
+  IndRNN                       73.27        69.49   64.61        future frames is available for interpolation, this is not true
+  IndRNN + data augmentation 68.72          65.61   60.82        in practice). There are works [8, 26, 36, 58] that fill missing
+  IndRNN + input interpolation 68.86        65.25   62.09        observations by either interpolation or imputation. Interpo-
+  mfIndRNN (proposed)          75.40        71.04   66.02        lation uses the temporal relation within the data steam to fill
+                                                                 the missing value. However, this usually requires knowing
+Table 1: Handling missing frames. This shows the classi-         the frames before and after the missing frame, but the frame
+fication accuracies of several methods for two different test    after the current time is unavailable for online setting. Im-
+scenarios. The proposed mfIndRNN achieves the best per-          putation usually results in a two-step process and missing
+formance on two test scenarios.                                  patterns are not effectively explored [55].
+trained an mfIndRNN on each view separately, while these         Test scenarios. We measure the classification performance
+methods trained on all three views at once; and 2) some          of these methods for two test scenarios. In Test Scenario 1,
+methods [20, 28, 39, 60] use CNN for sequence classifica-        the test sequences have variable frame rates due to the ran-
+tion which requires seeing the full video and therefore is not   dom frame dropping; the dropping rate ranges from 20% to
+applicable for early recognition. For the IXMAS dataset,         70%. In Test Scenario 2, the test sequences are the original
+we used one-layer LSTM with the hidden state size of 100         test sequences; every frame is observed.
+and the dropout rate of 0.5. For the nvGesture dataset, we
+                                                                 Results. Tab. 1 shows the experiment results for Test Sce-
+used one-layer LSTM with the hidden state size of 512 and
+                                                                 nario 1 on the NTU dataset. The actual RNN architec-
+the dropout of 0.25.
+                                                                 ture used in this experiment is IndRNN [29], so the result-
+    Both actor and critic networks for view selection pol-
+                                                                 ing network for handling missing frames is called mfInd-
+icy were two-layer perceptrons (hidden size of 512 and
+                                                                 RNN. Tab. 1 reports the action classification accuracy of
+128) and with Leaky ReLU of 0.2 as activation function.
+                                                                 four methods on three camera views separately. The re-
+The discounted reward factor γ was 0.9. All the mod-
+                                                                 ported numbers are averaged over 5 experiment runs. The
+els were trained with Adam optimizer [22] with an initial
+                                                                 proposed mfIndRNN achieves the best performance. Us-
+learning rate of 10−4 , which was decreased by a factor
+                                                                 ing augmented training data or input interpolation also im-
+of 10 when training performance plateaued. Training was
+                                                                 proves the performance of IndRNN. This is expected, as
+stopped when the learning rate was smaller than 10−8 .
+                                                                 the classifier is trained to anticipate missing video frames,
+5.2. Handling missing frames                                     and this scenario does occur during testing. However, the
+                                                                 augmented training data may hurt the performance of an
+   One contribution of this paper is the development of          IndRNN classifier, as can be seen in Tab. 1, which shows
+mfRNNs, novel recurrent network architectures for han-           the classification performance on the test sequences with-
+dling missing observations. In this section, we analyze the      out missing frames. This is due to having the wrong type
+ability of mfRNNs and competing approaches for handling          of augmented data: the test data has no missing frames,
+unobserved video frames. We analyze each camera sepa-            while the generated training data is severely different. On
+rately, without camera selection and integration.                the other hand, the proposed mfIndRNN with learnable de-
+Methods for comparison. Our approach for handling miss-          cay parameters has the right architecture to take advantages
+ing frames has two notable steps: 1) train an RNN classifier     of the augmented training data, regardless of test scenarios.
+with augmented data by random frame dropping; 2) extend
+                                                                 5.3. Integrating information from multiple cameras
+the normal RNN architecture to include the null and time-
+decay parameters for filling the missing values. We consider         To integrate the outputs of multiple mfRNNs, we per-
+three alternative methods for comparison: 1) use a normal        form the following training process. Each training instance
+RNN classifier without any modification and without using        is a set of sequences from all camera views. We randomly
+augmented training data. 2) perform data augmentation, but       select a view at every time step. At every time step, each
+use a normal RNN classifier. 3) use a RNN classifier, while      mfRNN will output a probability vector. As described in
+perform data augmentation by random frames dropping and          Sec. 4.2, we learn a weighted combination of these outputs.
+Policy/Method                             acc@40 acc@100           acc    ratio is 40% (acc@40), but not when the observation ratio
+                                                                          is 100% (acc@100). This suggests that View 1 is much
+Use All Views                              59.90       81.28      61.77   more informative than the other views at the beginning of
+Use View-invariant Features [39] 44.74                 70.38      50.17   the action, and it is important to observe and analyze more
+Use Keyframe Classifier [47]     16.22                 43.57      26.01   video frames from View 1. However, the additional infor-
+Frame-based Q-Learning [46]      27.23                 53.71      35.47   mation provided by View 1 will diminish as the observation
+                                                                          ratio increases. Toward the end of the action sequence, it is
+Always Select View 1                       52.80       74.18      54.94
+                                                                          better to observe the action from multiple cameras for bet-
+Always Select View 2                       47.71       68.92      50.52
+                                                                          ter recognition accuracy. The reinforcement learning policy
+Always Select View 3                       41.52       62.01      45.24
+                                                                          automatically learns which view to select at each time step,
+Select Random View                         49.86       76.66      54.81
+                                                                          and it outperforms all other direct baseline policies.
+Cycle Thru All Views                       51.69       78.02      56.31
+The learned policy (proposed)              54.55       79.62      58.01   Comparison with other view-invariant and view-
+Table 3: Comparison of different view selection policies                  selection methods. We also implemented three other meth-
+on the NTU dataset. This experiment assumes only one                      ods for comparison, and the results are shown in Tab. 3.
+view can be analyzed at a time. acc@R is the classification               1) Use View-Invariant Features: we use the vectorized dis-
+accuracy when only R% of the action has occurred. acc is                  tance matrix as feature representation, and it is a view-
+the average accuracy taken over all observation ratios.                   invariant feature representation for skeleton data, as de-
+                                                                          scribed in Sec. 5.1. Since the features are view invariant,
+During training, the parameters of the weight computation
+                                                                          we can use a single RNN for all views. Specifically, an
+function are learned, and the parameters of the mfRNNs are
+                                                                          IndRNN is trained with sequences which are generated by
+finetuned.
+                                                                          randomly selecting one view at each time step. However,
+   We compare the proposed view combination method
+                                                                          only using view-invariant features is not enough, as can be
+with a baseline where the outputs of multiple mfRNNs are
+                                                                          seen in Tab. 3. Due to occlusion and other factors, one view
+averaged. Tab. 2 shows the performance of these methods
+                                                                          might still be better than other views even though we use
+under two test scenarios on the NTU dataset. In Test Sce-
+                                                                          view-invariant features. 2) Use Keyframe Classifier for view
+nario 1, only one view is available at a time, while in Test
+                                                                          selection [47]. This method first uses iterative clustering to
+Scenario 2, all views are available at every step. In both
+                                                                          learn a set of keyframes that are discriminative for recog-
+cases, the proposed method outperforms the uniform pool-
+                                                                          nition. It then uses supervised learning to learn to select
+ing approach.
+                                                                          the discriminative frames at each time step. 3) Use frame-
+5.4. Evaluating the learned policy for view selection                     based Q-learning for view selection [46]. However, this
+                                                                          method, and also the second method, only considers the cur-
+Evaluation metrics. We consider three evaluation met-                     rent frame for choosing the next view. The performance of
+rics: 1) recognition accuracy when only the first 40% of the              these two methods are relative poor, possibly due to the lack
+action has observed (denoted as acc@40), 2) recognition                   of a recurrent network to integrate information from multi-
+accuracy when the full action has been observed (denoted                  ple observations. As can be seen from Tab. 3, the learned
+as acc@100), and 3) the average early recognition perfor-                 view selection policy outperforms other methods by a wide
+mance (noted as acc). The third metric is based on the aver-              margin. This policy has the average early recognition accu-
+age accuracy over different observational ratios. The obser-              racy acc of 58.01%. This is not too far below 61.77%, which
+vational ratio is the proportion of an action that has been               is the average early recognition accuracy of the method that
+observed when the recognition decision is made.                           analyzes all views from all cameras at each time step. This
+Comparison with direct baseline methods. We compare                       unfair comparison is reported here for reference only.
+the learned policy with some baseline methods: i) keep us-
+                                                                          Selection behavior of the learned policy. Due to space
+ing the same view; ii) select a random view at every step;
+                                                                          limit, the selection behavior of the learned policy at test time
+and iii) select views in a cycle, such as 1, 2, 3, 1, 2, 3,
+                                                                          is shown in supplementary materials. This policy does not
+etc. Experimental results are shown in Tab. 3, and there
+                                                                          stick to any particular view, and it does not cycle through
+are some notable messages1 . First, consider the top five
+                                                                          the views in any order. But the learned policy outperforms
+policies shown in the table. Always Select View 1 is bet-
+                                                                          the random policy in our experiments, so it must take into
+ter than the policies that keeps selecting either View 2 or
+                                                                          account what is occurring and what has been observed to
+View 3. This is understandable because View 1 is the frontal
+                                                                          make the decisions. On average, less informative views are
+view. Always Select View 1 is better than the Select Ran-
+                                                                          selected less frequently than other views. The selection fre-
+dom View and Cycle Thru All Views when the observation
+                                                                          quency for View 1, 2, and 3 of the NTU dataset are 40.3%,
+  1 See the supplementary material for the entire performance curves.     38.9%, and 20.9%, respectively.
+ Policy/Method                                acc@40 acc@100         acc      Method                           acc@40 acc@100         acc
+ Always Select View 1                          18.85      30.80     22.22     Use All Views                      98.79     99.39     97.52
+ Always Select View 2                          46.49      67.25     49.45
+                                                                              Select Random View                 95.94     97.15     92.21
+ Always Select View 3                          41.17      59.96     43.87
+                                                                              Cycle Thru All Views               96.06     97.57     93.09
+ Select Random View                            40.55      68.34     47.17
+                                                                              Use Keyframe Classifier [47]        n/a       84.0      n/a
+ Cycle Thru All Views                          40.02      71.32     48.85
+                                                                              Visibility-based Selection[38]      n/a       89.0      n/a
+ The learned policy (proposed)                 49.88      73.74     53.30
+                                                                              Frame-based Q-Learning [46]         85       94.24      83
+Table 4: Performance of view selection policies when                          The learned policy (proposed)      97.64     97.87     94.32
+View 1 suffers from severe occlusions.
+                                                                                     Table 5: Performance on IXMAS dataset.
+
+                        70                                                    Method                             acc@40 acc@100 acc
+                        60                                                    Use All 4 Modalities (our impl.) 65.35        82.37    68.20
+ Recognition Accuracy
+
+
+
+
+                                                                              Use All 4 Modalities (in [32])    n/a          83.4     n/a
+                        50
+                                                                              Select Random Modality              58.22     78.59    62.29
+                        40                                                    Cycle Thru All Modalities           58.09     81.95    64.00
+                                                                              The learned policy (proposed)       61.82     82.36    65.37
+                        30
+                                                                              Table 6: Performance on nvGesture dataset. The first
+                        20               Select a random view: 47.17          two methods are shown for reference only; they use all four
+                                         Cycle through the views: 48.85       modalities at each time step, so they have unfair advantages
+                        10               Use the learned policy: 53.23        over other methods.
+                        0                                                     Results on the nvGesture dataset. Tab. 6 shows the
+                             0.2   0.4        0.6         0.8             1
+                                                                              performance of view selection policies on the nvGesture
+                                   Observation Ratio
+                                                                              dataset. The learned policy outperforms other view selec-
+Figure 3: Early recognition performance on the NTU                            tion policies and that can only analyze one view at each time
+dataset when View 1 suffers from severe occlusions. This                      step. For acc@100, the learned policy performs as well as
+shows the recognition accuracy against the observational ra-                  the method that uses all four modalities, even though the
+tio, which is the proportion of an action that has been ob-                   learned policy only uses one modality at a time. Note that
+served when the recognition decision is made.                                 the additional post-processing step used in [32] is not appli-
+Effect of severe occlusion. We further study the perfor-                      cable to early recognition (due to the need for all frames).
+mance of the learned policy in the presence of severe occlu-                  This explains the 1% accuracy gap between our implemen-
+sions. Assuming View 1 is blocked by a table, and only the                    tation and [32] when using all four modalities.
+upper body of a person is visible, we set the values of the
+leg joints in View 1 to 0. Tab. 4 shows the performance of
+different view selection policies under this condition. The                   6. Conclusions
+learned policy learns to avoid View 1, and it outperforms
+other view selection policies by a wide margin. The over-                        In this paper, we study the problem of early recognition
+all selection frequency for Views 1, 2, 3 are 0.1%, 56.0%,                    using multiple cameras. Our objective is to recognize hu-
+43.9% respectively. Fig. 3 shows the entire performance                       man actions as early as possible under the constraint that
+curves of the last three policies on the NTU dataset, plotting                only one camera can be accessed and analyzed at a time. We
+the recognition accuracy as a function of the observational                   formulate this problem as a sequential decision process and
+ratio. To reduce clutter, we only plot the top performing                     develop our method based on reinforcement learning. Using
+policies in this figure.                                                      reinforcement learning, we optimize a policy for selecting
+                                                                              the best camera to use at each step and to integrate infor-
+                                                                              mation from multiple cameras. We also propose mfRNN,
+Results on the IXMAS dataset. Tab. 5 shows the perfor-                        a novel recurrent neural network architecture that can deal
+mance of different view selection policies on the IXMAS                       with unobserved video frames, improving the overall per-
+dataset. Following [46], we compute and report the leave-                     formance of our method in recognizing human actions.
+one-actor-out cross validation performance of the methods.
+The shown results for [38, 46, 47] are copied from the orig-                  Acknowledgement. This project is partially supported by
+inal papers. As can be seen, the learned policy achieves the                  Brookhaven National Lab, the US National Science Foun-
+best performance in all three metrics.                                        dation Award IIS-1763981, and VinAI Research Vietnam.
+References                                                           [14] Minh Hoai and Fernando De la Torre. Max-margin early
+                                                                          event detectors. International Journal of Computer Vision,
+ [1] Yazan Abu Farha, Alexander Richard, and Juergen Gall.                107(2):191–202, 2014.
+     When will you do what?-anticipating temporal occurrences        [15] Sepp Hochreiter and Jurgen Schmidhuber. Long short-term
+     of activities. In Proceedings of the IEEE Conference on              memory. Neural Computation, 9(8):1735–1780, 1997.
+     Computer Vision and Pattern Recognition, 2018.                  [16] Jian-Fang Hu, Wei-Shi Zheng, Lianyang Ma, Gang Wang,
+ [2] Saad Ali and Mubarak Shah. Human action recognition in               Jian-Huang Lai, and Jianguo Zhang. Early action prediction
+     videos using kinematic features and multiple instance learn-         by soft regression. IEEE Transactions on Pattern Analysis
+     ing. IEEE Transactions on Pattern Analysis and Machine               and Machine Intelligence, 2018.
+     Intelligence, 32(2):288–303, 2010.                              [17] Dong Huang, Shitong Yao, Yi Wang, and Fernando De La
+ [3] Mohammad Sadegh Aliakbarian, Fatemeh Sadat Saleh,                    Torre. Sequential max-margin event detectors. In Proceed-
+     Mathieu Salzmann, Basura Fernando, Lars Petersson, and               ings of the European Conference on Computer Vision, 2014.
+     Lars Andersson. Encouraging lstms to anticipate actions         [18] Karim Iskakov, Egor Burkov, Victor Lempitsky, and Yury
+     very early. In Proceedings of the International Conference           Malkov. Learnable triangulation of human pose. In Pro-
+     on Computer Vision, 2017.                                            ceedings of the International Conference on Computer Vi-
+ [4] Nikolay Atanasov, Bharath Sankaran, Jerome Le Ny,                    sion, 2019.
+     Thomas Koletschka, George J Pappas, and Kostas Daniilidis.      [19] Abhishek Kar, Christian Häne, and Jitendra Malik. Learning
+     Hypothesis testing framework for active object detection. In         a multi-view stereo machine. In Advances in Neural Infor-
+     Proceedings of the IEEE Conference Robotics and Automa-              mation Processing Systems, 2017.
+     tion. IEEE, 2013.                                               [20] Qiuhong Ke, Mohammed Bennamoun, Hossein Rahmani,
+ [5] Zhuowei Cai, Limin Wang, Xiaojiang Peng, and Yu Qiao.                Senjian An, Ferdous Sohel, and Farid Boussaid. Learning
+     Multi-view super vector for action recognition. In Proceed-          latent global network for skeleton-based action prediction.
+     ings of the IEEE Conference on Computer Vision and Pattern           IEEE Transactions on Image Processing, 2019.
+     Recognition, 2014.                                              [21] Qiuhong Ke, Mario Fritz, and Bernt Schiele.            Time-
+ [6] Yu Cao, Daniel Barrett, Andrei Barbu, Siddharth                      conditioned action anticipation in one shot. In Proceedings
+     Narayanaswamy, Haonan Yu, Aaron Michaux, Yuewei                      of the IEEE Conference on Computer Vision and Pattern
+     Lin, Sven Dickinson, Jeffrey Mark Siskind, and Song Wang.            Recognition, 2019.
+     Recognize human activities from partially observed videos.      [22] Diederik P Kingma and Jimmy Ba. Adam: A method for
+     In Proceedings of the IEEE Conference on Computer Vision             stochastic optimization. In arXiv preprint arXiv:1412.6980,
+     and Pattern Recognition, 2013.                                       2014.
+ [7] Joao Carreira and Andrew Zisserman. Quo vadis, action           [23] Vijay R Konda and John N Tsitsiklis. Actor-critic algo-
+     recognition? a new model and the kinetics dataset. In Pro-           rithms. In Advances in Neural Information Processing Sys-
+     ceedings of the IEEE Conference on Computer Vision and               tems, 2000.
+     Pattern Recognition, 2017.                                      [24] Yu Kong, Dmitry Kit, and Yun Fu. A discriminative model
+ [8] Zhengping Che, Sanjay Purushotham, Kyunghyun Cho,                    with multiple temporal scales for action prediction. In Pro-
+     David Sontag, and Yan Liu. Recurrent neural networks for             ceedings of the European Conference on Computer Vision,
+     multivariate time series with missing values. Nature Scien-          2014.
+     tific reports, 8(1):6085, 2018.                                 [25] Yu Kong, Zhengming Ding, Jun Li, and Yun Fu. Deeply
+ [9] Jianhui Chen, Hoang M Le, Peter Carr, Yisong Yue, and                learned view-invariant features for cross-view action recog-
+     James J Little. Learning online smooth predictors for real-          nition. IEEE Transactions on Image Processing, 26(6):
+     time camera planning using recurrent decision trees. In Pro-         3028–3037, 2017.
+     ceedings of the IEEE Conference on Computer Vision and          [26] David M Kreindler and Charles J Lumsden. The effects of
+     Pattern Recognition, 2016.                                           the irregular sample and missing data in time series analysis.
+[10] Lei Chen, Jiwen Lu, Zhanjie Song, and Jie Zhou. Part-                Nonlinear Dynamical Systems Analysis for the Behavioral
+     activated deep reinforcement learning for action prediction.         Sciences Using Real Data, page 135, 2012.
+     In Proceedings of the European Conference on Computer Vi-       [27] Catherine Laporte and Tal Arbel. Efficient discriminant
+     sion, 2018.                                                          viewpoint selection for active bayesian recognition. Inter-
+[11] Trevor Darrell and Alex Pentland. Active gesture recogni-            national Journal of Computer Vision, 68(3):267–287, 2006.
+     tion using partially observable markov decision processes.      [28] Chao Li, Qiaoyong Zhong, Di Xie, and Shiliang Pu. Co-
+     In Proceedings of the IEEE Conference on Computer Vision             occurrence feature learning from skeleton data for action
+     and Pattern Recognition, 1996.                                       recognition and detection with hierarchical aggregation. Pro-
+[12] Enrique Dunn and Jan-Michael Frahm. Next best view plan-             ceedings of the International Joint Conference on Artificial
+     ning for active model improvement. In Proceedings of the             Intelligence, 2018.
+     British Machine Vision Conference, 2009.                        [29] Shuai Li, Wanqing Li, Chris Cook, Ce Zhu, and Yanbo Gao.
+[13] Harshala Gammulle, Simon Denman, Sridha Sridharan, and               Independently recurrent neural network (indrnn): Building a
+     Clinton Fookes. Predicting the future: A jointly learnt model        longer and deeper rnn. In Proceedings of the IEEE Confer-
+     for action anticipation. In Proceedings of the International         ence on Computer Vision and Pattern Recognition, 2018.
+     Conference on Computer Vision, 2019.                            [30] Shugao Ma, Leonid Sigal, and Stan Sclaroff. Learning activ-
+     ity progression in lstms for activity detection and early detec-        ence on Computer Vision and Pattern Recognition, 2012.
+     tion. In Proceedings of the IEEE Conference on Computer            [45] Richard Souvenir and Justin Babbs. Learning the viewpoint
+     Vision and Pattern Recognition, 2016.                                   manifold for action recognition. In Proceedings of the IEEE
+[31] Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza,                  Conference on Computer Vision and Pattern Recognition,
+     Alex Graves, Timothy Lillicrap, Tim Harley, David Silver,               2008.
+     and Koray Kavukcuoglu. Asynchronous methods for deep               [46] Scott Spurlock and Richard Souvenir. Multi-view action
+     reinforcement learning. In Proceedings of the International             recognition one camera at a time. In Proceedings of the IEEE
+     Conference on Machine Learning, 2016.                                   Workshop on Applications of Computer Vision, 2014.
+[32] Pavlo Molchanov, Xiaodong Yang, Shalini Gupta, Kihwan              [47] Scott Spurlock, Junjie Shan, and Richard Souvenir. Discrim-
+     Kim, Stephen Tyree, and Jan Kautz. Online detection and                 inative poses for early recognition in multi-camera networks.
+     classification of dynamic hand gestures with recurrent 3d               In Proceedings of the 9th International Conference on Dis-
+     convolutional neural network. In Proceedings of the IEEE                tributed Smart Cameras. ACM, 2015.
+     Conference on Computer Vision and Pattern Recognition,             [48] Pavan Turaga, Ashok Veeraraghavan, and Rama Chellappa.
+     2016.                                                                   Statistical analysis on stiefel and grassmann manifolds with
+[33] Ehsan Adeli Mosabbeb, Kaamran Raahemifar, and Mah-                      applications in computer vision. In Proceedings of the IEEE
+     mood Fathy. Multi-view human activity recognition in dis-               Conference on Computer Vision and Pattern Recognition,
+     tributed camera sensor networks. Sensors, 13(8750–8770),                2008.
+     2013.                                                              [49] Carl Vondrick, Hamed Pirsiavash, and Antonio Torralba. An-
+[34] Rafael Possas, Sheila Pinto Caceres, and Fabio Ramos. Ego-              ticipating the future by watching unlabeled video. In Pro-
+     centric activity recognition on a budget. In Proceedings                ceedings of the IEEE Conference on Computer Vision and
+     of the IEEE Conference on Computer Vision and Pattern                   Pattern Recognition, 2016.
+     Recognition, 2018.                                                 [50] Boyu Wang and Minh Hoai. Predicting body movement
+[35] S. Ramagiri, R. Kavi, and V. Kulathumani. Real-time multi-              and recognizing actions: an integrated framework for mu-
+     view human action recognition using a wireless camera net-              tual benefits. In Proceedings of the International Conference
+     work. In Proceedings of the International Conference on                 on Automatic Face and Gesture Recognition, 2018.
+     Distributed Smart Cameras, 2011.                                   [51] Boyu Wang and Minh Hoai. Back to the beginning: Start-
+[36] Kira Rehfeld, Norbert Marwan, Jobst Heitzig, and Jürgen                ing point detection for early recognition of ongoing human
+     Kurths. Comparison of correlation analysis techniques for               actions. Computer Vision and Image Understanding, 175:
+     irregularly sampled time series. Nonlinear Processes in Geo-            24–31, 2018.
+     physics, 18(3):389–404, 2011.                                      [52] Xiaolong Wang, Ross Girshick, Abhinav Gupta, and Kaim-
+[37] Sumantra Dutta Roy, Santanu Chaudhury, and Subhashis                    ing He. Non-local neural networks. In Proceedings of the
+     Banerjee. Active recognition through next view planning:                IEEE Conference on Computer Vision and Pattern Recogni-
+     a survey. Pattern Recognition, 37(3):429–446, 2004.                     tion, 2018.
+[38] Dmitry Rudoy and Lihi Zelnik-Manor. Viewpoint selection            [53] Xionghui Wang, Jian-Fang Hu, Jian-Huang Lai, Jianguo
+     for human actions. International Journal of Computer Vi-                Zhang, and Wei-Shi Zheng. Progressive teacher-student
+     sion, 97(3):243–254, 2012.                                              learning for early action prediction. In Proceedings of the
+[39] Alejandro Hernandez Ruiz, Lorenzo Porzi, Samuel Rota                    IEEE Conference on Computer Vision and Pattern Recogni-
+     Bulò, and Francesc Moreno-Noguer. 3d cnns on distance                  tion, 2019.
+     matrices for human action recognition. In ACM Multimedia,          [54] Daniel Weinland, Remi Ronfard, and Edmond Boyer. Free
+     2017.                                                                   viewpoint action recognition using motion history volumes.
+[40] D. Rumelhart, G. Hinton, and R. Williams. Learning internal             Computer Vision and Image Understanding, 104(2):249–
+     representations by error propagation. In Parallel Distributed           257, 2006.
+     Processing, volume 1, chapter 8, pages 318–362. MIT Press,         [55] Brian J Wells, Kevin M Chagin, Amy S Nowacki, and
+     Cambridge, MA, 1986.                                                    Michael W Kattan. Strategies for handling missing data in
+[41] M. S. Ryoo, Thomas J. Fuchs, Lu Xia, J. K. Aggarwal, and                electronic health record derived data. eGEMs, 1(3), 2013.
+     Larry Matthies. Robot-centric activity prediction from first-      [56] Chen Wu, Amir Hossein Khalili, and Hamid Aghajan.
+     person videos: What will they do to me? In International                Multiview activity recognition in smart homes with spatio-
+     Conference on Human-Robot Interaction, 2015.                            temporal features. In Proceedings of the International Con-
+[42] M.S. Ryoo. Human activity prediction: Early recognition of              ference on Distributed Smart Cameras, 2010.
+     ongoing activities from streaming videos. In Proceedings of        [57] Zhen Xu, Laiyun Qing, and Jun Miao. Activity auto-
+     the International Conference on Computer Vision, 2011.                  completion: Predicting human activities from partial videos.
+[43] Amir Shahroudy, Jun Liu, Tian-Tsong Ng, and Gang Wang.                  In Proceedings of the International Conference on Computer
+     Ntu rgb+d: A large scale dataset for 3d human activity anal-            Vision, 2015.
+     ysis. In Proceedings of the IEEE Conference on Computer            [58] Jinsung Yoon, William R Zame, and Mihaela van der Schaar.
+     Vision and Pattern Recognition, 2016.                                   Deep sensing: Active sensing using multi-directional recur-
+[44] Abhishek Sharma, Abhishek Kumar, Hal Daume, and                         rent neural networks. In ICLR, 2018.
+     David W Jacobs. Generalized multiview analysis: A dis-             [59] Mabel M Zhang, Nikolay Atanasov, and Kostas Daniilidis.
+     criminative latent space. In Proceedings of the IEEE Confer-            Active end-effector pose selection for tactile object recog-
+     nition through monte carlo tree search. In Proceedings of
+     the IEEE/RSJ Conference on Intelligent Robots and Systems.
+     IEEE, 2017.
+[60] Pengfei Zhang, Cuiling Lan, Junliang Xing, Wenjun Zeng,
+     Jianru Xue, and Nanning Zheng. View adaptive neural net-
+     works for high performance skeleton-based human action
+     recognition. IEEE Transactions on Pattern Analysis and Ma-
+     chine Intelligence, 2019.
+

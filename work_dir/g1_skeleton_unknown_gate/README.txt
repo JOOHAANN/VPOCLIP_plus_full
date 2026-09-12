@@ -1,0 +1,1 @@
+Unknown gate trained on skeleton activity ranges/velocity/acceleration/bone-length statistics plus VPO confidence summaries. Threshold calibrated on pseudo classes [3, 8, 13, 27, 28, 30, 35, 41, 50, 52]; true unseen [14, 15, 25, 39, 46] was held out until the final report.

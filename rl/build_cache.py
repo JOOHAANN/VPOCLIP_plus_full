@@ -693,6 +693,11 @@ def export_cache(config: Dict[str, Any], manifest_path: Path) -> Path:
                 arrays["view_geometry"][start + offset] = geometry_padded
                 reachable = np.zeros((views, views), dtype=np.bool_)
                 reachable[:actual_count, :actual_count] = True
+                # Padded camera slots are invalid actions, but the cache
+                # contract still requires every fixed slot to have a reset
+                # self-edge.  `view_valid` remains the authority for whether
+                # a padded slot can actually be selected.
+                np.fill_diagonal(reachable, True)
                 arrays["reachable"][start + offset] = reachable
                 arrays["view_valid"][start + offset] = False
                 arrays["view_valid"][start + offset, :actual_count] = True

@@ -1,0 +1,1119 @@
+{
+  "variant": "v3",
+  "base_comparison": "multistep_angle_object_policy_v1",
+  "selection": {
+    "criterion": "pseudo-unseen fixed0 policy gain",
+    "chosen": {
+      "seed": 20260909,
+      "best_score": 0.00787402091063849,
+      "best_epoch": 9,
+      "checkpoint": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/trajectory_first_frame_new50_5/v3/seed_20260909/best.pt",
+      "output": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/trajectory_first_frame_new50_5/v3/seed_20260909",
+      "training_episodes": 2900
+    },
+    "runs": [
+      {
+        "seed": 20260909,
+        "best_score": 0.00787402091063849,
+        "best_epoch": 9,
+        "checkpoint": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/trajectory_first_frame_new50_5/v3/seed_20260909/best.pt",
+        "output": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/trajectory_first_frame_new50_5/v3/seed_20260909",
+        "training_episodes": 2900
+      },
+      {
+        "seed": 20260910,
+        "best_score": 8.91723028750846e-09,
+        "best_epoch": 1,
+        "checkpoint": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/trajectory_first_frame_new50_5/v3/seed_20260910/best.pt",
+        "output": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/trajectory_first_frame_new50_5/v3/seed_20260910",
+        "training_episodes": 2900
+      },
+      {
+        "seed": 20260911,
+        "best_score": 0.003937014913934389,
+        "best_epoch": 1,
+        "checkpoint": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/trajectory_first_frame_new50_5/v3/seed_20260911/best.pt",
+        "output": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/trajectory_first_frame_new50_5/v3/seed_20260911",
+        "training_episodes": 2900
+      }
+    ]
+  },
+  "policy_inputs": [
+    "sample-specific human/camera relative angle",
+    "causal 1-frame person center/velocity trajectory",
+    "causal 1-frame per-class object presence/position/confidence trajectory",
+    "object position relative to person center"
+  ],
+  "policy_inputs_excluded": [
+    "RGB/video embedding",
+    "VPOCLIP z",
+    "skeleton embedding",
+    "semantic belief",
+    "current logits",
+    "class ID",
+    "future-view features"
+  ],
+  "object_track_shape_per_episode": [
+    4,
+    1,
+    50,
+    4
+  ],
+  "reports": {
+    "val_pseudo_unseen": {
+      "fixed0": {
+        "protocol": "fixed0",
+        "class_bank": [
+          0,
+          2,
+          9,
+          10,
+          11,
+          17,
+          26,
+          34,
+          49,
+          50
+        ],
+        "episodes_before_two_move_filter": 254,
+        "episodes_policy_completed": 254,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.9724409580230713,
+            "mean_entropy": 0.01830989308655262
+          },
+          "random_3view_sampled": {
+            "top1": 0.9842519760131836,
+            "mean_entropy": 0.010533030144870281,
+            "mean_movement_cost": 0.3622486889362335,
+            "episodes": 254.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9803149610992492,
+            "mean_entropy": 0.010717287668132318,
+            "mean_movement_cost": 0.3645191123107756,
+            "episodes": 254.0
+          },
+          "policy_3view": {
+            "top1": 0.9881889820098877,
+            "mean_entropy": 0.008377636782824993,
+            "mean_movement_cost": 0.36993086338043213,
+            "episodes": 254.0
+          },
+          "oracle_3view": {
+            "top1": 0.9921259880065918,
+            "mean_entropy": 0.008033557794988155,
+            "mean_movement_cost": 0.307053804397583,
+            "episodes": 254.0
+          },
+          "all_valid_views": {
+            "top1": 0.9724409580230713
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 254,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.032820019870996475
+        },
+        "selected_seed": 20260909
+      },
+      "fixed1": {
+        "protocol": "fixed1",
+        "class_bank": [
+          0,
+          2,
+          9,
+          10,
+          11,
+          17,
+          26,
+          34,
+          49,
+          50
+        ],
+        "episodes_before_two_move_filter": 254,
+        "episodes_policy_completed": 254,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.9881889820098877,
+            "mean_entropy": 0.006999476812779903
+          },
+          "random_3view_sampled": {
+            "top1": 0.9842519760131836,
+            "mean_entropy": 0.009417739696800709,
+            "mean_movement_cost": 0.36530381441116333,
+            "episodes": 254.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9803149610992492,
+            "mean_entropy": 0.00948397607638543,
+            "mean_movement_cost": 0.36451911310276647,
+            "episodes": 254.0
+          },
+          "policy_3view": {
+            "top1": 0.9763779640197754,
+            "mean_entropy": 0.008531253784894943,
+            "mean_movement_cost": 0.35743874311447144,
+            "episodes": 254.0
+          },
+          "oracle_3view": {
+            "top1": 0.9921259880065918,
+            "mean_entropy": 0.007297674659639597,
+            "mean_movement_cost": 0.31364524364471436,
+            "episodes": 254.0
+          },
+          "all_valid_views": {
+            "top1": 0.9724409580230713
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 254,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.08771990239620209
+        },
+        "selected_seed": 20260909
+      },
+      "fixed2": {
+        "protocol": "fixed2",
+        "class_bank": [
+          0,
+          2,
+          9,
+          10,
+          11,
+          17,
+          26,
+          34,
+          49,
+          50
+        ],
+        "episodes_before_two_move_filter": 254,
+        "episodes_policy_completed": 254,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.9527559280395508,
+            "mean_entropy": 0.017540203407406807
+          },
+          "random_3view_sampled": {
+            "top1": 0.9842519760131836,
+            "mean_entropy": 0.009822150692343712,
+            "mean_movement_cost": 0.36398646235466003,
+            "episodes": 254.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9776902889876854,
+            "mean_entropy": 0.009316237986240258,
+            "mean_movement_cost": 0.36451911374809237,
+            "episodes": 254.0
+          },
+          "policy_3view": {
+            "top1": 0.9724409580230713,
+            "mean_entropy": 0.007224360015243292,
+            "mean_movement_cost": 0.3603532314300537,
+            "episodes": 254.0
+          },
+          "oracle_3view": {
+            "top1": 0.9921259880065918,
+            "mean_entropy": 0.007914635352790356,
+            "mean_movement_cost": 0.3671268820762634,
+            "episodes": 254.0
+          },
+          "all_valid_views": {
+            "top1": 0.9724409580230713
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 254,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.07624321430921555
+        },
+        "selected_seed": 20260909
+      },
+      "fixed3": {
+        "protocol": "fixed3",
+        "class_bank": [
+          0,
+          2,
+          9,
+          10,
+          11,
+          17,
+          26,
+          34,
+          49,
+          50
+        ],
+        "episodes_before_two_move_filter": 254,
+        "episodes_policy_completed": 254,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.960629940032959,
+            "mean_entropy": 0.012415318749845028
+          },
+          "random_3view_sampled": {
+            "top1": 0.9842519760131836,
+            "mean_entropy": 0.009296542964875698,
+            "mean_movement_cost": 0.36534491181373596,
+            "episodes": 254.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9750656169934535,
+            "mean_entropy": 0.009481920478107463,
+            "mean_movement_cost": 0.36451911266277154,
+            "episodes": 254.0
+          },
+          "policy_3view": {
+            "top1": 0.9724409580230713,
+            "mean_entropy": 0.009744502604007721,
+            "mean_movement_cost": 0.36045974493026733,
+            "episodes": 254.0
+          },
+          "oracle_3view": {
+            "top1": 0.9842519760131836,
+            "mean_entropy": 0.00863725133240223,
+            "mean_movement_cost": 0.3851237893104553,
+            "episodes": 254.0
+          },
+          "all_valid_views": {
+            "top1": 0.9724409580230713
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 254,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.059376273304224014
+        },
+        "selected_seed": 20260909
+      },
+      "random_start": {
+        "protocol": "random_start",
+        "class_bank": [
+          0,
+          2,
+          9,
+          10,
+          11,
+          17,
+          26,
+          34,
+          49,
+          50
+        ],
+        "episodes_before_two_move_filter": 254,
+        "episodes_policy_completed": 254,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.9724409580230713,
+            "mean_entropy": 0.010958156548440456
+          },
+          "random_3view_sampled": {
+            "top1": 0.9724409580230713,
+            "mean_entropy": 0.011967295780777931,
+            "mean_movement_cost": 0.35841381549835205,
+            "episodes": 254.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9790026251021333,
+            "mean_entropy": 0.0104967317335236,
+            "mean_movement_cost": 0.3645191130441005,
+            "episodes": 254.0
+          },
+          "policy_3view": {
+            "top1": 0.9763779640197754,
+            "mean_entropy": 0.009468596428632736,
+            "mean_movement_cost": 0.35810586810112,
+            "episodes": 254.0
+          },
+          "oracle_3view": {
+            "top1": 0.9921259880065918,
+            "mean_entropy": 0.008169555105268955,
+            "mean_movement_cost": 0.342678040266037,
+            "episodes": 254.0
+          },
+          "all_valid_views": {
+            "top1": 0.9724409580230713
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 254,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.05275227501988411
+        },
+        "selected_seed": 20260909
+      }
+    },
+    "seen_test": {
+      "fixed0": {
+        "protocol": "fixed0",
+        "class_bank": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54
+        ],
+        "episodes_before_two_move_filter": 2419,
+        "episodes_policy_completed": 2419,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.9206283092498779,
+            "mean_entropy": 0.015074274502694607
+          },
+          "random_3view_sampled": {
+            "top1": 0.9590739607810974,
+            "mean_entropy": 0.015219572000205517,
+            "mean_movement_cost": 0.3816213607788086,
+            "episodes": 2419.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9561802402489833,
+            "mean_entropy": 0.015269642059585975,
+            "mean_movement_cost": 0.38283859771387996,
+            "episodes": 2419.0
+          },
+          "policy_3view": {
+            "top1": 0.9553534388542175,
+            "mean_entropy": 0.01509086787700653,
+            "mean_movement_cost": 0.3664664328098297,
+            "episodes": 2419.0
+          },
+          "oracle_3view": {
+            "top1": 0.9723025560379028,
+            "mean_entropy": 0.012857755646109581,
+            "mean_movement_cost": 0.32810065150260925,
+            "episodes": 2419.0
+          },
+          "all_valid_views": {
+            "top1": 0.9607275128364563
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 2419,
+          "remaining_view_present_rate": 0.9987598061561584,
+          "predicted_action_legal_rate": 0.9987598061561584,
+          "mean_predicted_q": -0.030973682180047035
+        },
+        "selected_seed": 20260909
+      },
+      "fixed1": {
+        "protocol": "fixed1",
+        "class_bank": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54
+        ],
+        "episodes_before_two_move_filter": 2419,
+        "episodes_policy_completed": 2419,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.943778395652771,
+            "mean_entropy": 0.011455751024186611
+          },
+          "random_3view_sampled": {
+            "top1": 0.9586605429649353,
+            "mean_entropy": 0.01481674425303936,
+            "mean_movement_cost": 0.3814149796962738,
+            "episodes": 2419.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9559046442767912,
+            "mean_entropy": 0.015038224833388281,
+            "mean_movement_cost": 0.38284678521183785,
+            "episodes": 2419.0
+          },
+          "policy_3view": {
+            "top1": 0.958247184753418,
+            "mean_entropy": 0.015292735770344734,
+            "mean_movement_cost": 0.37364086508750916,
+            "episodes": 2419.0
+          },
+          "oracle_3view": {
+            "top1": 0.9698222279548645,
+            "mean_entropy": 0.012301367707550526,
+            "mean_movement_cost": 0.3346608877182007,
+            "episodes": 2419.0
+          },
+          "all_valid_views": {
+            "top1": 0.9607275128364563
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 2419,
+          "remaining_view_present_rate": 0.9987598061561584,
+          "predicted_action_legal_rate": 0.9987598061561584,
+          "mean_predicted_q": -0.059510745108127594
+        },
+        "selected_seed": 20260909
+      },
+      "fixed2": {
+        "protocol": "fixed2",
+        "class_bank": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54
+        ],
+        "episodes_before_two_move_filter": 2419,
+        "episodes_policy_completed": 2419,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.947912335395813,
+            "mean_entropy": 0.01166512444615364
+          },
+          "random_3view_sampled": {
+            "top1": 0.9553534388542175,
+            "mean_entropy": 0.014555338770151138,
+            "mean_movement_cost": 0.378927618265152,
+            "episodes": 2419.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9564558362458155,
+            "mean_entropy": 0.014671763995240858,
+            "mean_movement_cost": 0.38284678543590966,
+            "episodes": 2419.0
+          },
+          "policy_3view": {
+            "top1": 0.9574204087257385,
+            "mean_entropy": 0.013985654339194298,
+            "mean_movement_cost": 0.3847304880619049,
+            "episodes": 2419.0
+          },
+          "oracle_3view": {
+            "top1": 0.9718891978263855,
+            "mean_entropy": 0.012195815332233906,
+            "mean_movement_cost": 0.3759002387523651,
+            "episodes": 2419.0
+          },
+          "all_valid_views": {
+            "top1": 0.9607275128364563
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 2419,
+          "remaining_view_present_rate": 0.9987598061561584,
+          "predicted_action_legal_rate": 0.9987598061561584,
+          "mean_predicted_q": -0.046842917799949646
+        },
+        "selected_seed": 20260909
+      },
+      "fixed3": {
+        "protocol": "fixed3",
+        "class_bank": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54
+        ],
+        "episodes_before_two_move_filter": 2416,
+        "episodes_policy_completed": 2416,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.9325330853462219,
+            "mean_entropy": 0.012069111689925194
+          },
+          "random_3view_sampled": {
+            "top1": 0.9569536447525024,
+            "mean_entropy": 0.01576339080929756,
+            "mean_movement_cost": 0.38586166501045227,
+            "episodes": 2416.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9557119209615402,
+            "mean_entropy": 0.015183975861836774,
+            "mean_movement_cost": 0.3832802887682553,
+            "episodes": 2416.0
+          },
+          "policy_3view": {
+            "top1": 0.9532284736633301,
+            "mean_entropy": 0.015024162828922272,
+            "mean_movement_cost": 0.38505876064300537,
+            "episodes": 2416.0
+          },
+          "oracle_3view": {
+            "top1": 0.9701986908912659,
+            "mean_entropy": 0.013331498950719833,
+            "mean_movement_cost": 0.4084090292453766,
+            "episodes": 2416.0
+          },
+          "all_valid_views": {
+            "top1": 0.9606788158416748
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 2416,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.023479310795664787
+        },
+        "selected_seed": 20260909
+      },
+      "random_start": {
+        "protocol": "random_start",
+        "class_bank": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          47,
+          48,
+          49,
+          50,
+          51,
+          52,
+          53,
+          54
+        ],
+        "episodes_before_two_move_filter": 2419,
+        "episodes_policy_completed": 2419,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.9400578737258911,
+            "mean_entropy": 0.013212929479777813
+          },
+          "random_3view_sampled": {
+            "top1": 0.9570069909095764,
+            "mean_entropy": 0.01499429251998663,
+            "mean_movement_cost": 0.3828628361225128,
+            "episodes": 2419.0
+          },
+          "random_3view_exact": {
+            "top1": 0.9559046442767912,
+            "mean_entropy": 0.014968433889685268,
+            "mean_movement_cost": 0.3828467852780584,
+            "episodes": 2419.0
+          },
+          "policy_3view": {
+            "top1": 0.9545266032218933,
+            "mean_entropy": 0.01485082134604454,
+            "mean_movement_cost": 0.378340482711792,
+            "episodes": 2419.0
+          },
+          "oracle_3view": {
+            "top1": 0.9718891978263855,
+            "mean_entropy": 0.012752599082887173,
+            "mean_movement_cost": 0.36063507199287415,
+            "episodes": 2419.0
+          },
+          "all_valid_views": {
+            "top1": 0.9607275128364563
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 2419,
+          "remaining_view_present_rate": 0.9987598061561584,
+          "predicted_action_legal_rate": 0.9987598061561584,
+          "mean_predicted_q": -0.03947199508547783
+        },
+        "selected_seed": 20260909
+      }
+    },
+    "true_unseen_5way": {
+      "fixed0": {
+        "protocol": "fixed0",
+        "class_bank": [
+          14,
+          15,
+          25,
+          39,
+          46
+        ],
+        "episodes_before_two_move_filter": 271,
+        "episodes_policy_completed": 271,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.6125461459159851,
+            "mean_entropy": 0.38560205698013306
+          },
+          "random_3view_sampled": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.396543949842453,
+            "mean_movement_cost": 0.4139276444911957,
+            "episodes": 271.0
+          },
+          "random_3view_exact": {
+            "top1": 0.6432964341007036,
+            "mean_entropy": 0.39535430712604763,
+            "mean_movement_cost": 0.4286777509094604,
+            "episodes": 271.0
+          },
+          "policy_3view": {
+            "top1": 0.6273062825202942,
+            "mean_entropy": 0.39740875363349915,
+            "mean_movement_cost": 0.4440692663192749,
+            "episodes": 271.0
+          },
+          "oracle_3view": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3857736587524414,
+            "mean_movement_cost": 0.3894366919994354,
+            "episodes": 271.0
+          },
+          "all_valid_views": {
+            "top1": 0.6457564830780029
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 271,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.014517724514007568
+        },
+        "selected_seed": 20260909
+      },
+      "fixed1": {
+        "protocol": "fixed1",
+        "class_bank": [
+          14,
+          15,
+          25,
+          39,
+          46
+        ],
+        "episodes_before_two_move_filter": 271,
+        "episodes_policy_completed": 271,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.6457564830780029,
+            "mean_entropy": 0.37928739190101624
+          },
+          "random_3view_sampled": {
+            "top1": 0.6420664191246033,
+            "mean_entropy": 0.39563223719596863,
+            "mean_movement_cost": 0.4165879487991333,
+            "episodes": 271.0
+          },
+          "random_3view_exact": {
+            "top1": 0.6408364097570581,
+            "mean_entropy": 0.39450688066641454,
+            "mean_movement_cost": 0.4286777495623075,
+            "episodes": 271.0
+          },
+          "policy_3view": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.39167308807373047,
+            "mean_movement_cost": 0.43937718868255615,
+            "episodes": 271.0
+          },
+          "oracle_3view": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.3844550549983978,
+            "mean_movement_cost": 0.3910393714904785,
+            "episodes": 271.0
+          },
+          "all_valid_views": {
+            "top1": 0.6457564830780029
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 271,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.03608812019228935
+        },
+        "selected_seed": 20260909
+      },
+      "fixed2": {
+        "protocol": "fixed2",
+        "class_bank": [
+          14,
+          15,
+          25,
+          39,
+          46
+        ],
+        "episodes_before_two_move_filter": 271,
+        "episodes_policy_completed": 271,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.6346863508224487,
+            "mean_entropy": 0.3775399327278137
+          },
+          "random_3view_sampled": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.39397528767585754,
+            "mean_movement_cost": 0.4194760322570801,
+            "episodes": 271.0
+          },
+          "random_3view_exact": {
+            "top1": 0.6408364097570581,
+            "mean_entropy": 0.39342496302185026,
+            "mean_movement_cost": 0.4286777484213514,
+            "episodes": 271.0
+          },
+          "policy_3view": {
+            "top1": 0.6568265557289124,
+            "mean_entropy": 0.3940933644771576,
+            "mean_movement_cost": 0.42006704211235046,
+            "episodes": 271.0
+          },
+          "oracle_3view": {
+            "top1": 0.6826568245887756,
+            "mean_entropy": 0.38268300890922546,
+            "mean_movement_cost": 0.4052068591117859,
+            "episodes": 271.0
+          },
+          "all_valid_views": {
+            "top1": 0.6457564830780029
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 271,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.001326749217696488
+        },
+        "selected_seed": 20260909
+      },
+      "fixed3": {
+        "protocol": "fixed3",
+        "class_bank": [
+          14,
+          15,
+          25,
+          39,
+          46
+        ],
+        "episodes_before_two_move_filter": 271,
+        "episodes_policy_completed": 271,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.6051660776138306,
+            "mean_entropy": 0.39427709579467773
+          },
+          "random_3view_sampled": {
+            "top1": 0.6531365513801575,
+            "mean_entropy": 0.39834195375442505,
+            "mean_movement_cost": 0.425537109375,
+            "episodes": 271.0
+          },
+          "random_3view_exact": {
+            "top1": 0.6469864711110442,
+            "mean_entropy": 0.39706377466157683,
+            "mean_movement_cost": 0.4286777518579661,
+            "episodes": 271.0
+          },
+          "policy_3view": {
+            "top1": 0.6494464874267578,
+            "mean_entropy": 0.3918886184692383,
+            "mean_movement_cost": 0.4222630262374878,
+            "episodes": 271.0
+          },
+          "oracle_3view": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38818359375,
+            "mean_movement_cost": 0.4270736277103424,
+            "episodes": 271.0
+          },
+          "all_valid_views": {
+            "top1": 0.6457564830780029
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 271,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": -0.009621743112802505
+        },
+        "selected_seed": 20260909
+      },
+      "random_start": {
+        "protocol": "random_start",
+        "class_bank": [
+          14,
+          15,
+          25,
+          39,
+          46
+        ],
+        "episodes_before_two_move_filter": 271,
+        "episodes_policy_completed": 271,
+        "completion_rate": 1.0,
+        "metrics": {
+          "single_start": {
+            "top1": 0.61623615026474,
+            "mean_entropy": 0.3845396339893341
+          },
+          "random_3view_sampled": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3961094915866852,
+            "mean_movement_cost": 0.43384382128715515,
+            "episodes": 271.0
+          },
+          "random_3view_exact": {
+            "top1": 0.6432964342106753,
+            "mean_entropy": 0.3952882898545298,
+            "mean_movement_cost": 0.4286777504970667,
+            "episodes": 271.0
+          },
+          "policy_3view": {
+            "top1": 0.6383764147758484,
+            "mean_entropy": 0.3963720202445984,
+            "mean_movement_cost": 0.4403626322746277,
+            "episodes": 271.0
+          },
+          "oracle_3view": {
+            "top1": 0.6863468885421753,
+            "mean_entropy": 0.38754960894584656,
+            "mean_movement_cost": 0.4000491797924042,
+            "episodes": 271.0
+          },
+          "all_valid_views": {
+            "top1": 0.6457564830780029
+          }
+        },
+        "future_fourth_prediction": {
+          "episodes_after_three_observed": 271,
+          "remaining_view_present_rate": 1.0,
+          "predicted_action_legal_rate": 1.0,
+          "mean_predicted_q": 0.005980254150927067
+        },
+        "selected_seed": 20260909
+      }
+    }
+  },
+  "experiment": "trajectory_first_sampled_frame",
+  "temporal_input_frames": 1,
+  "selected_sample_frame_index": 0,
+  "original_temporal_input_frames": 13
+}
