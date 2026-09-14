@@ -167,7 +167,7 @@
   "assignment_cost": "min(cost(A->i)+cost(B->j), cost(A->j)+cost(B->i))",
   "movement_metric": "normalized angular movement cost from move_cost.npy; degree equivalent equals cost*180; not meters",
   "policy_algorithm": "offline masked Double Dueling DQN",
-  "reward": "terminal seen-bank weighted-fusion margin minus distance_lambda times assignment cost",
+  "reward": "fused two-view reward: negative fused CE + fused entropy penalty + fused ground-truth margin + target-view separation - movement cost",
   "distance_lambda": 0.25,
   "hyperparameters": {
     "epochs": 30,
@@ -209,5 +209,84 @@
     "stage1": 185472,
     "stage2": 556416,
     "training_episodes_seen_classes_four_valid_views": 2898
+  },
+  "selected_checkpoints": {
+    "full_depth19": "work_dir/far_loss_soft_10seeds_lambda025/models/full_depth19/seed_20260911/best.pt"
+  },
+  "depth_audits": {
+    "dqn_train": {
+      "split": "dqn_train",
+      "episodes": 3328,
+      "views_joined": 12541,
+      "depth_rows_available": 91406,
+      "join_key": "metadata.episodes[*].views[*].sample_name",
+      "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth"
+    },
+    "val": {
+      "split": "val",
+      "episodes": 1312,
+      "views_joined": 4991,
+      "depth_rows_available": 91406,
+      "join_key": "metadata.episodes[*].views[*].sample_name",
+      "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth"
+    },
+    "test": {
+      "split": "test",
+      "episodes": 2974,
+      "views_joined": 11324,
+      "depth_rows_available": 91406,
+      "join_key": "metadata.episodes[*].views[*].sample_name",
+      "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth"
+    }
+  },
+  "pair_constraint": "soft adjacent-pair penalty: rank gap < 2 remains legal",
+  "hard_nonadjacent": false,
+  "adjacency_penalty": 0.05,
+  "movement_ratio_limit": 0.4,
+  "reward_design": {
+    "terminal_reward": "margin_weight * fused_ground_truth_margin / margin_scale + loss_weight * (-fused_pair_CE) / loss_scale + entropy_weight * (-fused_entropy) / entropy_scale + separation_weight * normalized_target_chord_separation - distance_lambda * assignment_cost",
+    "margin_weight": 1.0,
+    "loss_weight": 0.01,
+    "entropy_weight": 0.01,
+    "separation_weight": 0.05,
+    "margin_scale": 1.0,
+    "margin_transform": "margin / margin_scale",
+    "loss_scale": 1.0,
+    "entropy_scale": 1.0,
+    "recognition_loss": "cross-entropy over the seen-class bank during policy training and the declared test bank during evaluation",
+    "recognition_source": "weighted fusion of the two selected per-view logits; fused CE is directly used by the terminal Q reward",
+    "entropy": "normalized entropy of softmax(fused logits) over the declared bank; lower is better",
+    "class_margin": "fused true-class logit minus the largest fused rival logit; higher is better",
+    "target_separation": "chord separation from the two body-relative sine/cosine target directions; opposite views equal 1",
+    "adjacency": "subtract 0.05 when target rank gap < 2",
+    "bellman_loss_note": "logged as a DDQN regression diagnostic; not treated as test accuracy"
+  },
+  "selected_training_loss": {
+    "full_depth19": {
+      "20260909": {
+        "best_epoch": 6,
+        "bellman_loss": 0.2678453338642915,
+        "validation_recognition_loss": 0.3141842186450958,
+        "validation_entropy": 0.286429762840271,
+        "validation_margin": 2.5653483867645264,
+        "validation_reward": 2.5635077953338623
+      },
+      "20260910": {
+        "best_epoch": 24,
+        "bellman_loss": 0.2819986902177334,
+        "validation_recognition_loss": 0.3051247000694275,
+        "validation_entropy": 0.2813763916492462,
+        "validation_margin": 2.592247247695923,
+        "validation_reward": 2.5819427967071533
+      },
+      "20260911": {
+        "best_epoch": 20,
+        "bellman_loss": 0.23219302265594402,
+        "validation_recognition_loss": 0.30420973896980286,
+        "validation_entropy": 0.28217700123786926,
+        "validation_margin": 2.5930564403533936,
+        "validation_reward": 2.5913503170013428
+      }
+    }
   }
 }

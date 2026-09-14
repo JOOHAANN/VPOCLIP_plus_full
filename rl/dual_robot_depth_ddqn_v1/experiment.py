@@ -62,6 +62,12 @@ for _pair_id, (_left, _right) in enumerate(PAIR_LIST):
 TRUE_UNSEEN = [14, 15, 25, 39, 46]
 SEEN_CLASSES = sorted(set(range(NUM_CLASSES)) - set(TRUE_UNSEEN))
 PSEUDO_UNSEEN = [0, 2, 9, 10, 11, 17, 26, 34, 49, 50]
+PSEUDO_UNSEEN_COUNT = 5
+FINAL_UNSEEN = sorted(set(TRUE_UNSEEN) - set(PSEUDO_UNSEEN))
+# The recognizer still has all classes in SEEN_CLASSES.  The policy-training
+# set is assigned after the validation cache is loaded, so pseudo-unseen
+# classes can be held out from the DDQN replay pool.
+POLICY_TRAIN_CLASSES = list(SEEN_CLASSES)
 DEFAULT_TRAIN_SEEDS = [20260909, 20260910, 20260911]
 DEFAULT_EVAL_SEEDS = list(range(20260920, 20260950))
 DEFAULT_VARIANTS = ["full_depth19", "human_only", "object_only_depth19"]
@@ -656,7 +662,19 @@ def build_transition_pool(
     labels = raw.labels.detach().cpu().numpy().astype(np.int64)
     reachable = raw.reachable.detach().cpu().numpy().astype(bool)
     edge_cost = np.nan_to_num(raw.cost.detach().cpu().numpy(), nan=1.0, posinf=1.0, neginf=1.0)
-    margins = pair_margin(fused_pairs, raw.labels, SEEN_CLASSES).detach().cpu().numpy()
+    # Compute margins only for episodes that can enter the replay pool.  In
+    # the strict 45/5/5 protocol, ``raw.labels`` still contains all 55 global
+    # class IDs, while the reward bank contains only the 45 recognizer-seen
+    # IDs.  Passing held-out labels to ``searchsorted`` would produce an
+    # out-of-range local index before the episode-level filter below runs.
+    policy_bank = torch.as_tensor(POLICY_TRAIN_CLASSES, device=raw.labels.device)
+    eligible = torch.isin(raw.labels, policy_bank) & (raw.valid.sum(dim=-1) == NUM_VIEWS)
+    margins = np.zeros((raw.num_episodes, len(PAIR_LIST)), dtype=np.float32)
+    if bool(eligible.any()):
+        eligible_margins = pair_margin(
+            fused_pairs[eligible], raw.labels[eligible], POLICY_TRAIN_CLASSES
+        ).detach().cpu().numpy()
+        margins[eligible.detach().cpu().numpy()] = eligible_margins
 
     episodes_out: list[int] = []
     a_out: list[int] = []
@@ -668,7 +686,10 @@ def build_transition_pool(
     stage1_out: list[bool] = []
 
     for episode in range(raw.num_episodes):
-        if labels[episode] not in SEEN_CLASSES or valid[episode].sum() != NUM_VIEWS:
+        if (
+            labels[episode] not in POLICY_TRAIN_CLASSES
+            or valid[episode].sum() != NUM_VIEWS
+        ):
             continue
         for start_a in range(NUM_VIEWS):
             for start_b in range(NUM_VIEWS):
@@ -781,6 +802,54 @@ def sample_pool_ids(
 def eligible_episodes(raw: Any, classes: Sequence[int]) -> torch.Tensor:
     bank = torch.as_tensor(classes, device=raw.device, dtype=torch.long)
     return torch.isin(raw.labels, bank) & (raw.valid.sum(dim=-1) == NUM_VIEWS)
+
+
+def select_pseudo_unseen_classes(
+    raw: Any,
+    requested: Sequence[int] = PSEUDO_UNSEEN,
+    count: int = PSEUDO_UNSEEN_COUNT,
+    candidate_classes: Sequence[int] | None = None,
+) -> tuple[list[int], dict[str, int]]:
+    """Select validation-only classes with complete 4-view data.
+
+    In the strict 45/5/5 protocol ``candidate_classes`` is the original
+    ten-class unseen bank, so the pseudo-unseen classes remain recognizer
+    unseen.  The legacy 50/5 protocol leaves it unset and selects from the
+    original seen bank for backward compatibility.
+    """
+
+    labels = raw.labels.detach().cpu().numpy().astype(np.int64)
+    valid = raw.valid.detach().cpu().numpy().astype(bool)
+    complete = valid.sum(axis=-1) == NUM_VIEWS
+    candidates = sorted(set(int(cls) for cls in (candidate_classes or SEEN_CLASSES)))
+    counts = {
+        int(cls): int(((labels == int(cls)) & complete).sum())
+        for cls in candidates
+    }
+    eligible = [cls for cls in candidates if counts[cls] > 0]
+
+    # Preserve the requested split where it is actually observable, then
+    # fill missing entries deterministically from other eligible seen classes.
+    selected: list[int] = []
+    for cls in requested:
+        cls = int(cls)
+        if cls in eligible and cls not in selected:
+            selected.append(cls)
+        if len(selected) >= count:
+            break
+    for cls in eligible:
+        if len(selected) >= count:
+            break
+        if cls not in selected:
+            selected.append(cls)
+    if len(selected) < count:
+        raise RuntimeError(
+            "not enough seen classes with a complete four-view validation "
+            f"episode: need {count}, found {len(selected)}"
+        )
+    selected = sorted(selected[:count])
+    assert all(counts[cls] > 0 for cls in selected)
+    return selected, {str(cls): counts[cls] for cls in selected}
 
 
 def sample_starts(raw: Any, episodes: torch.Tensor, seed: int) -> tuple[torch.Tensor, torch.Tensor]:
@@ -1203,7 +1272,7 @@ def write_results_markdown(
     lines = [
         "# Dual-robot depth-aware DDQN results",
         "",
-        "Primary test bank: true unseen five-way classes `[14, 15, 25, 39, 46]`.",
+        f"Primary test bank: final unseen classes `{metadata.get('final_unseen_test_classes', [])}`.",
         "Each cell is the mean over 30 random-start seed aggregates with a 95% normal CI.",
         "",
         "| method | weighted-fusion accuracy | normalized move cost | angular cost (deg-equivalent) | completion |",
@@ -1289,13 +1358,46 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--grad-clip", type=float, default=5.0)
     parser.add_argument("--distance-lambda", type=float, default=0.25)
     parser.add_argument("--validation-interval", type=int, default=2)
+    parser.add_argument(
+        "--true-unseen-classes", type=int, nargs="+", default=None,
+        help="Original held-out class bank; strict 45/5/5 uses ten IDs here.",
+    )
+    parser.add_argument(
+        "--pseudo-unseen-classes", type=int, nargs="+", default=None,
+        help="Five validation-only classes. In strict mode these must be selected from the ten true-unseen IDs.",
+    )
     parser.add_argument("--smoke-only", action="store_true")
     parser.add_argument("--skip-train", action="store_true")
+    parser.add_argument(
+        "--validation-only",
+        action="store_true",
+        help="train/select checkpoints on the pseudo-unseen validation set and skip true-unseen test evaluation",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
+    global TRUE_UNSEEN, SEEN_CLASSES, PSEUDO_UNSEEN, FINAL_UNSEEN, POLICY_TRAIN_CLASSES
+
     args = parse_args()
+    if args.true_unseen_classes is not None:
+        TRUE_UNSEEN = sorted(set(int(value) for value in args.true_unseen_classes))
+    if args.pseudo_unseen_classes is not None:
+        PSEUDO_UNSEEN = sorted(set(int(value) for value in args.pseudo_unseen_classes))
+    if not TRUE_UNSEEN:
+        raise ValueError("--true-unseen-classes must not be empty")
+    if not PSEUDO_UNSEEN:
+        raise ValueError("--pseudo-unseen-classes must not be empty")
+    if not set(PSEUDO_UNSEEN).issubset(set(TRUE_UNSEEN)):
+        # The original 50/5 run used policy-held-out seen classes.  Preserve
+        # that legacy behavior only when no explicit strict class split was
+        # requested; explicit inputs must be a true 45/5/5 protocol.
+        if args.true_unseen_classes is not None or args.pseudo_unseen_classes is not None:
+            raise ValueError("strict pseudo-unseen classes must be a subset of true-unseen classes")
+    SEEN_CLASSES = sorted(set(range(NUM_CLASSES)) - set(TRUE_UNSEEN))
+    FINAL_UNSEEN = sorted(set(TRUE_UNSEEN) - set(PSEUDO_UNSEEN))
+    if not FINAL_UNSEEN:
+        raise ValueError("the final unseen test bank is empty after removing pseudo-unseen classes")
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required for this experiment")
     device = torch.device("cuda:0")
@@ -1312,6 +1414,33 @@ def main() -> None:
             args.cache_root, args.track_root, split, device, depth_lookup
         )
         print("LOADED", split, raws[split].num_episodes, depth_audits[split], flush=True)
+
+    strict_pseudo = set(PSEUDO_UNSEEN).issubset(set(TRUE_UNSEEN))
+    candidate_classes = TRUE_UNSEEN if strict_pseudo else SEEN_CLASSES
+    # Select pseudo-unseen classes only from the declared candidate bank.  A
+    # class is eligible only if at least one complete four-view episode exists.
+    # In strict 45/5/5, the selected classes are part of the recognizer's
+    # original ten-class holdout and are never placed in the policy replay pool.
+    PSEUDO_UNSEEN, pseudo_complete_counts = select_pseudo_unseen_classes(
+        raws["val"], requested=PSEUDO_UNSEEN, count=len(PSEUDO_UNSEEN),
+        candidate_classes=candidate_classes,
+    )
+    FINAL_UNSEEN = sorted(set(TRUE_UNSEEN) - set(PSEUDO_UNSEEN))
+    # In strict 45/5/5 the pseudo classes are outside SEEN_CLASSES already;
+    # in the legacy protocol they are held out from the otherwise seen bank.
+    POLICY_TRAIN_CLASSES = sorted(set(SEEN_CLASSES) - set(PSEUDO_UNSEEN))
+    print(
+        "PSEUDO_UNSEEN",
+        json.dumps(
+            {
+                "classes": PSEUDO_UNSEEN,
+                "complete_four_view_validation_episodes": pseudo_complete_counts,
+                "policy_training_class_count": len(POLICY_TRAIN_CLASSES),
+            },
+            ensure_ascii=False,
+        ),
+        flush=True,
+    )
 
     gate = fusion_gate.load_gate(args.gate_checkpoint, device)
     print("GATE", args.gate_checkpoint, flush=True)
@@ -1333,8 +1462,14 @@ def main() -> None:
         "transitions": pool.size,
         "stage1": int(pool.stage1.sum()),
         "stage2": int((~pool.stage1).sum()),
-        "training_episodes_seen_classes_four_valid_views": int(
-            ((torch.isin(raws["dqn_train"].labels, torch.as_tensor(SEEN_CLASSES, device=device))) & (raws["dqn_train"].valid.sum(-1) == NUM_VIEWS)).sum()
+        "training_episodes_policy_classes_four_valid_views": int(
+            (
+                torch.isin(
+                    raws["dqn_train"].labels,
+                    torch.as_tensor(POLICY_TRAIN_CLASSES, device=device),
+                )
+                & (raws["dqn_train"].valid.sum(-1) == NUM_VIEWS)
+            ).sum()
         ),
     }
     dump_json(args.output_root / "transition_pool.json", pool_info)
@@ -1347,9 +1482,21 @@ def main() -> None:
         "depth_root": str(args.depth_root),
         "gate_checkpoint": str(args.gate_checkpoint),
         "device": str(device),
-        "training_classes": SEEN_CLASSES,
-        "true_unseen_test_classes": TRUE_UNSEEN,
+        "recognizer_seen_classes": SEEN_CLASSES,
+        "policy_training_classes": POLICY_TRAIN_CLASSES,
+        "original_unseen_classes": TRUE_UNSEEN,
+        "true_unseen_test_classes": FINAL_UNSEEN,
+        "final_unseen_test_classes": FINAL_UNSEEN,
         "pseudo_validation_classes": PSEUDO_UNSEEN,
+        "protocol": "strict_45_5_5" if len(SEEN_CLASSES) == 45 and len(TRUE_UNSEEN) == 10 and len(PSEUDO_UNSEEN) == 5 else "legacy_or_custom_split",
+        "recognizer_and_policy_training_class_count": len(SEEN_CLASSES),
+        "pseudo_classes_excluded_from_policy_replay": sorted(set(PSEUDO_UNSEEN) & set(POLICY_TRAIN_CLASSES)) == [],
+        "pseudo_validation_complete_four_view_episode_counts": pseudo_complete_counts,
+        "pseudo_validation_selection_rule": (
+            "five requested pseudo-unseen classes retained only when validation "
+            "has at least one complete four-view low-view episode; missing "
+            "classes are filled deterministically from eligible seen classes"
+        ),
         "train_seeds": args.train_seeds,
         "eval_seeds": args.eval_seeds,
         "variants": args.variants,
@@ -1445,10 +1592,33 @@ def main() -> None:
         policies[variant] = load_policy(checkpoint, variant, device)
         selected_checkpoints[variant] = str(checkpoint)
 
+    if args.validation_only:
+        metadata["selected_checkpoints"] = selected_checkpoints
+        metadata["validation_only"] = True
+        metadata["true_unseen_test_evaluation"] = "skipped during pseudo-unseen weight selection"
+        dump_json(args.output_root / "config_resolved.json", metadata)
+        dump_json(
+            args.output_root / "validation_selection.json",
+            {"training": summaries, "selected_checkpoints": selected_checkpoints},
+        )
+        print(
+            "VALIDATION_ONLY",
+            json.dumps(
+                {
+                    "pseudo_unseen_classes": PSEUDO_UNSEEN,
+                    "selected_checkpoints": selected_checkpoints,
+                    "training": summaries,
+                },
+                ensure_ascii=False,
+            ),
+            flush=True,
+        )
+        return
+
     seed_results: list[dict[str, Any]] = []
     for index, seed in enumerate(args.eval_seeds, start=1):
         row = test_seed_evaluation(
-            raws["test"], fused_test, policies, args.variants, int(seed), TRUE_UNSEEN
+            raws["test"], fused_test, policies, args.variants, int(seed), FINAL_UNSEEN
         )
         seed_results.append(row)
         dump_json(args.output_root / "test" / f"seed_{seed}.json", row)

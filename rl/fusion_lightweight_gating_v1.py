@@ -156,9 +156,34 @@ def main() -> None:
     parser.add_argument("--learning-rate", type=float, default=1e-3)
     parser.add_argument("--train-seeds", type=int, nargs="+", default=common.TRAIN_SEEDS)
     parser.add_argument("--eval-seeds", type=int, nargs="+", default=common.EVAL_SEEDS)
+    parser.add_argument(
+        "--training-classes", type=int, nargs="+", default=common.SEEN_CLASSES,
+        help="Class IDs used to fit the fusion gate; labels outside this bank are never sampled for gate training.",
+    )
+    parser.add_argument(
+        "--pseudo-unseen-classes", type=int, nargs="+", default=common.PSEUDO_UNSEEN,
+        help="Validation-only class IDs used for checkpoint selection.",
+    )
+    parser.add_argument(
+        "--true-unseen-classes", type=int, nargs="+", default=common.TRUE_UNSEEN,
+        help="Final held-out class IDs recorded in the protocol metadata.",
+    )
     args = parser.parse_args()
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required")
+    common.SEEN_CLASSES = sorted(set(int(value) for value in args.training_classes))
+    common.PSEUDO_UNSEEN = sorted(set(int(value) for value in args.pseudo_unseen_classes))
+    common.TRUE_UNSEEN = sorted(set(int(value) for value in args.true_unseen_classes))
+    if not common.SEEN_CLASSES:
+        raise ValueError("--training-classes must not be empty")
+    if not common.PSEUDO_UNSEEN:
+        raise ValueError("--pseudo-unseen-classes must not be empty")
+    if set(common.SEEN_CLASSES) & set(common.TRUE_UNSEEN):
+        raise ValueError("training and true-unseen classes must be disjoint")
+    if not set(common.PSEUDO_UNSEEN).issubset(set(common.TRUE_UNSEEN)):
+        raise ValueError("pseudo-unseen classes must be a subset of true-unseen classes")
+    if any(value < 0 or value >= common.NUM_CLASSES for value in (*common.SEEN_CLASSES, *common.PSEUDO_UNSEEN, *common.TRUE_UNSEEN)):
+        raise ValueError("class IDs must be in [0, NUM_CLASSES)")
     device = torch.device("cuda:0")
     torch.set_float32_matmul_precision("high")
     torch.backends.cuda.matmul.allow_tf32 = True
@@ -191,6 +216,8 @@ def main() -> None:
         ],
         "omitted_unavailable_fields": ["elevation sin/cos", "per-frame logits entropy_std", "top1_switch_rate from logits", "logit_variance_mean", "margin_std"],
         "recognizer_frozen": True,
+        "protocol": "strict_45_5_5" if len(common.SEEN_CLASSES) == 45 and len(common.PSEUDO_UNSEEN) == 5 and len(common.TRUE_UNSEEN) == 10 else "custom_class_split",
+        "gate_training_excludes_pseudo_and_true_unseen": True,
         "fusion": "weighted sum of frozen per-view classification logits",
         "anchor_preserved": True,
     }
@@ -205,4 +232,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

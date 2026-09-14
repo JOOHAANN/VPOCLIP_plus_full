@@ -47,7 +47,9 @@ def assign(raw, ep, a, c, left, right):
 
 def pool(raw, fused, penalty, device):
     p = original_pool(raw, fused, penalty, device)
-    episodes = b.eligible_episodes(raw, b.SEEN_CLASSES).nonzero().flatten().tolist()
+    episodes = b.eligible_episodes(
+        raw, b.POLICY_TRAIN_CLASSES
+    ).nonzero().flatten().tolist()
     successors = {}
     for seq in streams(raw, episodes, 731):
         successors.update(zip(seq[:-1], seq[1:]))

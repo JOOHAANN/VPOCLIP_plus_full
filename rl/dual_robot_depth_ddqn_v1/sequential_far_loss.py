@@ -60,6 +60,7 @@ LOSS_SCALE = float(os.environ.get("FAR_LOSS_SCALE", "1.0"))
 ENTROPY_SCALE = float(os.environ.get("FAR_ENTROPY_SCALE", "1.0"))
 MARGIN_TANH = os.environ.get("FAR_MARGIN_TANH", "1") not in {"0", "false", "False"}
 MOVEMENT_RATIO_LIMIT = float(os.environ.get("FAR_MOVEMENT_RATIO_LIMIT", "0.5"))
+VALIDATION_SELECTION = os.environ.get("FAR_VALIDATION_SELECTION", "reward").lower()
 
 _original_build_state = seq.b.build_state
 
@@ -301,7 +302,9 @@ def pool(raw, fused, penalty, device):
             "target_a": base.selected[terminal],
             "target_b": base.action[terminal],
         }
-        stats = _pair_statistics(raw, fused, rollout, seq.b.SEEN_CLASSES)
+        stats = _pair_statistics(
+            raw, fused, rollout, seq.b.POLICY_TRAIN_CLASSES
+        )
         reward = _combined_reward(stats, penalty)
         base.reward = base.reward.clone()
         base.reward[terminal] = reward
@@ -463,13 +466,23 @@ def validation(model, raw, fused, episodes, starts_a, starts_b, variant, bank, p
     random_metrics = _evaluate_rollout(raw, fused, random_rollout, bank, penalty)
     random_cost = max(float(random_metrics["mean_movement_cost"]), 1e-8)
     result["movement_ratio_to_random"] = float(result["mean_movement_cost"]) / random_cost
-    # Checkpoints are selected by the RL objective when the learned policy
-    # satisfies the validation movement budget; otherwise it is rejected.
-    result["mean_reward"] = (
-        result["mean_reward"]
-        if result["movement_ratio_to_random"] <= MOVEMENT_RATIO_LIMIT
-        else -result["movement_ratio_to_random"]
-    )
+    # A checkpoint must satisfy the movement budget.  The default selection
+    # criterion is the RL objective; validation accuracy or fused CE can be
+    # requested explicitly without using test labels.
+    in_budget = result["movement_ratio_to_random"] <= MOVEMENT_RATIO_LIMIT
+    rl_reward = result["mean_reward"]
+    if not in_budget:
+        selection_score = -result["movement_ratio_to_random"]
+    elif VALIDATION_SELECTION == "accuracy":
+        selection_score = result["accuracy"]
+    elif VALIDATION_SELECTION in {"loss", "recognition_loss", "ce"}:
+        selection_score = -result["recognition_loss"]
+    else:
+        selection_score = rl_reward
+    result["rl_reward"] = rl_reward
+    result["selection_score"] = selection_score
+    result["selection_metric"] = VALIDATION_SELECTION
+    result["mean_reward"] = selection_score
     return result
 
 
@@ -585,7 +598,16 @@ def _training_loss_summary(root: Path):
                     "validation_margin": float(
                         validation.get("mean_margin", 0.0)
                     ),
-                    "validation_reward": float(validation.get("mean_reward", 0.0)),
+                    "validation_selection_score": float(
+                        validation.get(
+                            "selection_score", validation.get("mean_reward", 0.0)
+                        )
+                    ),
+                    "validation_rl_reward": float(
+                        validation.get(
+                            "rl_reward", validation.get("mean_reward", 0.0)
+                        )
+                    ),
                 }
         output[variant] = variant_output
     return output
@@ -602,6 +624,13 @@ def report(root, metadata, summary):
         )
     metadata["hard_nonadjacent"] = HARD_NONADJACENT
     metadata["adjacency_penalty"] = ADJACENCY_PENALTY
+    metadata["checkpoint_selection"] = (
+        "validation accuracy subject to movement ratio limit"
+        if VALIDATION_SELECTION == "accuracy"
+        else "validation fused CE subject to movement ratio limit"
+        if VALIDATION_SELECTION in {"loss", "recognition_loss", "ce"}
+        else "validation RL reward subject to movement ratio limit"
+    )
     metadata["movement_ratio_limit"] = MOVEMENT_RATIO_LIMIT
     metadata["reward"] = (
         "fused two-view reward: negative fused CE + fused entropy penalty + "
@@ -638,6 +667,7 @@ def report(root, metadata, summary):
             if HARD_NONADJACENT
             else f"subtract {ADJACENCY_PENALTY} when target rank gap < {MIN_RANK_GAP}"
         ),
+        "checkpoint_selection": metadata["checkpoint_selection"],
         "bellman_loss_note": "logged as a DDQN regression diagnostic; not treated as test accuracy",
     }
     metadata["selected_training_loss"] = _training_loss_summary(root)

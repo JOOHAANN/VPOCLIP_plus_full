@@ -1,0 +1,54 @@
+{
+  "selected": {
+    "ce": 2.0,
+    "movement": 0.25,
+    "separation": 0.0,
+    "selected": {
+      "variant": "full_depth19",
+      "seed": 20260909,
+      "best_score": 0.8239436546961466,
+      "best_epoch": 30,
+      "checkpoint": "work_dir/strict45_5_sequential_reward_search/ce2_move0.25_sep0/models/full_depth19/seed_20260909/best.pt",
+      "replay_transitions": 649984
+    },
+    "validation": {
+      "accuracy": 0.8239436546961466,
+      "mean_movement_cost": 0.048509409030278526,
+      "mean_movement_angle_deg": 8.731693903605143,
+      "completion_rate": 1.0,
+      "episodes": 142.0,
+      "feasible_fraction_after_rollout": 1.0,
+      "recognition_loss": 0.7243614395459493,
+      "best_single_recognition_loss": 0.5416362881660461,
+      "recognition_loss_gain": -0.18272516131401062,
+      "normalized_entropy": 0.6739131609598795,
+      "best_single_normalized_entropy": 0.5985081791877747,
+      "entropy_gain": -0.07540500164031982,
+      "mean_margin": 0.8790021936098734,
+      "mean_top2_margin": 1.101862112681071,
+      "mean_separation": 0.39927005767822266,
+      "mean_separation_angle_deg": 47.915356953938804,
+      "mean_rank_gap": 2.300469398498535,
+      "mean_reward": 0.8239436546961466,
+      "physical_reward": -1.482456922531128,
+      "movement_ratio_to_random": 0.2564963713566655
+    }
+  },
+  "bank": [
+    25,
+    39,
+    46,
+    52,
+    54
+  ],
+  "audit": {
+    "split": "test",
+    "episodes": 2974,
+    "views_joined": 11324,
+    "depth_rows_available": 30698,
+    "join_key": "metadata.episodes[*].views[*].sample_name",
+    "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth",
+    "sequential_camera_mapping": "metadata angle_rank to physical camera; verified all complete episodes"
+  },
+  "protocol": "subject-wise sequential replay; pseudo-selected checkpoint frozen; 30 evaluation seeds"
+}

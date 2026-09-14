@@ -1,0 +1,17 @@
+{
+  "algorithm": "masked_offline_double_dueling_dqn",
+  "variant": "human_only_lstm",
+  "seed": 20260910,
+  "replay_transitions": 649984,
+  "stage1_transitions": 162496,
+  "stage2_terminal_transitions": 487488,
+  "gamma": 0.99,
+  "target_update_interval": 250,
+  "distance_lambda": 0.25,
+  "policy_inputs_excluded": [
+    "class label",
+    "VPOCLIP logits",
+    "future-view features"
+  ],
+  "terminal": "after selecting two distinct target slots"
+}
