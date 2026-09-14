@@ -670,12 +670,20 @@ def export_cache(config: Dict[str, Any], manifest_path: Path) -> Path:
                 arrays["pose"][start + offset] = cached_pose[offset]
                 arrays["object_map"][start + offset] = cached_objects[offset]
                 arrays["image_quality"][start + offset] = cached_quality[offset]
-                try:
-                    resolved_geometry = geometry_resolver.resolve(row)
-                except (FileNotFoundError, TypeError):
-                    if not bool(config["data"].get("allow_missing_skeleton", False)):
-                        raise
-                    resolved_geometry = _csv_geometry_fallback(row)
+                # Some experiments pre-resolve the candidate order from the
+                # released frame-0 anatomical yaw.  Preserve that exact
+                # contract instead of silently replacing it with the older
+                # temporal/reference-camera resolver.  Normal cache builds
+                # continue to use the historical resolver below.
+                if row.get("frame0_geometry") is not None:
+                    resolved_geometry = row["frame0_geometry"]
+                else:
+                    try:
+                        resolved_geometry = geometry_resolver.resolve(row)
+                    except (FileNotFoundError, TypeError):
+                        if not bool(config["data"].get("allow_missing_skeleton", False)):
+                            raise
+                        resolved_geometry = _csv_geometry_fallback(row)
                 angle_degrees = np.asarray([
                     float(view["relative_bearing_deg"])
                     for view in resolved_geometry["views"]
@@ -732,7 +740,8 @@ def export_cache(config: Dict[str, Any], manifest_path: Path) -> Path:
             for value in config["data"].get("merge_group_actions", [])
         }),
         "windowing": {"seconds": config["data"]["window_seconds"], "stride_seconds": config["data"]["stride_seconds"], "frames": config["data"]["frames"]},
-        "protocol": "strict_zsl_50_5", "angle_csv": str(resolve(config, config["data"]["angle_csv"])),
+        "protocol": str(config["cache"].get("protocol", "strict_zsl_50_5")),
+        "angle_csv": str(resolve(config, config["data"]["angle_csv"])),
         "geometry_contract": {
             "definition": (
                 "recording-specific candidate bearing; relative to anatomical body "

@@ -21,7 +21,13 @@ def parse_args():
     p.add_argument("--zsl-dir", type=Path, required=True)
     p.add_argument("--closed-dir", type=Path, required=True)
     p.add_argument("--manifest", type=Path, required=True)
-    p.add_argument("--unseen-classes", type=int, nargs=5, default=UNSEEN.tolist())
+    p.add_argument(
+        "--unseen-classes",
+        type=int,
+        nargs="+",
+        default=UNSEEN.tolist(),
+        help="One or more zero-based unseen class IDs; the remaining classes are seen.",
+    )
     p.add_argument("--zsl-only", action="store_true")
     p.add_argument("--unseen-recordings-manifest", type=Path)
     return p.parse_args()
@@ -86,8 +92,10 @@ def main():
     global UNSEEN
     args = parse_args()
     UNSEEN = np.asarray(sorted(args.unseen_classes), dtype=np.int64)
-    if len(set(UNSEEN.tolist())) != 5 or UNSEEN.min() < 0 or UNSEEN.max() >= 55:
-        raise ValueError("Expected five unique zero-based class IDs in [0,54]")
+    if (len(UNSEEN) < 1 or len(UNSEEN) >= 55
+            or len(set(UNSEEN.tolist())) != len(UNSEEN)
+            or UNSEEN.min() < 0 or UNSEEN.max() >= 55):
+        raise ValueError("Expected one to 54 unique zero-based class IDs in [0,54]")
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     complete_recordings = None
     if args.unseen_recordings_manifest:
@@ -148,7 +156,7 @@ def main():
         },
     }
     (args.zsl_dir / "metadata.json").write_text(
-        json.dumps({**common, "protocol": "strict_zsl_50_5", "counts": zsl_counts}, indent=2),
+        json.dumps({**common, "protocol": f"strict_zsl_{55 - len(UNSEEN)}_{len(UNSEEN)}", "counts": zsl_counts}, indent=2),
         encoding="utf-8",
     )
     if args.zsl_only:

@@ -1,0 +1,1283 @@
+{
+  "config": {
+    "experiment": "dual_robot_depth_ddqn_v1",
+    "cache_root": "/home/youhan/ws/VPOCLIP_plus_full/data/frame0_body_angle_rank_g1_pseudo_selected_stage_b/cache",
+    "track_root": "/home/youhan/ws/VPOCLIP_plus_full/data/frame0_body_angle_rank_g1_pseudo_selected_stage_b/object_tracks_full",
+    "depth_root": "/home/youhan/ws/VPOCLIP_plus_full/data/new50_5_group1_zsl_depth_first_frame_fp32",
+    "gate_checkpoint": "/home/youhan/ws/VPOCLIP_plus_full/work_dir/fusion_lightweight_gating_v1/models/seed_20260910/best.pt",
+    "device": "cuda:0",
+    "training_classes": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      47,
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54
+    ],
+    "true_unseen_test_classes": [
+      14,
+      15,
+      25,
+      39,
+      46
+    ],
+    "pseudo_validation_classes": [
+      0,
+      2,
+      9,
+      10,
+      11,
+      17,
+      26,
+      34,
+      49,
+      50
+    ],
+    "train_seeds": [
+      20260909,
+      20260910
+    ],
+    "eval_seeds": [
+      20260920,
+      20260921,
+      20260922,
+      20260923,
+      20260924
+    ],
+    "variants": [
+      "full_depth19",
+      "human_only",
+      "object_only_depth19"
+    ],
+    "human_channels": [
+      "center_x",
+      "center_y",
+      "velocity_x",
+      "velocity_y",
+      "sin_3d_body_yaw",
+      "cos_3d_body_yaw"
+    ],
+    "human_channels_by_variant": {
+      "full_depth19": [
+        "center_x",
+        "center_y",
+        "velocity_x",
+        "velocity_y",
+        "sin_3d_body_yaw",
+        "cos_3d_body_yaw"
+      ],
+      "human_only": [
+        "center_x",
+        "center_y",
+        "velocity_x",
+        "velocity_y",
+        "sin_3d_body_yaw",
+        "cos_3d_body_yaw"
+      ],
+      "human_trajectory_only": [
+        "center_x",
+        "center_y",
+        "velocity_x",
+        "velocity_y"
+      ],
+      "human_orientation_only": [
+        "sin_3d_body_yaw",
+        "cos_3d_body_yaw"
+      ]
+    },
+    "human_yaw_source": "released 3-D skeleton body_yaw_deg.npy; repeated over 13 frames",
+    "temporal_input": "13-frame sequence for both human and object branches",
+    "temporal_encoder_by_variant": {
+      "full_depth19": "Conv1d",
+      "human_only": "Conv1d",
+      "human_trajectory_only": "Conv1d",
+      "human_orientation_only": "Conv1d",
+      "object_only_depth19": "Conv1d",
+      "full_lstm19": "one-layer LSTM, hidden_size=32",
+      "human_only_lstm": "one-layer LSTM, hidden_size=32",
+      "object_only_lstm19": "one-layer LSTM, hidden_size=32"
+    },
+    "object_raw_track": [
+      "presence",
+      "center_x",
+      "center_y",
+      "confidence"
+    ],
+    "object_pooled_fields": [
+      "center_x",
+      "center_y",
+      "confidence",
+      "relative_x_to_person",
+      "relative_y_to_person",
+      "relative_depth_to_person"
+    ],
+    "object_pooled_width_with_depth": 19,
+    "object_pooled_width_without_depth": 16,
+    "object_category_or_slot_seen_by_policy": false,
+    "relative_depth_definition": "object MiDaS relative inverse depth minus person-slot depth; used only as object relative z; normalized first-frame depth; not metric",
+    "robot_protocol": "robot A random valid start performs single-view recognition; robot B random independent start; select two distinct final targets",
+    "action_space": "four target slots with invalid, already-selected, and infeasible pairs masked",
+    "assignment_cost": "min(cost(A->i)+cost(B->j), cost(A->j)+cost(B->i))",
+    "movement_metric": "normalized angular movement cost from move_cost.npy; degree equivalent equals cost*180; not meters",
+    "policy_algorithm": "offline masked Double Dueling DQN",
+    "reward": "terminal seen-bank weighted-fusion margin minus distance_lambda times assignment cost",
+    "distance_lambda": 0.5,
+    "hyperparameters": {
+      "epochs": 12,
+      "batch_size": 16384,
+      "updates_per_epoch": 48,
+      "learning_rate": 0.0003,
+      "weight_decay": 0.0001,
+      "gamma": 0.99,
+      "target_update_interval": 250
+    },
+    "depth_join_audits": {
+      "dqn_train": {
+        "split": "dqn_train",
+        "episodes": 3328,
+        "views_joined": 12541,
+        "depth_rows_available": 91406,
+        "join_key": "metadata.episodes[*].views[*].sample_name",
+        "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth"
+      },
+      "val": {
+        "split": "val",
+        "episodes": 1312,
+        "views_joined": 4991,
+        "depth_rows_available": 91406,
+        "join_key": "metadata.episodes[*].views[*].sample_name",
+        "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth"
+      },
+      "test": {
+        "split": "test",
+        "episodes": 2974,
+        "views_joined": 11324,
+        "depth_rows_available": 91406,
+        "join_key": "metadata.episodes[*].views[*].sample_name",
+        "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth"
+      }
+    },
+    "pool": {
+      "transitions": 463680,
+      "stage1": 185472,
+      "stage2": 278208,
+      "training_episodes_seen_classes_four_valid_views": 2898
+    },
+    "selected_checkpoints": {
+      "full_depth19": "work_dir/far_loss_sweep_a/models/full_depth19/seed_20260909/best.pt",
+      "human_only": "work_dir/far_loss_sweep_a/models/human_only/seed_20260909/best.pt",
+      "object_only_depth19": "work_dir/far_loss_sweep_a/models/object_only_depth19/seed_20260910/best.pt"
+    },
+    "depth_audits": {
+      "dqn_train": {
+        "split": "dqn_train",
+        "episodes": 3328,
+        "views_joined": 12541,
+        "depth_rows_available": 91406,
+        "join_key": "metadata.episodes[*].views[*].sample_name",
+        "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth"
+      },
+      "val": {
+        "split": "val",
+        "episodes": 1312,
+        "views_joined": 4991,
+        "depth_rows_available": 91406,
+        "join_key": "metadata.episodes[*].views[*].sample_name",
+        "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth"
+      },
+      "test": {
+        "split": "test",
+        "episodes": 2974,
+        "views_joined": 11324,
+        "depth_rows_available": 91406,
+        "join_key": "metadata.episodes[*].views[*].sample_name",
+        "depth_definition": "first-frame MiDaS normalized relative inverse depth; not metric depth"
+      }
+    },
+    "pair_constraint": "rank gap >= 2: adjacent pairs masked when the configured minimum is positive",
+    "reward_design": {
+      "terminal_reward": "margin_weight * tanh(fused_ground_truth_margin / margin_scale) + loss_weight * (best_single_CE - fused_pair_CE) / loss_scale + entropy_weight * (best_single_entropy - fused_entropy) / entropy_scale + separation_weight * normalized_target_chord_separation - distance_lambda * assignment_cost",
+      "margin_weight": 1.0,
+      "loss_weight": 2.0,
+      "entropy_weight": 1.0,
+      "separation_weight": 0.5,
+      "margin_scale": 2.0,
+      "loss_scale": 1.0,
+      "entropy_scale": 1.0,
+      "recognition_loss": "cross-entropy over the seen-class bank during policy training and the declared test bank during evaluation",
+      "recognition_source": "weighted fusion of the two selected per-view logits; no single-view loss is used as the terminal classification decision",
+      "entropy": "normalized entropy of softmax(fused logits) over the declared bank; lower is better",
+      "class_margin": "fused true-class logit minus the largest fused rival logit; higher is better",
+      "target_separation": "chord separation from the two body-relative sine/cosine target directions; opposite views equal 1",
+      "bellman_loss_note": "logged as a DDQN regression diagnostic; not treated as test accuracy"
+    },
+    "selected_training_loss": {
+      "full_depth19": {
+        "20260909": {
+          "best_epoch": 12,
+          "bellman_loss": 0.1711531039327383,
+          "validation_recognition_loss": 0.3163163661956787,
+          "validation_entropy": 0.28128886222839355,
+          "validation_margin": 2.564927577972412,
+          "validation_reward": 0.5199249982833862
+        },
+        "20260910": {
+          "best_epoch": 10,
+          "bellman_loss": 0.14505566656589508,
+          "validation_recognition_loss": 0.3187350034713745,
+          "validation_entropy": 0.2841714322566986,
+          "validation_margin": 2.5599496364593506,
+          "validation_reward": 0.5056533217430115
+        }
+      },
+      "human_only": {
+        "20260909": {
+          "best_epoch": 2,
+          "bellman_loss": 0.18734114586065212,
+          "validation_recognition_loss": 0.306270569562912,
+          "validation_entropy": 0.2889971435070038,
+          "validation_margin": 2.572460412979126,
+          "validation_reward": 0.5169315934181213
+        },
+        "20260910": {
+          "best_epoch": 2,
+          "bellman_loss": 0.18431901248792806,
+          "validation_recognition_loss": 0.3140276372432709,
+          "validation_entropy": 0.2824036180973053,
+          "validation_margin": 2.5621469020843506,
+          "validation_reward": 0.50938880443573
+        }
+      },
+      "object_only_depth19": {
+        "20260909": {
+          "best_epoch": 2,
+          "bellman_loss": 0.18152736810346445,
+          "validation_recognition_loss": 0.3203381896018982,
+          "validation_entropy": 0.2867421507835388,
+          "validation_margin": 2.5429625511169434,
+          "validation_reward": 0.5015790462493896
+        },
+        "20260910": {
+          "best_epoch": 4,
+          "bellman_loss": 0.16400457949688038,
+          "validation_recognition_loss": 0.3076716959476471,
+          "validation_entropy": 0.28552550077438354,
+          "validation_margin": 2.5770039558410645,
+          "validation_reward": 0.5376124382019043
+        }
+      }
+    }
+  },
+  "training": {
+    "full_depth19": [
+      {
+        "variant": "full_depth19",
+        "seed": 20260909,
+        "best_score": 0.5199249982833862,
+        "best_epoch": 12,
+        "checkpoint": "work_dir/far_loss_sweep_a/models/full_depth19/seed_20260909/best.pt",
+        "replay_transitions": 463680
+      },
+      {
+        "variant": "full_depth19",
+        "seed": 20260910,
+        "best_score": 0.5056533217430115,
+        "best_epoch": 10,
+        "checkpoint": "work_dir/far_loss_sweep_a/models/full_depth19/seed_20260910/best.pt",
+        "replay_transitions": 463680
+      }
+    ],
+    "human_only": [
+      {
+        "variant": "human_only",
+        "seed": 20260909,
+        "best_score": 0.5169315934181213,
+        "best_epoch": 2,
+        "checkpoint": "work_dir/far_loss_sweep_a/models/human_only/seed_20260909/best.pt",
+        "replay_transitions": 463680
+      },
+      {
+        "variant": "human_only",
+        "seed": 20260910,
+        "best_score": 0.50938880443573,
+        "best_epoch": 2,
+        "checkpoint": "work_dir/far_loss_sweep_a/models/human_only/seed_20260910/best.pt",
+        "replay_transitions": 463680
+      }
+    ],
+    "object_only_depth19": [
+      {
+        "variant": "object_only_depth19",
+        "seed": 20260909,
+        "best_score": 0.5015790462493896,
+        "best_epoch": 2,
+        "checkpoint": "work_dir/far_loss_sweep_a/models/object_only_depth19/seed_20260909/best.pt",
+        "replay_transitions": 463680
+      },
+      {
+        "variant": "object_only_depth19",
+        "seed": 20260910,
+        "best_score": 0.5376124382019043,
+        "best_epoch": 4,
+        "checkpoint": "work_dir/far_loss_sweep_a/models/object_only_depth19/seed_20260910/best.pt",
+        "replay_transitions": 463680
+      }
+    ]
+  },
+  "test": {
+    "cyclic_adjacent_pair": {
+      "accuracy": {
+        "n": 5,
+        "mean": 0.6819188237190247,
+        "std": 0.009188120513937553,
+        "ci95": 0.008053742725412871,
+        "ci95_low": 0.6738650809936118,
+        "ci95_high": 0.6899725664444376
+      },
+      "mean_movement_cost": {
+        "n": 5,
+        "mean": 0.23189270496368408,
+        "std": 0.006908755093863491,
+        "ci95": 0.006055790843672469,
+        "ci95_low": 0.2258369141200116,
+        "ci95_high": 0.23794849580735655
+      },
+      "mean_movement_angle_deg": {
+        "n": 5,
+        "mean": 41.74068603515625,
+        "std": 1.2435747347868198,
+        "ci95": 1.0900413156971638,
+        "ci95_low": 40.65064471945909,
+        "ci95_high": 42.830727350853415
+      },
+      "recognition_loss": {
+        "n": 5,
+        "mean": 0.9836033821105957,
+        "std": 0.01166967369886301,
+        "ci95": 0.010228919997032446,
+        "ci95_low": 0.9733744621135633,
+        "ci95_high": 0.9938323021076282
+      },
+      "recognition_loss_gain": {
+        "n": 5,
+        "mean": -0.2903799295425415,
+        "std": 0.011669688482532544,
+        "ci95": 0.010228932955490141,
+        "ci95_low": -0.30060886249803165,
+        "ci95_high": -0.28015099658705134
+      },
+      "normalized_entropy": {
+        "n": 5,
+        "mean": 0.6805238485336303,
+        "std": 0.0030766658752471015,
+        "ci95": 0.0026968165441137114,
+        "ci95_low": 0.6778270319895167,
+        "ci95_high": 0.683220665077744
+      },
+      "best_single_normalized_entropy": {
+        "n": 5,
+        "mean": 0.580472981929779,
+        "std": 3.264680847556389e-08,
+        "ci95": 2.8616189335912637e-08,
+        "ci95_low": 0.5804729533135897,
+        "ci95_high": 0.5804730105459683
+      },
+      "entropy_gain": {
+        "n": 5,
+        "mean": -0.10005086958408356,
+        "std": 0.0030766471156795784,
+        "ci95": 0.0026968001006277727,
+        "ci95_low": -0.10274766968471133,
+        "ci95_high": -0.09735406948345579
+      },
+      "mean_margin": {
+        "n": 5,
+        "mean": 0.3552265644073486,
+        "std": 0.01829933079074731,
+        "ci95": 0.016040070655619458,
+        "ci95_low": 0.33918649375172916,
+        "ci95_high": 0.3712666350629681
+      },
+      "mean_top2_margin": {
+        "n": 5,
+        "mean": 0.9083112597465515,
+        "std": 0.011640437329184686,
+        "ci95": 0.010203293189106158,
+        "ci95_low": 0.8981079665574453,
+        "ci95_high": 0.9185145529356576
+      },
+      "mean_separation": {
+        "n": 5,
+        "mean": 0.26143847703933715,
+        "std": 0.006179010425605466,
+        "ci95": 0.005416141439370822,
+        "ci95_low": 0.25602233559996634,
+        "ci95_high": 0.26685461847870795
+      },
+      "mean_separation_angle_deg": {
+        "n": 5,
+        "mean": 31.635993576049806,
+        "std": 0.7176804092347411,
+        "ci95": 0.6290746150181494,
+        "ci95_low": 31.00691896103166,
+        "ci95_high": 32.265068191067954
+      },
+      "mean_rank_gap": {
+        "n": 5,
+        "mean": 1.5476014852523803,
+        "std": 0.03875419304529928,
+        "ci95": 0.03396954794447599,
+        "ci95_low": 1.5136319373079044,
+        "ci95_high": 1.5815710331968562
+      },
+      "mean_reward": {
+        "n": 5,
+        "mean": -0.39339619874954224,
+        "std": 0.0296567202546702,
+        "ci95": 0.025995261451821874,
+        "ci95_low": -0.4193914602013641,
+        "ci95_high": -0.3674009372977204
+      },
+      "completion_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "episodes_per_seed": {
+        "n": 5,
+        "mean": 271.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 271.0,
+        "ci95_high": 271.0
+      }
+    },
+    "cyclic_pair": {
+      "accuracy": {
+        "n": 5,
+        "mean": 0.6870848894119262,
+        "std": 0.010566658064443705,
+        "ci95": 0.009262084165020251,
+        "ci95_low": 0.677822805246906,
+        "ci95_high": 0.6963469735769465
+      },
+      "mean_movement_cost": {
+        "n": 5,
+        "mean": 0.30608421564102173,
+        "std": 0.004843587181088064,
+        "ci95": 0.004245591355208921,
+        "ci95_low": 0.3018386242858128,
+        "ci95_high": 0.31032980699623064
+      },
+      "mean_movement_angle_deg": {
+        "n": 5,
+        "mean": 55.095159912109374,
+        "std": 0.8718472447481787,
+        "ci95": 0.764207804459107,
+        "ci95_low": 54.33095210765027,
+        "ci95_high": 55.85936771656848
+      },
+      "recognition_loss": {
+        "n": 5,
+        "mean": 0.9621800422668457,
+        "std": 0.007522989072575293,
+        "ci95": 0.006594190664424449,
+        "ci95_low": 0.9555858516024213,
+        "ci95_high": 0.9687742329312702
+      },
+      "recognition_loss_gain": {
+        "n": 5,
+        "mean": -0.26895660161972046,
+        "std": 0.007522973074863222,
+        "ci95": 0.006594176641811553,
+        "ci95_low": -0.275550778261532,
+        "ci95_high": -0.2623624249779089
+      },
+      "normalized_entropy": {
+        "n": 5,
+        "mean": 0.6813217997550964,
+        "std": 0.003532100450311196,
+        "ci95": 0.0030960225504193532,
+        "ci95_low": 0.678225777204677,
+        "ci95_high": 0.6844178223055158
+      },
+      "best_single_normalized_entropy": {
+        "n": 5,
+        "mean": 0.580472981929779,
+        "std": 3.264680847556389e-08,
+        "ci95": 2.8616189335912637e-08,
+        "ci95_low": 0.5804729533135897,
+        "ci95_high": 0.5804730105459683
+      },
+      "entropy_gain": {
+        "n": 5,
+        "mean": -0.10084877610206604,
+        "std": 0.0035320885483622103,
+        "ci95": 0.0030960121179010903,
+        "ci95_low": -0.10394478821996712,
+        "ci95_high": -0.09775276398416495
+      },
+      "mean_margin": {
+        "n": 5,
+        "mean": 0.37819855809211733,
+        "std": 0.01098630399356077,
+        "ci95": 0.009629920040023082,
+        "ci95_low": 0.3685686380520943,
+        "ci95_high": 0.3878284781321404
+      },
+      "mean_top2_margin": {
+        "n": 5,
+        "mean": 0.9005988717079163,
+        "std": 0.01567411147695357,
+        "ci95": 0.013738964469756101,
+        "ci95_low": 0.8868599072381602,
+        "ci95_high": 0.9143378361776724
+      },
+      "mean_separation": {
+        "n": 5,
+        "mean": 0.33156672716140745,
+        "std": 0.004184858939320437,
+        "ci95": 0.00366819059331072,
+        "ci95_low": 0.32789853656809675,
+        "ci95_high": 0.33523491775471814
+      },
+      "mean_separation_angle_deg": {
+        "n": 5,
+        "mean": 40.21609191894531,
+        "std": 0.6209844333241868,
+        "ci95": 0.5443168551057703,
+        "ci95_low": 39.67177506383954,
+        "ci95_high": 40.76040877405108
+      },
+      "mean_rank_gap": {
+        "n": 5,
+        "mean": 1.889298915863037,
+        "std": 0.02810250197986443,
+        "ci95": 0.02463292906780132,
+        "ci95_low": 1.8646659867952358,
+        "ci95_high": 1.9139318449308385
+      },
+      "mean_reward": {
+        "n": 5,
+        "mean": -0.3061520278453827,
+        "std": 0.02178470043436862,
+        "ci95": 0.01909513184796123,
+        "ci95_low": -0.32524715969334395,
+        "ci95_high": -0.28705689599742146
+      },
+      "completion_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "episodes_per_seed": {
+        "n": 5,
+        "mean": 271.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 271.0,
+        "ci95_high": 271.0
+      }
+    },
+    "full_depth19": {
+      "accuracy": {
+        "n": 5,
+        "mean": 0.6804428219795227,
+        "std": 0.00420729148453645,
+        "ci95": 0.003687853586147167,
+        "ci95_low": 0.6767549683933755,
+        "ci95_high": 0.6841306755656699
+      },
+      "mean_movement_cost": {
+        "n": 5,
+        "mean": 0.08373308926820755,
+        "std": 0.004312491631076925,
+        "ci95": 0.0037800655802788835,
+        "ci95_low": 0.07995302368792867,
+        "ci95_high": 0.08751315484848643
+      },
+      "mean_movement_angle_deg": {
+        "n": 5,
+        "mean": 15.071956443786622,
+        "std": 0.7762491363190422,
+        "ci95": 0.6804123678236726,
+        "ci95_low": 14.39154407596295,
+        "ci95_high": 15.752368811610294
+      },
+      "recognition_loss": {
+        "n": 5,
+        "mean": 0.9707820177078247,
+        "std": 0.00423433354367414,
+        "ci95": 0.0037115569960806767,
+        "ci95_low": 0.967070460711744,
+        "ci95_high": 0.9744935747039054
+      },
+      "recognition_loss_gain": {
+        "n": 5,
+        "mean": -0.2775585770606995,
+        "std": 0.0042343744817941445,
+        "ci95": 0.0037115928799250036,
+        "ci95_low": -0.2812701699406245,
+        "ci95_high": -0.27384698418077447
+      },
+      "normalized_entropy": {
+        "n": 5,
+        "mean": 0.6802943468093872,
+        "std": 0.0011655040476133338,
+        "ci95": 0.0010216093411777097,
+        "ci95_low": 0.6792727374682095,
+        "ci95_high": 0.6813159561505648
+      },
+      "best_single_normalized_entropy": {
+        "n": 5,
+        "mean": 0.580472981929779,
+        "std": 3.264680847556389e-08,
+        "ci95": 2.8616189335912637e-08,
+        "ci95_low": 0.5804729533135897,
+        "ci95_high": 0.5804730105459683
+      },
+      "entropy_gain": {
+        "n": 5,
+        "mean": -0.09982133507728577,
+        "std": 0.0011654772017879,
+        "ci95": 0.0010215858097742017,
+        "ci95_low": -0.10084292088705997,
+        "ci95_high": -0.09879974926751157
+      },
+      "mean_margin": {
+        "n": 5,
+        "mean": 0.3665090799331665,
+        "std": 0.010518794232737314,
+        "ci95": 0.009220129666727485,
+        "ci95_low": 0.35728895026643903,
+        "ci95_high": 0.375729209599894
+      },
+      "mean_top2_margin": {
+        "n": 5,
+        "mean": 0.9089864611625671,
+        "std": 0.00579576271404037,
+        "ci95": 0.005080210008740753,
+        "ci95_low": 0.9039062511538264,
+        "ci95_high": 0.9140666711713078
+      },
+      "mean_separation": {
+        "n": 5,
+        "mean": 0.46311222910881045,
+        "std": 0.0032134736268414382,
+        "ci95": 0.0028167338256199375,
+        "ci95_low": 0.4602954952831905,
+        "ci95_high": 0.46592896293443037
+      },
+      "mean_separation_angle_deg": {
+        "n": 5,
+        "mean": 57.4672248840332,
+        "std": 0.37456054745309747,
+        "ci95": 0.32831679555150733,
+        "ci95_low": 57.13890808848169,
+        "ci95_high": 57.79554167958471
+      },
+      "mean_rank_gap": {
+        "n": 5,
+        "mean": 2.642066478729248,
+        "std": 0.017307819752038083,
+        "ci95": 0.015170972911085318,
+        "ci95_low": 2.6268955058181627,
+        "ci95_high": 2.6572374516403334
+      },
+      "mean_reward": {
+        "n": 5,
+        "mean": -0.25955876111984255,
+        "std": 0.011592528872040552,
+        "ci95": 0.010161299574892561,
+        "ci95_low": -0.2697200606947351,
+        "ci95_high": -0.24939746154495
+      },
+      "completion_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "episodes_per_seed": {
+        "n": 5,
+        "mean": 271.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 271.0,
+        "ci95_high": 271.0
+      }
+    },
+    "human_only": {
+      "accuracy": {
+        "n": 5,
+        "mean": 0.6693727016448975,
+        "std": 0.010946435391334058,
+        "ci95": 0.009594973669362326,
+        "ci95_low": 0.6597777279755351,
+        "ci95_high": 0.6789676753142598
+      },
+      "mean_movement_cost": {
+        "n": 5,
+        "mean": 0.09032082557678223,
+        "std": 0.005615099391324446,
+        "ci95": 0.0049218516242523075,
+        "ci95_low": 0.08539897395252992,
+        "ci95_high": 0.09524267720103453
+      },
+      "mean_movement_angle_deg": {
+        "n": 5,
+        "mean": 16.257748985290526,
+        "std": 1.0107165287819797,
+        "ci95": 0.8859320988209387,
+        "ci95_low": 15.371816886469587,
+        "ci95_high": 17.143681084111464
+      },
+      "recognition_loss": {
+        "n": 5,
+        "mean": 0.980476188659668,
+        "std": 0.010355938639315018,
+        "ci95": 0.00907738044518342,
+        "ci95_low": 0.9713988082144845,
+        "ci95_high": 0.9895535691048515
+      },
+      "recognition_loss_gain": {
+        "n": 5,
+        "mean": -0.2872527539730072,
+        "std": 0.010355962703275703,
+        "ci95": 0.009077401538174967,
+        "ci95_low": -0.2963301555111822,
+        "ci95_high": -0.2781753524348322
+      },
+      "normalized_entropy": {
+        "n": 5,
+        "mean": 0.6784487247467041,
+        "std": 0.002445917751652915,
+        "ci95": 0.0021439414371471916,
+        "ci95_low": 0.6763047833095569,
+        "ci95_high": 0.6805926661838514
+      },
+      "best_single_normalized_entropy": {
+        "n": 5,
+        "mean": 0.580472981929779,
+        "std": 3.264680847556389e-08,
+        "ci95": 2.8616189335912637e-08,
+        "ci95_low": 0.5804729533135897,
+        "ci95_high": 0.5804730105459683
+      },
+      "entropy_gain": {
+        "n": 5,
+        "mean": -0.09797574430704117,
+        "std": 0.0024459271822025548,
+        "ci95": 0.0021439497033884152,
+        "ci95_low": -0.10011969401042958,
+        "ci95_high": -0.09583179460365276
+      },
+      "mean_margin": {
+        "n": 5,
+        "mean": 0.3525275230407715,
+        "std": 0.018534482502916724,
+        "ci95": 0.01624619021928648,
+        "ci95_low": 0.33628133282148504,
+        "ci95_high": 0.368773713260058
+      },
+      "mean_top2_margin": {
+        "n": 5,
+        "mean": 0.9189526557922363,
+        "std": 0.011525737140045811,
+        "ci95": 0.010102754040487088,
+        "ci95_low": 0.9088499017517492,
+        "ci95_high": 0.9290554098327234
+      },
+      "mean_separation": {
+        "n": 5,
+        "mean": 0.4192288041114807,
+        "std": 0.004632665453860702,
+        "ci95": 0.004060710309764198,
+        "ci95_low": 0.41516809380171654,
+        "ci95_high": 0.4232895144212449
+      },
+      "mean_separation_angle_deg": {
+        "n": 5,
+        "mean": 51.48079071044922,
+        "std": 0.5496616523966354,
+        "ci95": 0.48179968119842487,
+        "ci95_low": 50.998991029250796,
+        "ci95_high": 51.962590391647645
+      },
+      "mean_rank_gap": {
+        "n": 5,
+        "mean": 2.4797048568725586,
+        "std": 0.029404780284670504,
+        "ci95": 0.025774426331347796,
+        "ci95_low": 2.453930430541211,
+        "ci95_high": 2.5054792832039063
+      },
+      "mean_reward": {
+        "n": 5,
+        "mean": -0.3052087426185608,
+        "std": 0.027857505963739298,
+        "ci95": 0.024418180591262526,
+        "ci95_low": -0.32962692320982334,
+        "ci95_high": -0.28079056202729824
+      },
+      "completion_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "episodes_per_seed": {
+        "n": 5,
+        "mean": 271.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 271.0,
+        "ci95_high": 271.0
+      }
+    },
+    "object_only_depth19": {
+      "accuracy": {
+        "n": 5,
+        "mean": 0.6767527818679809,
+        "std": 0.005596219765724624,
+        "ci95": 0.004905302902769777,
+        "ci95_low": 0.6718474789652111,
+        "ci95_high": 0.6816580847707507
+      },
+      "mean_movement_cost": {
+        "n": 5,
+        "mean": 0.09263636767864228,
+        "std": 0.00693257727212215,
+        "ci95": 0.006076671903576193,
+        "ci95_low": 0.08655969577506609,
+        "ci95_high": 0.09871303958221847
+      },
+      "mean_movement_angle_deg": {
+        "n": 5,
+        "mean": 16.674546813964845,
+        "std": 1.2478643370182125,
+        "ci95": 1.0938013178340087,
+        "ci95_low": 15.580745496130836,
+        "ci95_high": 17.768348131798852
+      },
+      "recognition_loss": {
+        "n": 5,
+        "mean": 0.9718665242195129,
+        "std": 0.001873144971119519,
+        "ci95": 0.001641883958956969,
+        "ci95_low": 0.970224640260556,
+        "ci95_high": 0.9735084081784698
+      },
+      "recognition_loss_gain": {
+        "n": 5,
+        "mean": -0.27864310145378113,
+        "std": 0.0018731678034836295,
+        "ci95": 0.001641903972406518,
+        "ci95_low": -0.28028500542618767,
+        "ci95_high": -0.2770011974813746
+      },
+      "normalized_entropy": {
+        "n": 5,
+        "mean": 0.6781771898269653,
+        "std": 0.0009842084925088506,
+        "ci95": 0.0008626967805666939,
+        "ci95_low": 0.6773144930463986,
+        "ci95_high": 0.679039886607532
+      },
+      "best_single_normalized_entropy": {
+        "n": 5,
+        "mean": 0.580472981929779,
+        "std": 3.264680847556389e-08,
+        "ci95": 2.8616189335912637e-08,
+        "ci95_low": 0.5804729533135897,
+        "ci95_high": 0.5804730105459683
+      },
+      "entropy_gain": {
+        "n": 5,
+        "mean": -0.0977041944861412,
+        "std": 0.0009842128891676227,
+        "ci95": 0.0008627006344080261,
+        "ci95_low": -0.09856689512054922,
+        "ci95_high": -0.09684149385173318
+      },
+      "mean_margin": {
+        "n": 5,
+        "mean": 0.3620885968208313,
+        "std": 0.005000188581558726,
+        "ci95": 0.004382858534923957,
+        "ci95_low": 0.3577057382859073,
+        "ci95_high": 0.36647145535575526
+      },
+      "mean_top2_margin": {
+        "n": 5,
+        "mean": 0.9176138758659362,
+        "std": 0.006630048300501043,
+        "ci95": 0.005811493568058695,
+        "ci95_low": 0.9118023822978776,
+        "ci95_high": 0.9234253694339949
+      },
+      "mean_separation": {
+        "n": 5,
+        "mean": 0.4504766285419464,
+        "std": 0.006977345432224719,
+        "ci95": 0.006115912926069232,
+        "ci95_low": 0.4443607156158772,
+        "ci95_high": 0.45659254146801564
+      },
+      "mean_separation_angle_deg": {
+        "n": 5,
+        "mean": 55.41273880004883,
+        "std": 0.9609494542724208,
+        "ci95": 0.8423093346562278,
+        "ci95_low": 54.5704294653926,
+        "ci95_high": 56.255048134705056
+      },
+      "mean_rank_gap": {
+        "n": 5,
+        "mean": 2.595571994781494,
+        "std": 0.02399946017142084,
+        "ci95": 0.021036454351705536,
+        "ci95_low": 2.5745355404297885,
+        "ci95_high": 2.6166084491332
+      },
+      "mean_reward": {
+        "n": 5,
+        "mean": -0.26814653277397155,
+        "std": 0.006608101472495033,
+        "ci95": 0.005792256325128416,
+        "ci95_low": -0.27393878909909997,
+        "ci95_high": -0.2623542764488431
+      },
+      "completion_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "episodes_per_seed": {
+        "n": 5,
+        "mean": 271.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 271.0,
+        "ci95_high": 271.0
+      }
+    },
+    "random_nonadjacent": {
+      "accuracy": {
+        "n": 5,
+        "mean": 0.69225093126297,
+        "std": 0.016210983628238928,
+        "ci95": 0.01420955365895234,
+        "ci95_low": 0.6780413776040176,
+        "ci95_high": 0.7064604849219224
+      },
+      "mean_movement_cost": {
+        "n": 5,
+        "mean": 0.18144702911376953,
+        "std": 0.00561388563362346,
+        "ci95": 0.004920787718719081,
+        "ci95_low": 0.17652624139505044,
+        "ci95_high": 0.18636781683248863
+      },
+      "mean_movement_angle_deg": {
+        "n": 5,
+        "mean": 32.660465240478516,
+        "std": 1.0104990010708925,
+        "ci95": 0.8857414273753381,
+        "ci95_low": 31.77472381310318,
+        "ci95_high": 33.54620666785385
+      },
+      "recognition_loss": {
+        "n": 5,
+        "mean": 0.9711317181587219,
+        "std": 0.01619151771812531,
+        "ci95": 0.014192491036435226,
+        "ci95_low": 0.9569392271222866,
+        "ci95_high": 0.9853242091951572
+      },
+      "recognition_loss_gain": {
+        "n": 5,
+        "mean": -0.2779082953929901,
+        "std": 0.016191518078582785,
+        "ci95": 0.014192491352390132,
+        "ci95_low": -0.29210078674538026,
+        "ci95_high": -0.26371580404059997
+      },
+      "normalized_entropy": {
+        "n": 5,
+        "mean": 0.6794312596321106,
+        "std": 0.0016942710931790407,
+        "ci95": 0.0014850940919711965,
+        "ci95_low": 0.6779461655401394,
+        "ci95_high": 0.6809163537240818
+      },
+      "best_single_normalized_entropy": {
+        "n": 5,
+        "mean": 0.580472981929779,
+        "std": 3.264680847556389e-08,
+        "ci95": 2.8616189335912637e-08,
+        "ci95_low": 0.5804729533135897,
+        "ci95_high": 0.5804730105459683
+      },
+      "entropy_gain": {
+        "n": 5,
+        "mean": -0.09895825684070587,
+        "std": 0.001694282389971341,
+        "ci95": 0.0014851039940462366,
+        "ci95_low": -0.10044336083475211,
+        "ci95_high": -0.09747315284665964
+      },
+      "mean_margin": {
+        "n": 5,
+        "mean": 0.36878170967102053,
+        "std": 0.025761910650384537,
+        "ci95": 0.02258131031025797,
+        "ci95_low": 0.3462003993607626,
+        "ci95_high": 0.3913630199812785
+      },
+      "mean_top2_margin": {
+        "n": 5,
+        "mean": 0.9043503403663635,
+        "std": 0.011314087140783425,
+        "ci95": 0.009917234636458005,
+        "ci95_low": 0.8944331057299055,
+        "ci95_high": 0.9142675750028215
+      },
+      "mean_separation": {
+        "n": 5,
+        "mean": 0.39789262413978577,
+        "std": 0.00418422556601942,
+        "ci95": 0.0036676354171342874,
+        "ci95_low": 0.3942249887226515,
+        "ci95_high": 0.40156025955692004
+      },
+      "mean_separation_angle_deg": {
+        "n": 5,
+        "mean": 48.77614974975586,
+        "std": 0.6833663331870324,
+        "ci95": 0.5989970012200622,
+        "ci95_low": 48.177152748535796,
+        "ci95_high": 49.37514675097592
+      },
+      "mean_rank_gap": {
+        "n": 5,
+        "mean": 2.337269401550293,
+        "std": 0.021923847596374363,
+        "ci95": 0.01921709971310467,
+        "ci95_low": 2.3180523018371884,
+        "ci95_high": 2.3564865012633978
+      },
+      "mean_reward": {
+        "n": 5,
+        "mean": -0.2919084668159485,
+        "std": 0.04131893129122148,
+        "ci95": 0.036217640136927236,
+        "ci95_low": -0.32812610695287575,
+        "ci95_high": -0.25569082667902127
+      },
+      "completion_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "episodes_per_seed": {
+        "n": 5,
+        "mean": 271.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 271.0,
+        "ci95_high": 271.0
+      }
+    },
+    "random_pair": {
+      "accuracy": {
+        "n": 5,
+        "mean": 0.6892989039421081,
+        "std": 0.026787742718280976,
+        "ci95": 0.023480491763285694,
+        "ci95_low": 0.6658184121788224,
+        "ci95_high": 0.7127793957053938
+      },
+      "mean_movement_cost": {
+        "n": 5,
+        "mean": 0.1993023782968521,
+        "std": 0.010777494908072494,
+        "ci95": 0.009446890806710313,
+        "ci95_low": 0.18985548749014178,
+        "ci95_high": 0.20874926910356242
+      },
+      "mean_movement_angle_deg": {
+        "n": 5,
+        "mean": 35.874429321289064,
+        "std": 1.9399500350469348,
+        "ci95": 1.7004411793166738,
+        "ci95_low": 34.17398814197239,
+        "ci95_high": 37.57487050060574
+      },
+      "recognition_loss": {
+        "n": 5,
+        "mean": 0.9623350501060486,
+        "std": 0.014636201774985992,
+        "ci95": 0.012829196503698528,
+        "ci95_low": 0.9495058536023501,
+        "ci95_high": 0.9751642466097471
+      },
+      "recognition_loss_gain": {
+        "n": 5,
+        "mean": -0.26911158859729767,
+        "std": 0.014636210870630705,
+        "ci95": 0.01282920447638264,
+        "ci95_low": -0.2819407930736803,
+        "ci95_high": -0.25628238412091503
+      },
+      "normalized_entropy": {
+        "n": 5,
+        "mean": 0.6804211854934692,
+        "std": 0.004352844509368928,
+        "ci95": 0.0038154364376267714,
+        "ci95_low": 0.6766057490558425,
+        "ci95_high": 0.6842366219310959
+      },
+      "best_single_normalized_entropy": {
+        "n": 5,
+        "mean": 0.580472981929779,
+        "std": 3.264680847556389e-08,
+        "ci95": 2.8616189335912637e-08,
+        "ci95_low": 0.5804729533135897,
+        "ci95_high": 0.5804730105459683
+      },
+      "entropy_gain": {
+        "n": 5,
+        "mean": -0.09994817674160003,
+        "std": 0.004352834957716039,
+        "ci95": 0.0038154280652338704,
+        "ci95_low": -0.1037636048068339,
+        "ci95_high": -0.09613274867636616
+      },
+      "mean_margin": {
+        "n": 5,
+        "mean": 0.3785445272922516,
+        "std": 0.027685485299725483,
+        "ci95": 0.024267397831140868,
+        "ci95_low": 0.35427712946111073,
+        "ci95_high": 0.4028119251233924
+      },
+      "mean_top2_margin": {
+        "n": 5,
+        "mean": 0.9046269655227661,
+        "std": 0.01576241446627514,
+        "ci95": 0.01381636545255797,
+        "ci95_low": 0.8908106000702082,
+        "ci95_high": 0.918443330975324
+      },
+      "mean_separation": {
+        "n": 5,
+        "mean": 0.28911362290382386,
+        "std": 0.011496348818588673,
+        "ci95": 0.010076994040954157,
+        "ci95_low": 0.27903662886286973,
+        "ci95_high": 0.299190616944778
+      },
+      "mean_separation_angle_deg": {
+        "n": 5,
+        "mean": 34.978902435302736,
+        "std": 1.4753849692536258,
+        "ci95": 1.2932319450191574,
+        "ci95_low": 33.68567049028358,
+        "ci95_high": 36.272134380321894
+      },
+      "mean_rank_gap": {
+        "n": 5,
+        "mean": 1.688560914993286,
+        "std": 0.05551022920564201,
+        "ci95": 0.0486568612125606,
+        "ci95_low": 1.6399040537807255,
+        "ci95_high": 1.7372177762058467
+      },
+      "mean_reward": {
+        "n": 5,
+        "mean": -0.3277826547622681,
+        "std": 0.038535444422337445,
+        "ci95": 0.03377780632243256,
+        "ci95_low": -0.36156046108470064,
+        "ci95_high": -0.29400484843983554
+      },
+      "completion_rate": {
+        "n": 5,
+        "mean": 1.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 1.0,
+        "ci95_high": 1.0
+      },
+      "episodes_per_seed": {
+        "n": 5,
+        "mean": 271.0,
+        "std": 0.0,
+        "ci95": 0.0,
+        "ci95_low": 271.0,
+        "ci95_high": 271.0
+      }
+    }
+  }
+}

@@ -1,0 +1,120 @@
+runtime:
+  device: cuda:0
+  amp: true
+recognizer:
+  config: /home/youhan/ws/VPOCLIP_plus_full/config_final_aug_entropy_single_h2.yaml
+  checkpoint: /home/youhan/ws/VPOCLIP_plus_full/work_dir/merged45_10_groupAB/selected_stage_b/last_model.pth
+data:
+  rgb_root: /home/youhan/ws/ETRI-Activity3D-RGB
+  skeleton_root: /home/youhan/ws/ETRI-Activity3D-Skeleton
+  angle_csv: /home/youhan/ws/ETRI-Activity3D-RGB/low_view_camera_angles_split55.csv
+  source_split_dir: /home/youhan/ws/X3D_full/data/etri_rgb_allviews_cs_45_25_10_20
+  source_prefix:
+    dqn_train: dqn
+    val: val
+    test: test
+  subject_groups:
+    dqn_train:
+    - P001
+    - P002
+    - P005
+    - P006
+    - P008
+    - P012
+    - P015
+    - P021
+    - P024
+    - P025
+    - P026
+    - P032
+    - P044
+    - P052
+    - P054
+    - P056
+    - P060
+    - P065
+    - P068
+    - P076
+    - P077
+    - P081
+    - P086
+    - P091
+    - P093
+    val:
+    - P010
+    - P014
+    - P019
+    - P031
+    - P033
+    - P034
+    - P038
+    - P046
+    - P048
+    - P090
+    test:
+    - P003
+    - P009
+    - P022
+    - P023
+    - P027
+    - P035
+    - P036
+    - P040
+    - P051
+    - P055
+    - P061
+    - P064
+    - P066
+    - P069
+    - P079
+    - P092
+    - P094
+    - P095
+    - P096
+    - P098
+  window_seconds: 8.0
+  stride_seconds: 1.0
+  frames: 13
+  max_windows_per_clip: 1
+  max_episodes: null
+  exclude_labels: []
+  allow_variable_views: true
+  allow_available_four_views: false
+  allow_cross_group_views: false
+  allow_missing_skeleton: false
+  merge_group_actions:
+  - A049
+  - A050
+  minimum_views: 2
+cache:
+  root: /home/youhan/ws/VPOCLIP_plus_full/work_dir/frame0_body_angle_rank_strict45_10/cache
+  candidate_cameras:
+  - C001
+  - C003
+  - C005
+  - C007
+  protocol: strict_zsl_45_10_frame0_body_angle_rank
+raw:
+  batch_size: 64
+  decode_workers: 8
+  x3d_input_size: 182
+  x3d_root: /home/youhan/ws/X3D_full
+  x3d_config: /home/youhan/ws/VPOCLIP_plus_full/logs/merged45_10_groupAB_20260913/x3d.yaml
+  x3d_checkpoint: /home/youhan/ws/X3D_full/outputs/etri_allviews_cs45_merged_groupAB_7000/model_best.pth
+  x3d_layer: s5
+  ctrgcn_root: /home/youhan/ws/CTR-GCN_17_full
+  ctrgcn_config: /home/youhan/ws/VPOCLIP_plus_full/logs/merged45_10_groupAB_20260913/ctrgcn.yaml
+  ctrgcn_weights: /home/youhan/ws/CTR-GCN_17_full/work_dir/etri_coco17/allviews_cs45_merged_groupAB/runs-51-4029.pt
+  ctrgcn_hook_layer: l4
+  yolo_repo: /home/youhan/ws/yolov5_full
+  yolo_weights: /home/youhan/ws/yolov5_full/best.pt
+  rtmpose_cache_root: /home/youhan/ws/VPOCLIP_plus_full/work_dir/frame0_body_angle_rank_strict45_10/rtmpose_cache
+  yolo_size: 640
+  yolo_conf: 0.25
+  yolo_iou: 0.45
+  yolo_half: true
+  no_yolo: false
+  object_grid_size: 6
+  object_value: presence
+  object_max_distance_weight: 10.0
+  yolo_detect_every: 1

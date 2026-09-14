@@ -1,0 +1,53 @@
+{
+  "experiment": "RTMPose-17 to 3-D body-forward yaw, eight circular bins",
+  "model": "Linear(51,128)-ReLU-Linear(128,64)-ReLU-Linear(64,8)",
+  "input": "one RTMPose frame with 17 interleaved (x,y,score) triplets after hip-centered torso-scale normalization",
+  "label": "3-D anatomical body-forward yaw in the source camera coordinate frame",
+  "frame_index": 6,
+  "split": "strict 50/5 subject-disjoint cache; 30 random initialization seeds",
+  "confidence_interval": "normal 95% CI across the 30 seed-level metrics",
+  "n_seeds": 30,
+  "test": {
+    "top1": {
+      "mean": 0.6078815658887228,
+      "sd": 0.003092691677332123,
+      "ci95_low": 0.6067748603852684,
+      "ci95_high": 0.6089882713921771
+    },
+    "class_mae_deg": {
+      "mean": 26.137428983052573,
+      "sd": 0.23058283654470166,
+      "ci95_low": 26.05491597469919,
+      "ci95_high": 26.219941991405957
+    },
+    "soft_mae_deg": {
+      "mean": 21.814327494303384,
+      "sd": 0.1428395186078041,
+      "ci95_low": 21.763213029026197,
+      "ci95_high": 21.865441959580572
+    },
+    "class_within_45_deg": {
+      "mean": 0.8519336104393005,
+      "sd": 0.003361193336826408,
+      "ci95_low": 0.8507308228509661,
+      "ci95_high": 0.8531363980276349
+    },
+    "soft_within_45_deg": {
+      "mean": 0.88223850329717,
+      "sd": 0.0016056985264565928,
+      "ci95_low": 0.8816639114588879,
+      "ci95_high": 0.8828130951354521
+    }
+  },
+  "data_build": {
+    "train": 12543,
+    "val": 4996,
+    "test": 11326,
+    "unusable_pose_or_skeleton": 14,
+    "mean_skeleton_frame_error": {
+      "train": 0.012915570437694332,
+      "val": 0.045636509207365894,
+      "test": 0.01792336217552534
+    }
+  }
+}

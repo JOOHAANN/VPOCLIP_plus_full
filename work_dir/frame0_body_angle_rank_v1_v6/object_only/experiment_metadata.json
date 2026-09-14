@@ -1,0 +1,30 @@
+{
+  "requested_variant": "object_only",
+  "implementation": "multistep_angle_object_trajectory_ablation.py",
+  "experiment": "frame0_body_angle_rank_v1_v6",
+  "cache_root": "/home/youhan/ws/VPOCLIP_plus_full/data/frame0_body_angle_rank_g1_pseudo_selected_stage_b/cache",
+  "track_root": "/home/youhan/ws/VPOCLIP_plus_full/data/frame0_body_angle_rank_g1_pseudo_selected_stage_b/object_tracks_full",
+  "track_root_v3": "/home/youhan/ws/VPOCLIP_plus_full/data/frame0_body_angle_rank_g1_pseudo_selected_stage_b/object_tracks_v3_bbox_size",
+  "angle_contract": {
+    "source": "released 25-joint 3-D skeleton at video frame 0",
+    "value": "signed angle from anatomical body-forward to person-to-camera",
+    "sign": "negative body-left, positive body-right",
+    "action": "rank 0..3 after ascending signed-angle sort; rank_to_original maps to source video",
+    "camera_id_is_not_order": true
+  },
+  "v_poclip": "frozen logits/z from source cache; selector never receives class logits/z",
+  "training": {
+    "epochs": 40,
+    "batch_size": 16384,
+    "updates_per_epoch": 64,
+    "learning_rate": 0.0001,
+    "seeds": [
+      20260909,
+      20260910,
+      20260911
+    ],
+    "device": "cuda:0",
+    "per_process_memory_fraction": 0.16
+  },
+  "old_outputs_modified": false
+}

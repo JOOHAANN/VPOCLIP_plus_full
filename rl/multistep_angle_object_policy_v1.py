@@ -521,7 +521,23 @@ def main() -> None:
     parser.add_argument("--updates-per-epoch", type=int, default=64)
     parser.add_argument("--learning-rate", type=float, default=1e-4)
     parser.add_argument("--seeds", type=int, nargs="+", default=[20260909, 20260910, 20260911])
+    parser.add_argument("--unseen-classes", type=int, nargs="+", default=None)
+    parser.add_argument("--pseudo-unseen-classes", type=int, nargs="+", default=None)
     args = parser.parse_args()
+    if args.unseen_classes is not None:
+        if args.pseudo_unseen_classes is None:
+            raise ValueError("--pseudo-unseen-classes is required with --unseen-classes")
+        unseen = sorted(set(int(x) for x in args.unseen_classes))
+        pseudo = sorted(set(int(x) for x in args.pseudo_unseen_classes))
+        seen = sorted(set(range(55)) - set(unseen))
+        if not unseen or any(x < 0 or x >= 55 for x in unseen):
+            raise ValueError(f"invalid unseen class IDs: {unseen}")
+        if not pseudo or not set(pseudo).issubset(set(seen)):
+            raise ValueError(f"pseudo-unseen classes must be a non-empty subset of seen: {pseudo}")
+        global SEEN_CLASSES, PSEUDO_UNSEEN_CLASSES, TRUE_UNSEEN_CLASSES
+        SEEN_CLASSES = seen
+        PSEUDO_UNSEEN_CLASSES = pseudo
+        TRUE_UNSEEN_CLASSES = unseen
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is required for this experiment")
     device = torch.device("cuda:0")
@@ -540,6 +556,9 @@ def main() -> None:
             "learning_rate": args.learning_rate,
             "seeds": args.seeds,
             "base_comparison": "multistep_g18_view_policy_v1",
+            "seen_classes": SEEN_CLASSES,
+            "pseudo_unseen_classes": PSEUDO_UNSEEN_CLASSES,
+            "unseen_classes": TRUE_UNSEEN_CLASSES,
         },
     )
     raw = {}
